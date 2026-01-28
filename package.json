@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "gts": "^7.0.0",
+    "prettier-plugin-organize-imports": "^4.3.0"
+  }
+}
