@@ -1,18 +1,18 @@
 /**
- * Correction pour le mode spectateur de MU/TH/UR
- * Ce script corrige les problèmes de synchronisation entre le joueur actif et les spectateurs
+ * Fix for MU/TH/UR spectator mode
+ * This script fixes synchronization issues between the active player and spectators
  */
 
-// Attendre que le document soit prêt
+// Wait for the document to be ready
 Hooks.once('ready', () => {
-    console.log("MU/TH/UR | Chargement des corrections pour le mode spectateur");
+    console.log("MU/TH/UR | Loading fixes for spectator mode");
     
-    // Politique audio spectateur: mêmes règles que le joueur (game.settings)
+    // Spectator audio policy: same rules as the player (game.settings)
     try { window.MUTHUR = window.MUTHUR || {}; window.MUTHUR.muteForSpectator = false; } catch(e) {}
     
-    // Fonction pour mettre à jour les interfaces spectateurs avec un nouveau message
+    // Function to update spectator interfaces with a new message
     window.updateSpectatorsWithMessage = function(text, prefix = '', color = '#00ff00', messageType = 'normal') {
-        // Envoyer le message à tous les spectateurs via le socket
+        // Send the message to all spectators via the socket
         game.socket.emit('module.alien-mu-th-ur', {
             type: 'updateSpectators',
             text: text,
@@ -22,20 +22,20 @@ Hooks.once('ready', () => {
         });
     };
     
-    // Fonction pour synchroniser les messages entre le joueur actif et les spectateurs
+    // Function to synchronize messages between the active player and spectators
     window.syncMessageToSpectators = function(chatLog, message, prefix = '', color = '#00ff00', messageType = 'normal') {
-        // Afficher le message dans le chat local
+        // Display the message in the local chat
         const messageElement = displayMuthurMessage(chatLog, message, prefix, color, messageType);
         
-        // Mettre à jour les interfaces spectateurs avec le même message
+        // Update spectator interfaces with the same message
         updateSpectatorsWithMessage(message, prefix, color, messageType);
         
         return messageElement;
     };
     
-    // Fonction pour synchroniser les résultats des commandes spéciales
+    // Function to synchronize special command results
     window.syncCommandResult = function(command, result) {
-        // Envoyer le résultat de la commande à tous les spectateurs
+        // Send the command result to all spectators
         game.socket.emit('module.alien-mu-th-ur', {
             type: 'commandResult',
             command: command,
@@ -43,15 +43,15 @@ Hooks.once('ready', () => {
         });
     };
     
-    // Fonction pour afficher un message d'attente pendant que le GM sélectionne les spectateurs
+    // Function to display a waiting message while the GM selects spectators
     window.showWaitingMessage = function() {
-        // Vérifier si un message d'attente existe déjà
+        // Check if a waiting message already exists
         let waitingContainer = document.getElementById('muthur-waiting-container');
         if (waitingContainer) {
             return waitingContainer;
         }
         
-        // Créer le conteneur du message d'attente
+        // Create the waiting message container
         waitingContainer = document.createElement('div');
         waitingContainer.id = 'muthur-waiting-container';
         waitingContainer.style.cssText = `
@@ -68,7 +68,7 @@ Hooks.once('ready', () => {
             min-width: 400px;
         `;
         
-        // Ajouter le titre
+        // Add the title
         const title = document.createElement('h2');
         title.textContent = "MU/TH/UR 6000";
         title.style.cssText = `
@@ -78,7 +78,7 @@ Hooks.once('ready', () => {
         `;
         waitingContainer.appendChild(title);
         
-        // Ajouter le message d'attente
+        // Add the waiting message
         const message = document.createElement('p');
         message.textContent = game.i18n.localize("MUTHUR.waitingForGM");
         message.style.cssText = `
@@ -88,7 +88,7 @@ Hooks.once('ready', () => {
         `;
         waitingContainer.appendChild(message);
         
-        // Ajouter un indicateur de chargement (points clignotants)
+        // Add a loading indicator (blinking dots)
         const loadingIndicator = document.createElement('div');
         loadingIndicator.style.cssText = `
             color: #00ff00;
@@ -98,29 +98,29 @@ Hooks.once('ready', () => {
         loadingIndicator.textContent = ".";
         waitingContainer.appendChild(loadingIndicator);
         
-        // Animation des points clignotants
+        // Animation of blinking dots
         let dots = 1;
         const loadingInterval = setInterval(() => {
             dots = (dots % 3) + 1;
             loadingIndicator.textContent = ".".repeat(dots);
         }, 500);
         
-        // Stocker l'intervalle dans un attribut pour pouvoir le nettoyer plus tard
+        // Store the interval in an attribute to be able to clean it up later
         waitingContainer.dataset.intervalId = loadingInterval;
         
-        // Ajouter au document
+        // Add to document
         document.body.appendChild(waitingContainer);
         
         return waitingContainer;
     };
     
-    // Remplacer la fonction toggleMuthurChat pour afficher un message d'attente
+    // Replace toggleMuthurChat function to display a waiting message
     const originalToggleMuthurChat = window.toggleMuthurChat;
     if (originalToggleMuthurChat) {
         window.toggleMuthurChat = function() {
             let chatContainer = document.getElementById('muthur-chat-container');
 
-            // Si une fenêtre existe déjà, la fermer
+            // If a window already exists, close it
             if (chatContainer) {
                 chatContainer.remove();
                 if (currentMuthurSession.userId === game.user.id) {
@@ -139,25 +139,25 @@ Hooks.once('ready', () => {
                 return;
             }
 
-            // Vérifier si une session est active avant d'en créer une nouvelle
+            // Check if a session is active before creating a new one
             if (currentMuthurSession.active && currentMuthurSession.userId !== game.user.id) {
                 ui.notifications.warn(game.i18n.format("MUTHUR.sessionActiveWarning", { userName: currentMuthurSession.userName }));
                 return;
             }
 
-            // Différencier le comportement GM/Joueur
+            // Differentiate GM/Player behavior
             if (game.user.isGM) {
                 showMuthurInterface();
             } else {
-                // Afficher un message d'attente pendant que le GM sélectionne les spectateurs
+                // Display a waiting message while the GM selects spectators
                 showWaitingMessage();
                 
-                // Mettre à jour l'état de la session
+                // Update session state
                 currentMuthurSession.active = true;
                 currentMuthurSession.userId = game.user.id;
                 currentMuthurSession.userName = game.user.name;
                 
-                // Informer le GM qu'un joueur a lancé MU/TH/UR et attendre sa sélection de spectateurs
+                // Inform the GM that a player has launched MU/TH/UR and wait for their spectator selection
                 game.socket.emit('module.alien-mu-th-ur', {
                     type: 'requestSpectatorSelection',
                     userId: game.user.id,
@@ -167,36 +167,36 @@ Hooks.once('ready', () => {
         };
     }
     
-    // Modifier la fonction showBootSequence pour gérer les spectateurs
+    // Modify showBootSequence function to handle spectators
     const originalShowBootSequence = window.showBootSequence;
     if (originalShowBootSequence) {
         window.showBootSequence = function(isSpectator = false) {
-            // Fermer le message d'attente s'il existe
+            // Close the waiting message if it exists
             const waitingContainer = document.getElementById('muthur-waiting-container');
             if (waitingContainer) {
-                // Nettoyer l'intervalle
+                // Clean up the interval
                 if (waitingContainer.dataset.intervalId) {
                     clearInterval(parseInt(waitingContainer.dataset.intervalId));
                 }
                 waitingContainer.remove();
             }
             
-            // Appeler la fonction d'origine
+            // Call the original function
             return originalShowBootSequence(isSpectator);
         };
     }
     
-    // Modifier la fonction showMuthurInterface pour utiliser syncMessageToSpectators
+    // Modify showMuthurInterface function to use syncMessageToSpectators
     const originalShowMuthurInterface = window.showMuthurInterface;
     if (originalShowMuthurInterface) {
         window.showMuthurInterface = function() {
             const interfaceElement = originalShowMuthurInterface();
             
-            // Remplacer les appels à displayMuthurMessage par syncMessageToSpectators
+            // Replace calls to displayMuthurMessage with syncMessageToSpectators
             const chatLog = interfaceElement.querySelector('.muthur-chat-log');
             if (chatLog) {
-                // Afficher le message de bienvenue avec syncMessageToSpectators
-                chatLog.innerHTML = ''; // Vider le chat log
+                // Display welcome message with syncMessageToSpectators
+                chatLog.innerHTML = ''; // Empty the chat log
                 syncMessageToSpectators(chatLog, game.i18n.localize("MUTHUR.welcome"), '', '#00ff00', 'reply');
             }
             
@@ -204,27 +204,27 @@ Hooks.once('ready', () => {
         };
     }
     
-    // Remplacer la fonction showGMSpectatorSelectionDialog
+    // Replace showGMSpectatorSelectionDialog function
     const originalShowGMSpectatorSelectionDialog = window.showGMSpectatorSelectionDialog;
     if (originalShowGMSpectatorSelectionDialog) {
         window.showGMSpectatorSelectionDialog = function(activeUserId, activeUserName) {
-            // Appeler la fonction d'origine
+            // Call the original function
             const dialog = originalShowGMSpectatorSelectionDialog(activeUserId, activeUserName);
             
-            // Remplacer les gestionnaires d'événements des boutons
+            // Replace button event handlers
             const confirmButton = dialog.querySelector('button:first-child');
             const cancelButton = dialog.querySelector('button:last-child');
             
             if (confirmButton && cancelButton) {
-                // Supprimer les gestionnaires existants
+                // Remove existing handlers
                 const newConfirmButton = confirmButton.cloneNode(true);
                 const newCancelButton = cancelButton.cloneNode(true);
                 confirmButton.parentNode.replaceChild(newConfirmButton, confirmButton);
                 cancelButton.parentNode.replaceChild(newCancelButton, cancelButton);
                 
-                // Ajouter les nouveaux gestionnaires
+                // Add new handlers
                 newConfirmButton.addEventListener('click', () => {
-                    // Récupérer les joueurs sélectionnés
+                    // Get selected players
                     const selectedPlayers = [];
                     const checkboxes = dialog.querySelectorAll('input[type="checkbox"]');
                     checkboxes.forEach(checkbox => {
@@ -233,10 +233,10 @@ Hooks.once('ready', () => {
                         }
                     });
                     
-                    // Fermer la fenêtre de dialogue
+                    // Close the dialog window
                     dialog.remove();
                     
-                    // Envoyer un signal aux joueurs sélectionnés pour ouvrir l'interface en mode spectateur
+                    // Send a signal to selected players to open the interface in spectator mode
                     if (selectedPlayers.length > 0) {
                         game.socket.emit('module.alien-mu-th-ur', {
                             type: 'openSpectatorInterface',
@@ -246,7 +246,7 @@ Hooks.once('ready', () => {
                         });
                     }
                     
-                    // Envoyer un signal au joueur actif et aux spectateurs pour continuer avec la séquence de démarrage
+                    // Send a signal to the active player and spectators to continue with the boot sequence
                     game.socket.emit('module.alien-mu-th-ur', {
                         type: 'continueBootSequence',
                         targetUserId: activeUserId,
@@ -255,10 +255,10 @@ Hooks.once('ready', () => {
                 });
                 
                 newCancelButton.addEventListener('click', () => {
-                    // Fermer la fenêtre de dialogue
+                    // Close the dialog window
                     dialog.remove();
                     
-                    // Envoyer un signal au joueur actif pour continuer avec la séquence de démarrage (sans spectateurs)
+                    // Send a signal to the active player to continue with the boot sequence (without spectators)
                     game.socket.emit('module.alien-mu-th-ur', {
                         type: 'continueBootSequence',
                         targetUserId: activeUserId,
@@ -271,32 +271,32 @@ Hooks.once('ready', () => {
         };
     }
     
-    // Ajouter une fonction pour synchroniser les animations de hack
+    // Add a function to synchronize hacking animations
     window.syncHackingAttempt = function() {
-        try { console.log('MUTHUR Spectator | syncHackingAttempt demandé par initiateur'); } catch(e) {}
-        // Informer les spectateurs qu'une tentative de hack est en cours
+        try { console.debug('MUTHUR Spectator | syncHackingAttempt requested by initiator'); } catch(e) {}
+        // Inform spectators that a hacking attempt is in progress
         game.socket.emit('module.alien-mu-th-ur', {
             type: 'hackingAttempt'
         });
     };
     
-    // Remplacer la fonction simulateHackingAttempt pour synchroniser avec les spectateurs
+    // Replace simulateHackingAttempt function to synchronize with spectators
     const originalSimulateHackingAttempt = window.simulateHackingAttempt;
     if (originalSimulateHackingAttempt) {
         window.simulateHackingAttempt = async function(chatLog) {
-            // Synchroniser avec les spectateurs
+            // Synchronize with spectators
             syncHackingAttempt();
             
-            // Appeler la fonction d'origine
+            // Call the original function
             return await originalSimulateHackingAttempt(chatLog);
         };
     }
     
-    // Fonction pour afficher les animations de hack chez les spectateurs
+    // Function to display hacking animations on spectators
     window.showSpectatorHackingAnimation = async function() {
         const spectatorChatLog = document.querySelector('.muthur-spectator-log');
         if (spectatorChatLog) {
-            // Créer les fenêtres d'animation de hack
+            // Create hacking animation windows
             try {
                 const creator = (window.createHackingWindows || window.parent?.createHackingWindows);
                 if (creator) {
@@ -305,29 +305,29 @@ Hooks.once('ready', () => {
                 }
             } catch (e) { console.warn('createHackingWindows not available', e); }
             
-            // Ajouter la classe hacking-active au conteneur
+            // Add hacking-active class to container
             const container = document.getElementById('muthur-spectator-container');
             if (container) {
                 container.classList.add('hacking-active');
             }
             
-            // Attendre la fin de l'animation (environ 10 secondes)
+            // Wait for animation to end (about 10 seconds)
             await new Promise(resolve => setTimeout(resolve, 10000));
             
-            // Nettoyer les éléments de hacking
+            // Clean up hacking elements
             try { if (window.stopHackingWindows) { window.stopHackingWindows(); window.stopHackingWindows = null; } } catch (e) {}
             try { (window.clearHackingElements || window.parent?.clearHackingElements)?.(); } catch (e) {}
             
-            // Retirer la classe hacking-active
+            // Remove hacking-active class
             if (container) {
                 container.classList.remove('hacking-active');
             }
         }
     };
     
-    // Écouter les événements socket pour les spectateurs
+    // Listen for socket events for spectators
     game.socket.on('module.alien-mu-th-ur', (data) => {
-        // Effacer le chat côté spectateur lorsque le joueur envoie CLEAR
+        // Clear spectator side chat when player sends CLEAR
         if (data.type === 'clearSpectatorChat' && !game.user.isGM) {
             try {
                 const spectatorLog = document.querySelector('.muthur-spectator-log');
@@ -337,22 +337,22 @@ Hooks.once('ready', () => {
             } catch(e) { /* no-op */ }
         }
 
-        // S'assurer que les spectateurs voient la séquence de boot
+        // Ensure spectators see the boot sequence
         if (data.type === 'continueBootSequence' && !game.user.isGM) {
             if (data.spectatorIds && data.spectatorIds.includes(game.user.id)) {
                 try { (window.showBootSequence || window.parent?.showBootSequence)?.(true); } catch (e) { console.warn('Spectator boot error:', e); }
                 try { window.currentMuthurSession = window.currentMuthurSession || {}; window.currentMuthurSession.spectatorIds = data.spectatorIds; } catch(e) {}
-                // Le son suit les paramètres globaux, aucun prompt d'activation
+                // Sound follows global settings, no activation prompt
             }
         }
         
-        // Gérer les tentatives de hack pour les spectateurs
+        // Handle hacking attempts for spectators
         if (data.type === 'hackingAttempt' && !game.user.isGM) {
-            try { console.log('MUTHUR Spectator | réception hackingAttempt'); } catch(e) {}
+            try { console.debug('MUTHUR Spectator | hackingAttempt received'); } catch(e) {}
             try { showSpectatorHackingAnimation(); } catch (e) { console.warn('Spectator hacking animation error:', e); }
         }
 
-        // Flux texte temps-réel du hack (séquences + mots de passe)
+        // Real-time hack text stream (sequences + passwords)
         if (data.type === 'hackStream' && !game.user.isGM) {
             const spectatorLog = document.querySelector('.muthur-spectator-log');
             if (spectatorLog) {
@@ -361,7 +361,7 @@ Hooks.once('ready', () => {
             }
         }
 
-        // Reproduire les glitchs ponctuels du joueur
+        // Reproduce player's periodic glitches
         if (data.type === 'hackGlitch' && !game.user.isGM) {
             try {
                 const container = document.getElementById('muthur-spectator-container');
@@ -370,7 +370,7 @@ Hooks.once('ready', () => {
             } catch(e) { /* no-op */ }
         }
 
-        // Arrêt des glitchs exactement au moment AdminPrivileges
+        // Stop glitches exactly at AdminPrivileges step
         if (data.type === 'hackStopGlitch' && !game.user.isGM) {
             try {
                 const container = document.getElementById('muthur-spectator-container');
@@ -381,7 +381,7 @@ Hooks.once('ready', () => {
             } catch(e) {}
         }
 
-        // Fin du hack: nettoyer les fenêtres/glitches côté spectateur
+        // End of hack: clean up windows/glitches on spectator side
         if (data.type === 'hackComplete' && !game.user.isGM) {
             try {
                 const container = document.getElementById('muthur-spectator-container');
@@ -389,10 +389,10 @@ Hooks.once('ready', () => {
                 (window.clearHackingElements || window.parent?.clearHackingElements)?.();
                 const overlay = document.getElementById('muthur-glitch-overlay');
                 if (overlay) overlay.remove();
-                // Tuer d’éventuels timers anim
+                // Kill any remaining anim timers
                 try { if (window.stopHackingWindows) window.stopHackingWindows(); } catch(e) {}
 
-                // Reproduire l’étape visuelle finale du joueur: vider le chat et fond rouge
+                // Reproduce player's final visual step: empty chat and red background
                 const spectatorLog = document.querySelector('.muthur-spectator-log');
                 if (spectatorLog) {
                     spectatorLog.innerHTML = '';
@@ -401,7 +401,7 @@ Hooks.once('ready', () => {
             } catch(e) { console.warn('Spectator hackComplete cleanup error', e); }
         }
         
-        // Fermer l'interface spectateur si la session est clôturée (EXIT côté joueur)
+        // Close spectator interface if the session is closed (EXIT on player side)
         if (data.type === 'sessionStatus' && !data.active && !game.user.isGM) {
             try {
                 const container = document.getElementById('muthur-spectator-container');
@@ -409,21 +409,21 @@ Hooks.once('ready', () => {
             } catch(e) { /* no-op */ }
         }
         
-        // Gérer les résultats des commandes spéciales pour les spectateurs
+        // Handle special command results for spectators
         if (data.type === 'commandResult' && !game.user.isGM) {
             try {
                 if (window.currentMuthurSession && window.currentMuthurSession.spectatorIds && window.currentMuthurSession.spectatorIds.includes(game.user.id)) {
                 const spectatorLog = document.querySelector('.muthur-spectator-log');
                 if (spectatorLog) {
-                    // Traiter différents types de résultats
+                    // Process different types of results
                     if (data.command === 'SPECIAL_ORDER') {
-                        // Afficher le résultat de l'ordre spécial
+                        // Display result of special order
                         displayMuthurMessage(spectatorLog, data.result.text, '', data.result.color || '#00ff00', data.result.type || 'reply');
                     } else if (data.command === 'HACK') {
-                        // Afficher le résultat du hack
+                        // Display result of hack
                         displayMuthurMessage(spectatorLog, data.result.text, '', data.result.color || '#ff0000', data.result.type || 'error');
                     } else {
-                        // Afficher tout autre résultat de commande
+                        // Display any other command result
                         displayMuthurMessage(spectatorLog, data.result.text, '', data.result.color || '#00ff00', data.result.type || 'reply');
                     }
                 }
@@ -431,9 +431,9 @@ Hooks.once('ready', () => {
             } catch (e) { console.warn('Spectator commandResult sync error:', e); }
         }
         
-        // Synchroniser les messages entre le joueur actif et les spectateurs
+        // Synchronize messages between active player and spectators
         if (data.type === 'requestCurrentMessages' && data.targetUserId === game.user.id) {
-            // Le joueur actif envoie tous ses messages actuels au spectateur qui vient de se connecter
+            // Active player sends all current messages to the spectator who just connected
             const chatLog = document.querySelector('.muthur-chat-log');
             if (chatLog) {
                 const messages = chatLog.querySelectorAll('.message');
@@ -456,13 +456,13 @@ Hooks.once('ready', () => {
         }
         
         if (data.type === 'syncMessages' && data.targetSpectatorId === game.user.id) {
-            // Le spectateur reçoit tous les messages actuels du joueur actif
+            // Spectator receives all current messages from the active player
             const spectatorLog = document.querySelector('.muthur-spectator-log');
             if (spectatorLog) {
-                // Effacer les messages existants
+                // Clear existing messages
                 spectatorLog.innerHTML = '';
                 
-                // Ajouter tous les messages reçus
+                // Add all received messages
                 data.messages.forEach(msg => {
                     displayMuthurMessage(spectatorLog, msg.text, '', msg.color, msg.messageType);
                 });
@@ -471,7 +471,7 @@ Hooks.once('ready', () => {
             }
         }
 
-        // Fermer toute interface MU/TH/UR côté spectateur lorsque la session est désactivée
+        // Close any MU/TH/UR interface on spectator side when session is deactivated
         if (data.type === 'sessionStatus' && !data.active && !game.user.isGM) {
             try {
                 const container = document.getElementById('muthur-spectator-container');
@@ -480,10 +480,10 @@ Hooks.once('ready', () => {
         }
     });
 
-    // Sons spectateurs: suivent les settings (pas de mute forcé)
+    // Spectator sounds: follow settings (no forced mute)
     try { window.MUTHUR = window.MUTHUR || {}; window.MUTHUR.muteForSpectator = false; } catch (e) {}
 
-    // Support d'overlay d'alarme pour spectateurs (au cas où l'overlay n'est pas déjà synchronisé)
+    // Support for alarm overlay for spectators (in case the overlay is not already synchronized)
     try {
         window.muthurSpectatorAlarmOn = function(){
             let ov = document.getElementById('muthur-alarm-overlay');
