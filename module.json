@@ -1,104 +1,100 @@
 {
-  "id": "alien-mu-th-ur",
-  "title": "Alien MU/TH/UR",
-  "description": "Module MU/TH/UR 6000 for Alien RPG",
-  "version": "2.1.0",
-  "compatibility": {
-    "minimum": "13",
-    "verified": "13"
-  },
-  "relationships": {
-    "systems": [
-      {
-        "id": "alienrpg",
-        "type": "system",
-        "compatibility": {
-          "minimum": "3.0.0"
+    "id": "alien-mu-th-ur",
+    "title": "Alien MU/TH/UR",
+    "description": "Module MU/TH/UR 6000 for Alien RPG",
+    "version": "2.1.0",
+    "compatibility": {
+        "minimum": "13",
+        "verified": "13"
+    },
+    "relationships": {
+        "systems": [
+            {
+                "id": "alienrpg",
+                "type": "system",
+                "compatibility": {
+                    "minimum": "3.0.0"
+                }
+            }
+        ]
+    },
+    "socket": true,
+    "esmodules": ["greensock/esm/all.js", "scripts/main.js"],
+    "languages": [
+        {
+            "lang": "en",
+            "name": "English",
+            "path": "lang/en.json",
+            "flags": {}
+        },
+        {
+            "lang": "fr",
+            "name": "Français",
+            "path": "lang/fr.json",
+            "flags": {}
+        },
+        {
+            "lang": "de",
+            "name": "Deutsch",
+            "path": "lang/de.json",
+            "flags": {}
+        },
+        {
+            "lang": "es",
+            "name": "Español",
+            "path": "lang/es.json",
+            "flags": {}
+        },
+        {
+            "lang": "it",
+            "name": "Italiano",
+            "path": "lang/it.json",
+            "flags": {}
+        },
+        {
+            "lang": "nl",
+            "name": "Nederlands",
+            "path": "lang/nl.json",
+            "flags": {}
+        },
+        {
+            "lang": "sv",
+            "name": "Svenska",
+            "path": "lang/sv.json",
+            "flags": {}
+        },
+        {
+            "lang": "no",
+            "name": "Norsk",
+            "path": "lang/no.json",
+            "flags": {}
+        },
+        {
+            "lang": "da",
+            "name": "Dansk",
+            "path": "lang/da.json",
+            "flags": {}
         }
-      }
-    ]
-  },
-  "socket": true,
-  "esmodules": [
-    "greensock/esm/all.js",
-    "scripts/main.js",
-    "scripts/spectators.js"
-  ],
-  "languages": [
-    {
-      "lang": "en",
-      "name": "English",
-      "path": "lang/en.json",
-      "flags": {}
-    },
-    {
-      "lang": "fr",
-      "name": "Français",
-      "path": "lang/fr.json",
-      "flags": {}
-    },
-    {
-      "lang": "de",
-      "name": "Deutsch",
-      "path": "lang/de.json",
-      "flags": {}
-    },
-    {
-      "lang": "es",
-      "name": "Español",
-      "path": "lang/es.json",
-      "flags": {}
-    },
-    {
-      "lang": "it",
-      "name": "Italiano",
-      "path": "lang/it.json",
-      "flags": {}
-    },
-    {
-      "lang": "nl",
-      "name": "Nederlands",
-      "path": "lang/nl.json",
-      "flags": {}
-    },
-    {
-      "lang": "sv",
-      "name": "Svenska",
-      "path": "lang/sv.json",
-      "flags": {}
-    },
-    {
-      "lang": "no",
-      "name": "Norsk",
-      "path": "lang/no.json",
-      "flags": {}
-    },
-    {
-      "lang": "da",
-      "name": "Dansk",
-      "path": "lang/da.json",
-      "flags": {}
-    }
-  ],
-  "media": [
-    {
-      "loop": false,
-      "flags": {}
-    }
-  ],
-  "authors": [
-    {
-      "name": "Ian Ramirez",
-      "flags": {}
-    },
-    {
-      "name": "ShazProd",
-      "flags": {}
-    }
-  ],
-  "url": "https://github.com/ianespana/alien-mu-th-ur",
-  "manifest": "https://github.com/ianespana/alien-mu-th-ur/releases/latest/download/module.json",
-  "download": "https://github.com/ianespana/alien-mu-th-ur/releases/download/2.1.0/alien-mu-th-ur.zip",
-  "license": "LICENSE.txt",
-  "flags": {}
+    ],
+    "media": [
+        {
+            "loop": false,
+            "flags": {}
+        }
+    ],
+    "authors": [
+        {
+            "name": "Ian Ramirez",
+            "flags": {}
+        },
+        {
+            "name": "ShazProd",
+            "flags": {}
+        }
+    ],
+    "url": "https://github.com/ianespana/alien-mu-th-ur",
+    "manifest": "https://github.com/ianespana/alien-mu-th-ur/releases/latest/download/module.json",
+    "download": "https://github.com/ianespana/alien-mu-th-ur/releases/download/2.1.0/alien-mu-th-ur.zip",
+    "license": "LICENSE.txt",
+    "flags": {}
 }

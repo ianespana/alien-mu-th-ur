@@ -66,10 +66,10 @@
         "lifeformsDetected": "levensvormen gedetecteerd",
         "entitiesAffected": "getroffen entiteiten",
         "postHack": { "title": "POST-HACK COMMANDO'S:" },
-            "alarmSoundPath": {
-                "name": "ALARMGELUID",
-                "hint": "Kies het audiobestand dat wordt afgespeeld wanneer ALARM actief is"
-            },
+        "alarmSoundPath": {
+            "name": "ALARMGELUID",
+            "hint": "Kies het audiobestand dat wordt afgespeeld wanneer ALARM actief is"
+        },
         "helpMenu": {
             "title": "COMMANDO HULP",
             "tooltip": "Commando hulp",
@@ -77,26 +77,47 @@
             "consultHint": "RAADPLEEG DE ? VOOR DE COMMANDOLIJST",
             "sections": {
                 "intro": "LIJST EN BESCHRIJVING VAN BESCHIKBARE POST-HACK-COMMANDO'S (MET GM-GOEDKEURING).",
-                "basic": { "title": "BASISCOMMANDO'S", "desc": "HELP: TOON DEZE HULP\nSTATUS: SYSTEEMSTATUS\nCLEAR: SCHERM WISSEN\nEXIT: TERMINAL SLUITEN\n/M [BERICHT]: COMMUNICEREN MET MOEDER" },
+                "basic": {
+                    "title": "BASISCOMMANDO'S",
+                    "desc": "HELP: TOON DEZE HULP\nSTATUS: SYSTEEMSTATUS\nCLEAR: SCHERM WISSEN\nEXIT: TERMINAL SLUITEN\n/M [BERICHT]: COMMUNICEREN MET MOEDER"
+                },
                 "hack": { "title": "HACK", "desc": "HACK: PROBEERT ADMINRECHTEN TE KRIJGEN (GM-GECONTROLEERD)" },
-                "specialOrders": { "title": "SPECIALE ORDERS", "desc": "ORDERS: 754, 899, 931, 937, 939, 966. TOONT ORDERDETAILS." },
-                "cerberus": { "title": "CERBERUS-PROTOCOL", "desc": "CERBERUS: ZELFVERNIETIGINGSPROTOCOL MET AFTELLING." },
-                "doors": { "title": "DEURCONTROLE", "desc": "DOORS, LOCK DOOR X, UNLOCK DOOR X. RICHT ZICH OP DEUREN 'AD*'." },
-                "lights": { "title": "LICHTCONTROLE", "desc": "SHUTDOWN LIGHTS, RESTORE LIGHTS. LICHT UITSCHAKELEN EN HERSTELLEN." },
-                "alarm": { "title": "ALARM", "desc": "ACTIVATE ALARM. SPEELT ALARM EN KAN EEN ROOD OVERLAY TOEPASSEN." },
+                "specialOrders": {
+                    "title": "SPECIALE ORDERS",
+                    "desc": "ORDERS: 754, 899, 931, 937, 939, 966. TOONT ORDERDETAILS."
+                },
+                "cerberus": {
+                    "title": "CERBERUS-PROTOCOL",
+                    "desc": "CERBERUS: ZELFVERNIETIGINGSPROTOCOL MET AFTELLING."
+                },
+                "doors": {
+                    "title": "DEURCONTROLE",
+                    "desc": "DOORS, LOCK DOOR X, UNLOCK DOOR X. RICHT ZICH OP DEUREN 'AD*'."
+                },
+                "lights": {
+                    "title": "LICHTCONTROLE",
+                    "desc": "SHUTDOWN LIGHTS, RESTORE LIGHTS. LICHT UITSCHAKELEN EN HERSTELLEN."
+                },
+                "alarm": {
+                    "title": "ALARM",
+                    "desc": "ACTIVATE ALARM. SPEELT ALARM EN KAN EEN ROOD OVERLAY TOEPASSEN."
+                },
                 "gas": { "title": "GAS", "desc": "GAS TARGETS. PAST VERGIFTIGD/BEWUSTELOOS EFFECT TOE IN HET GEBIED." },
                 "cryo": { "title": "CRYO POD", "desc": "CRYO POD [NAAM?]. TOONT TOKENS, GM KIEST DOEL VOOR STASIS." },
-                "cryoRelease": { "title": "CRYO RELEASE", "desc": "CRYO RELEASE. TOONT PERSONAGES IN STASIS VOOR MEERVOUDIGE VRIJLATING." }
+                "cryoRelease": {
+                    "title": "CRYO RELEASE",
+                    "desc": "CRYO RELEASE. TOONT PERSONAGES IN STASIS VOOR MEERVOUDIGE VRIJLATING."
+                }
             }
         },
         "Time": {
-                "Minute": "minuut",
-                "Minutes": "minuten",
-                "Second": "seconde",
-                "Seconds": "seconden",
-                "MinutesAndSeconds": "{minutes} {minuteLabel} en {seconds} {secondLabel}",
-                "OnlySeconds": "{seconds} {secondLabel}"
-            },
+            "Minute": "minuut",
+            "Minutes": "minuten",
+            "Second": "seconde",
+            "Seconds": "seconden",
+            "MinutesAndSeconds": "{minutes} {minuteLabel} en {seconds} {secondLabel}",
+            "OnlySeconds": "{seconds} {secondLabel}"
+        },
         "DONATION": {
             "support": "Om mijn projecten te steunen:"
         },
@@ -106,14 +127,17 @@
                 "hint": "Gebruik karakternaam in plaats van spelernaam in berichten"
             },
             "postHack": {
-                "phShowInHelp": {"name": "NA HACK: NIEUWE COMMANDO'S IN HELP", "hint": "Indien ingeschakeld bevat HELP geavanceerde commando's."},
-                "phSpecialOrders": {"name": "NA HACK: SPECIALE ORDERS", "hint": "Speciaalorders na HACK toestaan."},
-                "phCerberus": {"name": "NA HACK: CERBERUS PROTOCOL", "hint": "CERBERUS protocol na HACK toestaan."},
-                "phDoors": {"name": "NA HACK: DEURCONTROLE", "hint": "LOCK/UNLOCK/DOORS toestaan."},
-                "phLights": {"name": "NA HACK: LICHTCONTROLE", "hint": "DIM/SHUTDOWN/RESTORE LIGHTS toestaan."},
-                "phAlarm": {"name": "NA HACK: ALARM ACTIVEREN", "hint": "Alarmsgeluid + overlay toestaan."},
-                "phGas": {"name": "NA HACK: GAS TARGETS", "hint": "Gaseffect toestaan (vergiftigd/bewusteloos)."},
-                "phCryo": {"name": "NA HACK: CRYO POD/RELEASE", "hint": "Stasis/vrijgave van een doelwit toestaan."}
+                "phShowInHelp": {
+                    "name": "NA HACK: NIEUWE COMMANDO'S IN HELP",
+                    "hint": "Indien ingeschakeld bevat HELP geavanceerde commando's."
+                },
+                "phSpecialOrders": { "name": "NA HACK: SPECIALE ORDERS", "hint": "Speciaalorders na HACK toestaan." },
+                "phCerberus": { "name": "NA HACK: CERBERUS PROTOCOL", "hint": "CERBERUS protocol na HACK toestaan." },
+                "phDoors": { "name": "NA HACK: DEURCONTROLE", "hint": "LOCK/UNLOCK/DOORS toestaan." },
+                "phLights": { "name": "NA HACK: LICHTCONTROLE", "hint": "DIM/SHUTDOWN/RESTORE LIGHTS toestaan." },
+                "phAlarm": { "name": "NA HACK: ALARM ACTIVEREN", "hint": "Alarmsgeluid + overlay toestaan." },
+                "phGas": { "name": "NA HACK: GAS TARGETS", "hint": "Gaseffect toestaan (vergiftigd/bewusteloos)." },
+                "phCryo": { "name": "NA HACK: CRYO POD/RELEASE", "hint": "Stasis/vrijgave van een doelwit toestaan." }
             },
             "typewriter": {
                 "name": "Typemachine Effect",
@@ -143,8 +167,14 @@
                 "name": "Typgeluid Volume",
                 "hint": "Past het volume van de typgeluiden aan (0 = stil, 1 = maximum)"
             },
-            "allowDragGM": { "name": "Terminal verplaatsen (GM)", "hint": "Sta MOTHER (GM) toe de terminal op de scene te slepen." },
-            "allowDragPlayers": { "name": "Terminal verplaatsen (Spelers/Toeschouwers)", "hint": "Sta spelers en toeschouwers toe hun terminal op de scene te slepen." },
+            "allowDragGM": {
+                "name": "Terminal verplaatsen (GM)",
+                "hint": "Sta MOTHER (GM) toe de terminal op de scene te slepen."
+            },
+            "allowDragPlayers": {
+                "name": "Terminal verplaatsen (Spelers/Toeschouwers)",
+                "hint": "Sta spelers en toeschouwers toe hun terminal op de scene te slepen."
+            },
             "motherResponseColor": {
                 "name": "MOTHER Antwoordkleur",
                 "hint": "Stelt de kleur in van MOTHER's antwoordberichten",
@@ -270,7 +300,7 @@
         "CerberusDetonation": "DETONATIE",
         "CerberusEvacuate": "ONMIDDELLIJKE EVACUATIE VEREIST",
         "Keywords": {
-            "Ordre": "ORDER",
+            "Order": "ORDER",
             "Special": "SPECIAL",
             "Special2": "SPECIAL",
             "Protocol": "PROTOCOL"

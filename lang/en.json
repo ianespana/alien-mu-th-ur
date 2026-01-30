@@ -73,7 +73,10 @@
             "consultHint": "CONSULT THE ? FOR THE COMMANDS LIST",
             "sections": {
                 "intro": "LIST AND DESCRIPTION OF AVAILABLE POST-HACK COMMANDS (WITH GM APPROVAL).",
-                "basic": { "title": "BASIC COMMANDS", "desc": "HELP: DISPLAY THIS HELP\nSTATUS: SYSTEM STATUS\nCLEAR: CLEAR SCREEN\nEXIT: CLOSE TERMINAL\n/M [MESSAGE]: COMMUNICATE WITH MOTHER" },
+                "basic": {
+                    "title": "BASIC COMMANDS",
+                    "desc": "HELP: DISPLAY THIS HELP\nSTATUS: SYSTEM STATUS\nCLEAR: CLEAR SCREEN\nEXIT: CLOSE TERMINAL\n/M [MESSAGE]: COMMUNICATE WITH MOTHER"
+                },
                 "hack": { "title": "HACK", "desc": "HACK: ATTEMPT TO OBTAIN ADMIN RIGHTS (GM-CONTROLLED)" },
                 "specialOrders": {
                     "title": "SPECIAL ORDERS",
@@ -110,13 +113,13 @@
             }
         },
         "Time": {
-                "Minute": "minute",
-                "Minutes": "minutes",
-                "Second": "second",
-                "Seconds": "seconds",
-                "MinutesAndSeconds": "{minutes} {minuteLabel} and {seconds} {secondLabel}",
-                "OnlySeconds": "{seconds} {secondLabel}"
-            },
+            "Minute": "minute",
+            "Minutes": "minutes",
+            "Second": "second",
+            "Seconds": "seconds",
+            "MinutesAndSeconds": "{minutes} {minuteLabel} and {seconds} {secondLabel}",
+            "OnlySeconds": "{seconds} {secondLabel}"
+        },
         "DONATION": {
             "support": "To support my projects:"
         },
@@ -126,21 +129,30 @@
                 "hint": "Use character name instead of player name in messages"
             },
             "postHack": {
-                "phShowInHelp": {"name": "POST-HACK: SHOW NEW COMMANDS IN HELP", "hint": "If enabled, player HELP includes advanced commands."},
-                "phSpecialOrders": {"name": "POST-HACK: SPECIAL ORDERS", "hint": "Allow SPECIAL ORDERS after HACK."},
-                "phCerberus": {"name": "POST-HACK: CERBERUS PROTOCOL", "hint": "Allow CERBERUS protocol after HACK."},
-                "phDoors": {"name": "POST-HACK: DOOR CONTROL", "hint": "Allow LOCK/UNLOCK/DOORS."},
-                "phLights": {"name": "POST-HACK: LIGHTS CONTROL", "hint": "Allow DIM/SHUTDOWN/RESTORE LIGHTS."},
-                "phAlarm": {"name": "POST-HACK: ACTIVATE ALARM", "hint": "Allow alarm sound + overlay."},
-                "phGas": {"name": "POST-HACK: GAS TARGETS", "hint": "Allow gas effect (poisoned/unconscious)."},
-                "phCryo": {"name": "POST-HACK: CRYO POD/RELEASE", "hint": "Allow stasis/release of a target."}
+                "phShowInHelp": {
+                    "name": "POST-HACK: SHOW NEW COMMANDS IN HELP",
+                    "hint": "If enabled, player HELP includes advanced commands."
+                },
+                "phSpecialOrders": { "name": "POST-HACK: SPECIAL ORDERS", "hint": "Allow SPECIAL ORDERS after HACK." },
+                "phCerberus": { "name": "POST-HACK: CERBERUS PROTOCOL", "hint": "Allow CERBERUS protocol after HACK." },
+                "phDoors": { "name": "POST-HACK: DOOR CONTROL", "hint": "Allow LOCK/UNLOCK/DOORS." },
+                "phLights": { "name": "POST-HACK: LIGHTS CONTROL", "hint": "Allow DIM/SHUTDOWN/RESTORE LIGHTS." },
+                "phAlarm": { "name": "POST-HACK: ACTIVATE ALARM", "hint": "Allow alarm sound + overlay." },
+                "phGas": { "name": "POST-HACK: GAS TARGETS", "hint": "Allow gas effect (poisoned/unconscious)." },
+                "phCryo": { "name": "POST-HACK: CRYO POD/RELEASE", "hint": "Allow stasis/release of a target." }
             },
             "alarmSoundPath": {
                 "name": "ALARM SOUND",
                 "hint": "Choose the audio file played when ALARM is active"
             },
-            "allowDragGM": { "name": "Move terminal (GM)", "hint": "Allow MOTHER (GM) to drag the terminal on the scene." },
-            "allowDragPlayers": { "name": "Move terminal (Players/Spectators)", "hint": "Allow players and spectators to drag their terminal on the scene." },
+            "allowDragGM": {
+                "name": "Move terminal (GM)",
+                "hint": "Allow MOTHER (GM) to drag the terminal on the scene."
+            },
+            "allowDragPlayers": {
+                "name": "Move terminal (Players/Spectators)",
+                "hint": "Allow players and spectators to drag their terminal on the scene."
+            },
             "typewriter": {
                 "name": "Typewriter Effect",
                 "hint": "Enables progressive text display like in the Alien movie",
@@ -294,7 +306,7 @@
         "CerberusDetonation": "DETONATION",
         "CerberusEvacuate": "IMMEDIATE EVACUATION REQUIRED",
         "Keywords": {
-            "Ordre": "ORDER",
+            "Order": "ORDER",
             "Special": "SPECIAL",
             "Special2": "SPECIAL",
             "Protocol": "PROTOCOL"
