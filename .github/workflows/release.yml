@@ -1,0 +1,40 @@
+name: Create Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get version
+        id: get_version
+        run: echo "VERSION=$(date +'%Y.%m.%d.%H%M')" >> $GITHUB_OUTPUT
+
+      - name: Update module.json
+        run: |
+          VERSION=${{ steps.get_version.outputs.VERSION }}
+          jq --indent 4 ".version = \"$VERSION\" | .download = \"https://github.com/${{ github.repository }}/releases/download/$VERSION/alien-mu-th-ur.zip\"" module.json > module.json.tmp && mv module.json.tmp module.json
+
+      - name: Create Zip
+        run: zip -r alien-mu-th-ur.zip module.json lang scripts sounds
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.get_version.outputs.VERSION }}
+          name: Release ${{ steps.get_version.outputs.VERSION }}
+          draft: false
+          prerelease: false
+          files: |
+            alien-mu-th-ur.zip
+            module.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
