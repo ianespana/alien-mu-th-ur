@@ -1,4 +1,14 @@
-## 🇳🇴 Alien MU/TH/UR 6000 — Komplett Veiledning
+## Alien MU/TH/UR 6000 — Komplett Veiledning
+
+[English](../README.md) ·
+[Español](README.es.md) ·
+[Français](README.fr.md) ·
+[Deutsch](README.de.md) ·
+[Italiano](README.it.md) ·
+[Nederlands](README.nl.md) ·
+[Norsk](README.no.md) ·
+[Svenska](README.sv.md) ·
+[Dansk](README.da.md)
 
 MU/TH/UR 6000 for Foundry VTT (ALIEN RPG): retro‑terminal fullt synkronisert mellom Spiller, Tilskuer og SL: skrivemaskinvisning, CRT/scanline‑utseende, glitcher, lyd, SL‑styrt HACK og globalt CERBERUS‑protokoll.
 
@@ -63,8 +73,3 @@ MU/TH/UR 6000 for Foundry VTT (ALIEN RPG): retro‑terminal fullt synkronisert m
 2. Spiller åpner MU/TH/UR (knapp i scenenotater/kontroller)
 3. SL godkjenner og velger tilskuere
 4. Skriv kommandoer i terminalen
-
-### 10) Support
-Støtt utviklingen: Ko‑fi / Tipeee (lenker i hoved‑README)
-
-

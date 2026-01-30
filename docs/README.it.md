@@ -1,4 +1,14 @@
-## 🇮🇹 Alien MU/TH/UR 6000 — Guida Completa
+## Alien MU/TH/UR 6000 — Guida Completa
+
+[English](../README.md) ·
+[Español](README.es.md) ·
+[Français](README.fr.md) ·
+[Deutsch](README.de.md) ·
+[Italiano](README.it.md) ·
+[Nederlands](README.nl.md) ·
+[Norsk](README.no.md) ·
+[Svenska](README.sv.md) ·
+[Dansk](README.da.md)
 
 MU/TH/UR 6000 per Foundry VTT (ALIEN RPG): terminale retrò completamente sincronizzato tra Giocatore, Spettatore e GM: effetto macchina da scrivere, estetica CRT/scanline, glitch, audio, HACK gestito dal GM e protocollo CERBERUS globale.
 
@@ -63,8 +73,3 @@ MU/TH/UR 6000 per Foundry VTT (ALIEN RPG): terminale retrò completamente sincro
 2. Il giocatore apre MU/TH/UR (pulsante nelle note/controlli della scena)
 3. Il GM approva e seleziona gli spettatori
 4. Digita i comandi nel terminale
-
-### 10) Supporto
-Supporto allo sviluppo: Ko‑fi / Tipeee (link nel README principale)
-
-
