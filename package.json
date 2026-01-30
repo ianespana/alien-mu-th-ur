@@ -1,7 +1,8 @@
 {
-  "dependencies": {
-    "gts": "^7.0.0",
-    "prettier": "^3.8.1",
-    "prettier-plugin-organize-imports": "^4.3.0"
-  }
+    "name": "alien-mu-th-ur",
+    "dependencies": {
+        "gts": "^7.0.0",
+        "prettier": "^3.8.1",
+        "prettier-plugin-organize-imports": "^4.3.0"
+    }
 }
