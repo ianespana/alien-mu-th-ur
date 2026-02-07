@@ -66,13 +66,13 @@
         "lifeformsDetected": "formes de vie détectées",
         "entitiesAffected": "entités affectées",
         "Time": {
-                "Minute": "minute",
-                "Minutes": "minutes",
-                "Second": "seconde",
-                "Seconds": "secondes",
-                "MinutesAndSeconds": "{minutes} {minuteLabel} et {seconds} {secondLabel}",
-                "OnlySeconds": "{seconds} {secondLabel}"
-            },
+            "Minute": "minute",
+            "Minutes": "minutes",
+            "Second": "seconde",
+            "Seconds": "secondes",
+            "MinutesAndSeconds": "{minutes} {minuteLabel} et {seconds} {secondLabel}",
+            "OnlySeconds": "{seconds} {secondLabel}"
+        },
         "DONATION": {
             "support": "Pour soutenir mes projets :"
         },
@@ -82,21 +82,51 @@
                 "hint": "Utiliser le nom du personnage au lieu du nom du joueur dans les messages"
             },
             "postHack": {
-                "phShowInHelp": {"name": "Après HACK: afficher les nouvelles commandes dans HELP", "hint": "Si activé, le HELP joueur inclut les commandes avancées."},
-                "phSpecialOrders": {"name": "Après HACK: Ordres spéciaux", "hint": "Autoriser les ORDRES SPÉCIAUX après HACK."},
-                "phCerberus": {"name": "Après HACK: Protocole CERBERUS", "hint": "Autoriser le protocole CERBERUS après HACK."},
-                "phDoors": {"name": "Après HACK: Contrôle des portes", "hint": "Autoriser LOCK/UNLOCK/DOORS."},
-                "phLights": {"name": "Après HACK: Contrôle des lumières", "hint": "Autoriser DIM/SHUTDOWN/RESTORE LIGHTS."},
-                "phAlarm": {"name": "Après HACK: ACTIVATE ALARM", "hint": "Autoriser l’alarme sonore + overlay."},
-                "phGas": {"name": "Après HACK: GAS TARGETS", "hint": "Autoriser l’effet gaz (empoisonné/inconscient)."},
-                "phCryo": {"name": "Après HACK: CRYO POD", "hint": "Autoriser la mise en stase d’une cible."}
+                "phShowInHelp": {
+                    "name": "Après HACK: afficher les nouvelles commandes dans HELP",
+                    "hint": "Si activé, le HELP joueur inclut les commandes avancées."
+                },
+                "phSpecialOrders": {
+                    "name": "Après HACK: Ordres spéciaux",
+                    "hint": "Autoriser les ORDRES SPÉCIAUX après HACK."
+                },
+                "phCerberus": {
+                    "name": "Après HACK: Protocole CERBERUS",
+                    "hint": "Autoriser le protocole CERBERUS après HACK."
+                },
+                "phDoors": {
+                    "name": "Après HACK: Contrôle des portes",
+                    "hint": "Autoriser LOCK/UNLOCK/DOORS."
+                },
+                "phLights": {
+                    "name": "Après HACK: Contrôle des lumières",
+                    "hint": "Autoriser DIM/SHUTDOWN/RESTORE LIGHTS."
+                },
+                "phAlarm": {
+                    "name": "Après HACK: ACTIVATE ALARM",
+                    "hint": "Autoriser l’alarme sonore + overlay."
+                },
+                "phGas": {
+                    "name": "Après HACK: GAS TARGETS",
+                    "hint": "Autoriser l’effet gaz (empoisonné/inconscient)."
+                },
+                "phCryo": {
+                    "name": "Après HACK: CRYO POD",
+                    "hint": "Autoriser la mise en stase d’une cible."
+                }
             },
             "alarmSoundPath": {
                 "name": "SON D'ALARME",
                 "hint": "Choisir le fichier audio joué lors de l'ALARME"
             },
-            "allowDragGM": { "name": "Déplacer le terminal (MJ)", "hint": "Autoriser MAMAN à déplacer son terminal sur la scène." },
-            "allowDragPlayers": { "name": "Déplacer terminal (Joueurs/Spectateurs)", "hint": "Autoriser les joueurs et spectateurs à déplacer leur terminal sur la scène." },
+            "allowDragGM": {
+                "name": "Déplacer le terminal (MJ)",
+                "hint": "Autoriser MAMAN à déplacer son terminal sur la scène."
+            },
+            "allowDragPlayers": {
+                "name": "Déplacer terminal (Joueurs/Spectateurs)",
+                "hint": "Autoriser les joueurs et spectateurs à déplacer leur terminal sur la scène."
+            },
             "typewriter": {
                 "name": "Effet Machine à écrire",
                 "hint": "Active l'affichage progressif du texte comme dans le film Alien",
@@ -120,10 +150,6 @@
                 "hint": "Active les sons de frappe de clavier comme dans le film Alien",
                 "enable": "Activés",
                 "disable": "Désactivés"
-            },
-            "typingSoundVolume": {
-                "name": "Volume des frappes",
-                "hint": "Ajuste le volume des sons de frappe (0 = muet, 1 = maximum)"
             },
             "motherResponseColor": {
                 "name": "Couleur des réponses de MAMAN",
@@ -160,6 +186,10 @@
             "cerberusDuration": {
                 "name": "Durée du protocole Cerberus",
                 "hint": "Durée en minutes avant l'auto-destruction (1-60 minutes)"
+            },
+            "soundVolume": {
+                "name": "Volume de MUTHUR",
+                "hint": "Ajuste le volume de MUTHUR (0 = muet, 1 = maximum)"
             }
         },
         "motherName": "MAMAN",
@@ -302,7 +332,7 @@
         "CerberusDetonation": "DÉTONATION",
         "CerberusEvacuate": "ÉVACUATION IMMÉDIATE REQUISE",
         "Keywords": {
-            "Ordre": "ORDRE",
+            "Order": "ORDRE",
             "Special": "SPÉCIAL",
             "Special2": "SPECIAL",
             "Protocol": "PROTOCOLE"

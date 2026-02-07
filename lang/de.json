@@ -65,7 +65,9 @@
         "unknownEntity": "unbekannte Entität",
         "lifeformsDetected": "Lebensformen entdeckt",
         "entitiesAffected": "betroffene Einheiten",
-        "postHack": { "title": "POST-HACK-BEFEHLE:" },
+        "postHack": {
+            "title": "POST-HACK-BEFEHLE:"
+        },
         "helpMenu": {
             "title": "BEFEHLSHILFE",
             "tooltip": "Befehlsübersicht",
@@ -73,26 +75,56 @@
             "consultHint": "KONSULTIEREN SIE DAS ? FÜR DIE BEFEHLSLISTE",
             "sections": {
                 "intro": "LISTE UND BESCHREIBUNG VERFÜGBARER POST-HACK-BEFEHLE (MIT MJ-GENEHMIGUNG).",
-                "basic": { "title": "GRUNDBEFEHLE", "desc": "HELP: HILFE ANZEIGEN\nSTATUS: SYSTEMSTATUS\nCLEAR: BILDSCHIRM LÖSCHEN\nEXIT: TERMINAL SCHLIESSEN\n/M [NACHRICHT]: MIT MUTTER KOMMUNIZIEREN" },
-                "hack": { "title": "HACK", "desc": "HACK: VERSUCH, ADMINRECHTE ZU ERHALTEN (VOM MJ KONTROLLIERT)" },
-                "specialOrders": { "title": "SPEZIALBEFEHLE", "desc": "ORDERS: 754, 899, 931, 937, 939, 966. ZEIGT BEFEHLDETAILS." },
-                "cerberus": { "title": "CERBERUS-PROTOKOLL", "desc": "CERBERUS: SELBSTZERSTÖRUNGSPROTOKOLL MIT COUNTDOWN." },
-                "doors": { "title": "TÜRENSTEUERUNG", "desc": "DOORS, LOCK DOOR X, UNLOCK DOOR X. ZIELT AUF TÜREN MIT NAMEN 'AD*'." },
-                "lights": { "title": "LICHTSTEUERUNG", "desc": "SHUTDOWN LIGHTS, RESTORE LIGHTS. LICHT AUSSCHALTEN UND WIEDERHERSTELLEN." },
-                "alarm": { "title": "ALARM", "desc": "ACTIVATE ALARM. SPIELT EINEN ALARM UND KANN EIN ROTES OVERLAY ANZEIGEN." },
-                "gas": { "title": "GAS", "desc": "GAS TARGETS. WIRKT VERGIFTET/BEWUSSTLOS IN DER UMGEBUNG." },
-                "cryo": { "title": "CRYO POD", "desc": "CRYO POD [NAME?]. LISTET TOKENS, MJ WÄHLT ZIEL FÜR STASE." },
-                "cryoRelease": { "title": "CRYO RELEASE", "desc": "CRYO RELEASE. LISTET CHARAKTERE IN STASE ZUR MEHRFACH-FREIGABE." }
+                "basic": {
+                    "title": "GRUNDBEFEHLE",
+                    "desc": "HELP: HILFE ANZEIGEN\nSTATUS: SYSTEMSTATUS\nCLEAR: BILDSCHIRM LÖSCHEN\nEXIT: TERMINAL SCHLIESSEN\n/M [NACHRICHT]: MIT MUTTER KOMMUNIZIEREN"
+                },
+                "hack": {
+                    "title": "HACK",
+                    "desc": "HACK: VERSUCH, ADMINRECHTE ZU ERHALTEN (VOM MJ KONTROLLIERT)"
+                },
+                "specialOrders": {
+                    "title": "SPEZIALBEFEHLE",
+                    "desc": "ORDERS: 754, 899, 931, 937, 939, 966. ZEIGT BEFEHLDETAILS."
+                },
+                "cerberus": {
+                    "title": "CERBERUS-PROTOKOLL",
+                    "desc": "CERBERUS: SELBSTZERSTÖRUNGSPROTOKOLL MIT COUNTDOWN."
+                },
+                "doors": {
+                    "title": "TÜRENSTEUERUNG",
+                    "desc": "DOORS, LOCK DOOR X, UNLOCK DOOR X. ZIELT AUF TÜREN MIT NAMEN 'AD*'."
+                },
+                "lights": {
+                    "title": "LICHTSTEUERUNG",
+                    "desc": "SHUTDOWN LIGHTS, RESTORE LIGHTS. LICHT AUSSCHALTEN UND WIEDERHERSTELLEN."
+                },
+                "alarm": {
+                    "title": "ALARM",
+                    "desc": "ACTIVATE ALARM. SPIELT EINEN ALARM UND KANN EIN ROTES OVERLAY ANZEIGEN."
+                },
+                "gas": {
+                    "title": "GAS",
+                    "desc": "GAS TARGETS. WIRKT VERGIFTET/BEWUSSTLOS IN DER UMGEBUNG."
+                },
+                "cryo": {
+                    "title": "CRYO POD",
+                    "desc": "CRYO POD [NAME?]. LISTET TOKENS, MJ WÄHLT ZIEL FÜR STASE."
+                },
+                "cryoRelease": {
+                    "title": "CRYO RELEASE",
+                    "desc": "CRYO RELEASE. LISTET CHARAKTERE IN STASE ZUR MEHRFACH-FREIGABE."
+                }
             }
         },
         "Time": {
-                "Minute": "Minute",
-                "Minutes": "Minuten",
-                "Second": "Sekunde",
-                "Seconds": "Sekunden",
-                "MinutesAndSeconds": "{minutes} {minuteLabel} und {seconds} {secondLabel}",
-                "OnlySeconds": "{seconds} {secondLabel}"
-            },
+            "Minute": "Minute",
+            "Minutes": "Minuten",
+            "Second": "Sekunde",
+            "Seconds": "Sekunden",
+            "MinutesAndSeconds": "{minutes} {minuteLabel} und {seconds} {secondLabel}",
+            "OnlySeconds": "{seconds} {secondLabel}"
+        },
         "DONATION": {
             "support": "Um meine Projekte zu unterstützen:"
         },
@@ -102,14 +134,38 @@
                 "hint": "Verwendet den Charakternamen anstelle des Spielernamens in Nachrichten"
             },
             "postHack": {
-                "phShowInHelp": {"name": "NACH HACK: NEUE BEFEHLE IN HELP", "hint": "Wenn aktiviert, enthält HELP erweiterte Befehle."},
-                "phSpecialOrders": {"name": "NACH HACK: SPEZIALBEFEHLE", "hint": "Spezialbefehle nach HACK erlauben."},
-                "phCerberus": {"name": "NACH HACK: CERBERUS-PROTOKOLL", "hint": "CERBERUS-Protokoll nach HACK erlauben."},
-                "phDoors": {"name": "NACH HACK: TÜRENSTEUERUNG", "hint": "LOCK/UNLOCK/DOORS erlauben."},
-                "phLights": {"name": "NACH HACK: LICHTSTEUERUNG", "hint": "DIM/SHUTDOWN/RESTORE LIGHTS erlauben."},
-                "phAlarm": {"name": "NACH HACK: ALARM AKTIVIEREN", "hint": "Alarmton + Overlay erlauben."},
-                "phGas": {"name": "NACH HACK: GAS TARGETS", "hint": "Gas-Effekt erlauben (vergiftet/bewusstlos)."},
-                "phCryo": {"name": "NACH HACK: CRYO POD/RELEASE", "hint": "Stase/Freigabe eines Ziels erlauben."}
+                "phShowInHelp": {
+                    "name": "NACH HACK: NEUE BEFEHLE IN HELP",
+                    "hint": "Wenn aktiviert, enthält HELP erweiterte Befehle."
+                },
+                "phSpecialOrders": {
+                    "name": "NACH HACK: SPEZIALBEFEHLE",
+                    "hint": "Spezialbefehle nach HACK erlauben."
+                },
+                "phCerberus": {
+                    "name": "NACH HACK: CERBERUS-PROTOKOLL",
+                    "hint": "CERBERUS-Protokoll nach HACK erlauben."
+                },
+                "phDoors": {
+                    "name": "NACH HACK: TÜRENSTEUERUNG",
+                    "hint": "LOCK/UNLOCK/DOORS erlauben."
+                },
+                "phLights": {
+                    "name": "NACH HACK: LICHTSTEUERUNG",
+                    "hint": "DIM/SHUTDOWN/RESTORE LIGHTS erlauben."
+                },
+                "phAlarm": {
+                    "name": "NACH HACK: ALARM AKTIVIEREN",
+                    "hint": "Alarmton + Overlay erlauben."
+                },
+                "phGas": {
+                    "name": "NACH HACK: GAS TARGETS",
+                    "hint": "Gas-Effekt erlauben (vergiftet/bewusstlos)."
+                },
+                "phCryo": {
+                    "name": "NACH HACK: CRYO POD/RELEASE",
+                    "hint": "Stase/Freigabe eines Ziels erlauben."
+                }
             },
             "typewriter": {
                 "name": "Schreibmaschineneffekt",
@@ -135,12 +191,14 @@
                 "enable": "Aktiviert",
                 "disable": "Deaktiviert"
             },
-            "typingSoundVolume": {
-                "name": "Tippgeräusch-Lautstärke",
-                "hint": "Passt die Lautstärke der Tippgeräusche an (0 = stumm, 1 = maximum)"
+            "allowDragGM": {
+                "name": "Terminal verschieben (SL)",
+                "hint": "Dem Spielleiter erlauben, das Terminal auf der Szene zu verschieben."
             },
-            "allowDragGM": { "name": "Terminal verschieben (SL)", "hint": "Dem Spielleiter erlauben, das Terminal auf der Szene zu verschieben." },
-            "allowDragPlayers": { "name": "Terminal verschieben (Spieler/Zuschauer)", "hint": "Spielern und Zuschauern erlauben, ihr Terminal auf der Szene zu verschieben." },
+            "allowDragPlayers": {
+                "name": "Terminal verschieben (Spieler/Zuschauer)",
+                "hint": "Spielern und Zuschauern erlauben, ihr Terminal auf der Szene zu verschieben."
+            },
             "motherResponseColor": {
                 "name": "MOTHER Antwortfarbe",
                 "hint": "Legt die Farbe der MOTHER-Antwortnachrichten fest",
@@ -176,6 +234,10 @@
             "cerberusDuration": {
                 "name": "Cerberus-Protokoll Dauer",
                 "hint": "Dauer in Minuten bis zur Selbstzerstörung (1-60 Minuten)"
+            },
+            "soundVolume": {
+                "name": "MUTHUR-Lautst?rke",
+                "hint": "Passt die MUTHUR-Lautst?rke an (0 = stumm, 1 = maximal)"
             }
         },
         "motherName": "MUTTER",
@@ -266,7 +328,7 @@
         "CerberusDetonation": "DETONATION",
         "CerberusEvacuate": "SOFORTIGE EVAKUIERUNG ERFORDERLICH",
         "Keywords": {
-            "Ordre": "ORDER",
+            "Order": "ORDER",
             "Special": "SPECIAL",
             "Special2": "SPECIAL",
             "Protocol": "PROTOCOL"
