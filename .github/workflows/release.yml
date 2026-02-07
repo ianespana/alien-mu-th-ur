@@ -39,7 +39,7 @@ jobs:
           jq --indent 4 ".version = \"$VERSION\" | .download = \"https://github.com/${{ github.repository }}/releases/download/$VERSION/alien-mu-th-ur.zip\"" module.json > module.json.tmp && mv module.json.tmp module.json
 
       - name: Create Zip
-        run: zip -r alien-mu-th-ur.zip module.json lang dist sounds
+        run: zip -r alien-mu-th-ur.zip module.json lang dist sounds templates
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
