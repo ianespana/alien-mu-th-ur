@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
     {
-        ignores: ['eslint.config.mjs', '.prettierrc.js', 'original.js', 'scripts/**'],
+        ignores: ['eslint.config.mjs', '.prettierrc.js', 'tsup.config.ts'],
     },
     eslint.configs.recommended,
     ...tseslint.configs.recommendedTypeChecked,
