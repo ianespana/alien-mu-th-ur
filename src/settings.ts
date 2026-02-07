@@ -136,7 +136,7 @@ export function registerSettings(): void {
         scope: 'world',
         config: false,
         type: new foundry.data.fields.FilePathField({
-            categories: [CONST.FILE_CATEGORIES.AUDIO],
+            categories: ['AUDIO'],
             nullable: false,
         } as unknown as foundry.data.fields.FilePathField.DefaultOptions),
         default: '/modules/alien-mu-th-ur/sounds/reply/Computer_Reply_1.wav',
