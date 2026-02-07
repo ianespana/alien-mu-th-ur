@@ -464,7 +464,7 @@ async function handleMuthurResponse(data: SocketPayload): Promise<void> {
             let label = getGame().i18n?.localize(`MUTHUR.approve.${action}`) || `Approve ${action}?`;
             if (target) label = label.replace('{label}', target).replace('{target}', target);
 
-            await new foundry.applications.api.DialogV2({
+            const dialog = new foundry.applications.api.DialogV2({
                 window: { title: 'MUTHUR Action Approval' },
                 content: `<p>${label}</p>`,
                 buttons: [
@@ -492,7 +492,9 @@ async function handleMuthurResponse(data: SocketPayload): Promise<void> {
                         },
                     },
                 ],
-            }).render(true);
+            });
+
+            void dialog.render({ force: true });
         }
     }
 }
