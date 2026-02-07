@@ -1,3 +1,5 @@
+[![Qodana](https://github.com/ianespana/alien-mu-th-ur/actions/workflows/qodana_code_quality.yml/badge.svg)](https://github.com/ianespana/alien-mu-th-ur/actions/workflows/qodana_code_quality.yml)
+
 ## 🌌 Alien MU/TH/UR 6000 — Complete Guide
 
 [English](README.md) ·
