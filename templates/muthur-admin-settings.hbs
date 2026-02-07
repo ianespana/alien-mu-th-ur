@@ -1,0 +1,103 @@
+<form class="muthur-admin-settings" autocomplete="off">
+    <h2>MU/TH/UR Admin</h2>
+
+    <fieldset>
+        <legend>General</legend>
+        <div class="form-group">
+            <label>{{localize "MUTHUR.SETTINGS.allowHack.name"}}</label>
+            <input type="checkbox" name="allowHack" {{#if allowHack}}checked{{/if}} />
+            <p class="notes">{{localize "MUTHUR.SETTINGS.allowHack.hint"}}</p>
+        </div>
+        <div class="form-group">
+            <label>{{localize "MUTHUR.SETTINGS.allowDragGM.name"}}</label>
+            <input type="checkbox" name="allowDragGM" {{#if allowDragGM}}checked{{/if}} />
+            <p class="notes">{{localize "MUTHUR.SETTINGS.allowDragGM.hint"}}</p>
+        </div>
+        <div class="form-group">
+            <label>{{localize "MUTHUR.SETTINGS.allowDragPlayers.name"}}</label>
+            <input type="checkbox" name="allowDragPlayers" {{#if allowDragPlayers}}checked{{/if}} />
+            <p class="notes">{{localize "MUTHUR.SETTINGS.allowDragPlayers.hint"}}</p>
+        </div>
+        <div class="form-group">
+            <label>{{localize "MUTHUR.ROLES.allowCaptainOrders"}}</label>
+            <input type="checkbox" name="allowCaptainSpecialOrders" {{#if allowCaptainSpecialOrders}}checked{{/if}} />
+            <p class="notes">{{localize "MUTHUR.ROLES.allowCaptainOrdersHint"}}</p>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Post-Hack</legend>
+        <div class="form-group">
+            <label>{{localize "MUTHUR.SETTINGS.postHack.phShowInHelp.name"}}</label>
+            <input type="checkbox" name="phShowInHelp" {{#if phShowInHelp}}checked{{/if}} />
+        </div>
+        <div class="form-group">
+            <label>{{localize "MUTHUR.SETTINGS.postHack.phSpecialOrders.name"}}</label>
+            <input type="checkbox" name="phSpecialOrders" {{#if phSpecialOrders}}checked{{/if}} />
+        </div>
+        <div class="form-group">
+            <label>{{localize "MUTHUR.SETTINGS.postHack.phCerberus.name"}}</label>
+            <input type="checkbox" name="phCerberus" {{#if phCerberus}}checked{{/if}} />
+        </div>
+        <div class="form-group">
+            <label>{{localize "MUTHUR.SETTINGS.postHack.phDoors.name"}}</label>
+            <input type="checkbox" name="phDoors" {{#if phDoors}}checked{{/if}} />
+        </div>
+        <div class="form-group">
+            <label>{{localize "MUTHUR.SETTINGS.postHack.phLights.name"}}</label>
+            <input type="checkbox" name="phLights" {{#if phLights}}checked{{/if}} />
+        </div>
+        <div class="form-group">
+            <label>{{localize "MUTHUR.SETTINGS.postHack.phAlarm.name"}}</label>
+            <input type="checkbox" name="phAlarm" {{#if phAlarm}}checked{{/if}} />
+        </div>
+        <div class="form-group">
+            <label>{{localize "MUTHUR.SETTINGS.postHack.phGas.name"}}</label>
+            <input type="checkbox" name="phGas" {{#if phGas}}checked{{/if}} />
+        </div>
+        <div class="form-group">
+            <label>{{localize "MUTHUR.SETTINGS.postHack.phCryo.name"}}</label>
+            <input type="checkbox" name="phCryo" {{#if phCryo}}checked{{/if}} />
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Status</legend>
+        <div class="form-group">
+            <label>{{localize "MUTHUR.STATUS.current"}}</label>
+            <select name="currentStatusKey">
+                {{#select currentStatusKey}}
+                    <option value="normal">{{localize "MUTHUR.STATUS.presets.normal"}}</option>
+                    <option value="anomalyDetected">{{localize "MUTHUR.STATUS.presets.anomalyDetected"}}</option>
+                    <option value="systemOffline">{{localize "MUTHUR.STATUS.presets.systemOffline"}}</option>
+                    <option value="degradedPerformance">{{localize "MUTHUR.STATUS.presets.degradedPerformance"}}</option>
+                    <option value="fireDetected">{{localize "MUTHUR.STATUS.presets.fireDetected"}}</option>
+                    <option value="quarantine">{{localize "MUTHUR.STATUS.presets.quarantine"}}</option>
+                    <option value="lockdown">{{localize "MUTHUR.STATUS.presets.lockdown"}}</option>
+                    <option value="intrusion">{{localize "MUTHUR.STATUS.presets.intrusion"}}</option>
+                    <option value="networkIssue">{{localize "MUTHUR.STATUS.presets.networkIssue"}}</option>
+                    <option value="custom">{{localize "MUTHUR.STATUS.presets.custom"}}</option>
+                {{/select}}
+            </select>
+            <p class="notes">{{localize "MUTHUR.STATUS.currentHint"}}</p>
+        </div>
+        <div class="form-group">
+            <label>{{localize "MUTHUR.STATUS.customText"}}</label>
+            <textarea name="customStatusText" rows="3">{{customStatusText}}</textarea>
+            <p class="notes">{{localize "MUTHUR.STATUS.customTextHint"}}</p>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Alarm</legend>
+        <div class="form-group">
+            <label>{{localize "MUTHUR.SETTINGS.alarmSoundPath.name"}}</label>
+            <input type="text" name="alarmSoundPath" value="{{alarmSoundPath}}" />
+            <p class="notes">{{localize "MUTHUR.SETTINGS.alarmSoundPath.hint"}}</p>
+        </div>
+    </fieldset>
+
+    <footer class="form-footer">
+        <button type="submit">{{localize "SETTINGS.Save"}}</button>
+    </footer>
+</form>
