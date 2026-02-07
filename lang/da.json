@@ -65,7 +65,9 @@
         "unknownEntity": "ukendt enhed",
         "lifeformsDetected": "livsformer registreret",
         "entitiesAffected": "påvirkede enheder",
-        "postHack": { "title": "POST-HACK-KOMMANDOER:" },
+        "postHack": {
+            "title": "POST-HACK-KOMMANDOER:"
+        },
         "alarmSoundPath": {
             "name": "ALARMLYD",
             "hint": "Vælg lydfilen der afspilles, når ALARM er aktiv"
@@ -81,7 +83,10 @@
                     "title": "BASISKOMMANDOER",
                     "desc": "HELP: VIS DENNE HJÆLP\nSTATUS: SYSTEMSTATUS\nCLEAR: RYD SKÆRM\nEXIT: LUK TERMINAL\n/M [BESKED]: KOMMUNIKER MED MOR"
                 },
-                "hack": { "title": "HACK", "desc": "HACK: FORSØG AT FÅ ADMIN-RETTIGHEDER (GM-STYRET)" },
+                "hack": {
+                    "title": "HACK",
+                    "desc": "HACK: FORSØG AT FÅ ADMIN-RETTIGHEDER (GM-STYRET)"
+                },
                 "specialOrders": {
                     "title": "SPECIELLE ORDRER",
                     "desc": "ORDERS: 754, 899, 931, 937, 939, 966. Viser ordredetaljer."
@@ -90,11 +95,26 @@
                     "title": "CERBERUS-PROTOKOL",
                     "desc": "CERBERUS: SELVDESTRUKTIONS-PROTOKOL MED NEDTÆLLING."
                 },
-                "doors": { "title": "DØRKONTROL", "desc": "DOORS, LOCK DOOR X, UNLOCK DOOR X. MÅLRETTER DØRE 'AD*'." },
-                "lights": { "title": "LYSKONTROL", "desc": "SHUTDOWN LIGHTS, RESTORE LIGHTS. SLUK OG GENOPRET LYS." },
-                "alarm": { "title": "ALARM", "desc": "ACTIVATE ALARM. AFGIVER ALARM OG KAN LÆGGE RØD OVERLAY." },
-                "gas": { "title": "GAS", "desc": "GAS TARGETS. ANVENDER FORGIFTET/BEVIDSTLØS EFFEKT I OMRÅDET." },
-                "cryo": { "title": "CRYO POD", "desc": "CRYO POD [NAVN?]. LISTE TOKENS, MJ VÆLGER MÅL TIL STASE." },
+                "doors": {
+                    "title": "DØRKONTROL",
+                    "desc": "DOORS, LOCK DOOR X, UNLOCK DOOR X. MÅLRETTER DØRE 'AD*'."
+                },
+                "lights": {
+                    "title": "LYSKONTROL",
+                    "desc": "SHUTDOWN LIGHTS, RESTORE LIGHTS. SLUK OG GENOPRET LYS."
+                },
+                "alarm": {
+                    "title": "ALARM",
+                    "desc": "ACTIVATE ALARM. AFGIVER ALARM OG KAN LÆGGE RØD OVERLAY."
+                },
+                "gas": {
+                    "title": "GAS",
+                    "desc": "GAS TARGETS. ANVENDER FORGIFTET/BEVIDSTLØS EFFEKT I OMRÅDET."
+                },
+                "cryo": {
+                    "title": "CRYO POD",
+                    "desc": "CRYO POD [NAVN?]. LISTE TOKENS, MJ VÆLGER MÅL TIL STASE."
+                },
                 "cryoRelease": {
                     "title": "CRYO RELEASE",
                     "desc": "CRYO RELEASE. LISTE OVER PERSONER I STASE TIL FLERVALGS FRIGIVELSE."
@@ -130,11 +150,26 @@
                     "name": "EFTER HACK: CERBERUS PROTOKOL",
                     "hint": "Tillad CERBERUS protokol efter HACK."
                 },
-                "phDoors": { "name": "EFTER HACK: DØRKONTROL", "hint": "Tillad LOCK/UNLOCK/DOORS." },
-                "phLights": { "name": "EFTER HACK: LYSKONTROL", "hint": "Tillad DIM/SHUTDOWN/RESTORE LIGHTS." },
-                "phAlarm": { "name": "EFTER HACK: AKTIVER ALARM", "hint": "Tillad alarmlyd + overlay." },
-                "phGas": { "name": "EFTER HACK: GAS TARGETS", "hint": "Tillad gaseffekt (forgiftet/bevidstløs)." },
-                "phCryo": { "name": "EFTER HACK: CRYO POD/RELEASE", "hint": "Tillad stase/frigivelse af et mål." }
+                "phDoors": {
+                    "name": "EFTER HACK: DØRKONTROL",
+                    "hint": "Tillad LOCK/UNLOCK/DOORS."
+                },
+                "phLights": {
+                    "name": "EFTER HACK: LYSKONTROL",
+                    "hint": "Tillad DIM/SHUTDOWN/RESTORE LIGHTS."
+                },
+                "phAlarm": {
+                    "name": "EFTER HACK: AKTIVER ALARM",
+                    "hint": "Tillad alarmlyd + overlay."
+                },
+                "phGas": {
+                    "name": "EFTER HACK: GAS TARGETS",
+                    "hint": "Tillad gaseffekt (forgiftet/bevidstløs)."
+                },
+                "phCryo": {
+                    "name": "EFTER HACK: CRYO POD/RELEASE",
+                    "hint": "Tillad stase/frigivelse af et mål."
+                }
             },
             "typewriter": {
                 "name": "Skrivemaskineffekt",
@@ -160,11 +195,10 @@
                 "enable": "Aktiveret",
                 "disable": "Deaktiveret"
             },
-            "typingSoundVolume": {
-                "name": "Tastelydstyrke",
-                "hint": "Justerer lydstyrken af tastelydene (0 = stille, 1 = maksimum)"
+            "allowDragGM": {
+                "name": "Flyt terminal (GM)",
+                "hint": "Tillad MOR (GM) at trække terminalen på scenen."
             },
-            "allowDragGM": { "name": "Flyt terminal (GM)", "hint": "Tillad MOR (GM) at trække terminalen på scenen." },
             "allowDragPlayers": {
                 "name": "Flyt terminal (Spillere/Tilskuere)",
                 "hint": "Tillad spillere og tilskuere at trække terminalen på scenen."
@@ -204,6 +238,10 @@
             "cerberusDuration": {
                 "name": "Cerberus Protokol Varighed",
                 "hint": "Varighed i minutter før selvdestruktion (1-60 minutter)"
+            },
+            "soundVolume": {
+                "name": "MUTHUR-lydstyrke",
+                "hint": "Justerer MUTHUR-lydstyrken (0 = lydl?s, 1 = maksimum)"
             }
         },
         "motherName": "MOR",

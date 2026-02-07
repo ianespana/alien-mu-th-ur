@@ -65,7 +65,9 @@
         "unknownEntity": "okänd enhet",
         "lifeformsDetected": "livsformer upptäckta",
         "entitiesAffected": "påverkade enheter",
-        "postHack": { "title": "POST-HACK-KOMMANDON:" },
+        "postHack": {
+            "title": "POST-HACK-KOMMANDON:"
+        },
         "alarmSoundPath": {
             "name": "ALARMLJUD",
             "hint": "Välj ljudfilen som spelas när ALARM är aktiv"
@@ -81,7 +83,10 @@
                     "title": "GRUNDKOMMANDON",
                     "desc": "HELP: VISA DENNA HJÄLP\nSTATUS: SYSTEMSTATUS\nCLEAR: RENSA SKÄRM\nEXIT: STÄNG TERMINAL\n/M [MEDDELANDE]: KOMMUNICERA MED MODER"
                 },
-                "hack": { "title": "HACK", "desc": "HACK: FÖRSÖK ATT FÅ ADMINRÄTTIGHETER (GM-STYRT)" },
+                "hack": {
+                    "title": "HACK",
+                    "desc": "HACK: FÖRSÖK ATT FÅ ADMINRÄTTIGHETER (GM-STYRT)"
+                },
                 "specialOrders": {
                     "title": "SPECIALORDER",
                     "desc": "ORDERS: 754, 899, 931, 937, 939, 966. VISAR ORDERDETALJER."
@@ -98,9 +103,18 @@
                     "title": "LJUSKONTROLL",
                     "desc": "SHUTDOWN LIGHTS, RESTORE LIGHTS. STÄNGER AV OCH ÅTERSTÄLLER BELYSNING."
                 },
-                "alarm": { "title": "ALARM", "desc": "ACTIVATE ALARM. SPELAR ALARM OCH KAN LÄGGA RÖD OVERLAY." },
-                "gas": { "title": "GAS", "desc": "GAS TARGETS. APPLICERAR FÖRGIFTAD/MEDETSLÖS EFFEKT I OMRÅDET." },
-                "cryo": { "title": "CRYO POD", "desc": "CRYO POD [NAMN?]. LISTAR TOKENS, GM VÄLJER MÅL FÖR STASIS." },
+                "alarm": {
+                    "title": "ALARM",
+                    "desc": "ACTIVATE ALARM. SPELAR ALARM OCH KAN LÄGGA RÖD OVERLAY."
+                },
+                "gas": {
+                    "title": "GAS",
+                    "desc": "GAS TARGETS. APPLICERAR FÖRGIFTAD/MEDETSLÖS EFFEKT I OMRÅDET."
+                },
+                "cryo": {
+                    "title": "CRYO POD",
+                    "desc": "CRYO POD [NAMN?]. LISTAR TOKENS, GM VÄLJER MÅL FÖR STASIS."
+                },
                 "cryoRelease": {
                     "title": "CRYO RELEASE",
                     "desc": "CRYO RELEASE. LISTAR KARAKTÄRER I STASIS FÖR FLERVALSFRIGIVNING."
@@ -128,16 +142,34 @@
                     "name": "EFTER HACK: VISA NYA KOMMANDON I HELP",
                     "hint": "Om aktiverat inkluderar HELP avancerade kommandon."
                 },
-                "phSpecialOrders": { "name": "EFTER HACK: SPECIALORDER", "hint": "Tillåt SPECIALORDER efter HACK." },
+                "phSpecialOrders": {
+                    "name": "EFTER HACK: SPECIALORDER",
+                    "hint": "Tillåt SPECIALORDER efter HACK."
+                },
                 "phCerberus": {
                     "name": "EFTER HACK: CERBERUS PROTOCOL",
                     "hint": "Tillåt CERBERUS-protokoll efter HACK."
                 },
-                "phDoors": { "name": "EFTER HACK: DÖRRKONTROLL", "hint": "Tillåt LOCK/UNLOCK/DOORS." },
-                "phLights": { "name": "EFTER HACK: LJUSKONTROLL", "hint": "Tillåt DIM/SHUTDOWN/RESTORE LIGHTS." },
-                "phAlarm": { "name": "EFTER HACK: AKTIVERA ALARM", "hint": "Tillåt alarmsound + overlay." },
-                "phGas": { "name": "EFTER HACK: GAS TARGETS", "hint": "Tillåt gaseffekt (förgiftad/medvetslös)." },
-                "phCryo": { "name": "EFTER HACK: CRYO POD/RELEASE", "hint": "Tillåt stasis/frisläppande av ett mål." }
+                "phDoors": {
+                    "name": "EFTER HACK: DÖRRKONTROLL",
+                    "hint": "Tillåt LOCK/UNLOCK/DOORS."
+                },
+                "phLights": {
+                    "name": "EFTER HACK: LJUSKONTROLL",
+                    "hint": "Tillåt DIM/SHUTDOWN/RESTORE LIGHTS."
+                },
+                "phAlarm": {
+                    "name": "EFTER HACK: AKTIVERA ALARM",
+                    "hint": "Tillåt alarmsound + overlay."
+                },
+                "phGas": {
+                    "name": "EFTER HACK: GAS TARGETS",
+                    "hint": "Tillåt gaseffekt (förgiftad/medvetslös)."
+                },
+                "phCryo": {
+                    "name": "EFTER HACK: CRYO POD/RELEASE",
+                    "hint": "Tillåt stasis/frisläppande av ett mål."
+                }
             },
             "typewriter": {
                 "name": "Skrivmaskineffekt",
@@ -162,10 +194,6 @@
                 "hint": "Aktiverar tangentbordsljud som i Alien-filmen",
                 "enable": "Aktiverat",
                 "disable": "Inaktiverat"
-            },
-            "typingSoundVolume": {
-                "name": "Skrivljudsvolym",
-                "hint": "Justerar volymen på skrivljuden (0 = tyst, 1 = maximum)"
             },
             "allowDragGM": {
                 "name": "Flytta terminal (SL)",
@@ -210,6 +238,10 @@
             "cerberusDuration": {
                 "name": "Cerberus Protokoll Varaktighet",
                 "hint": "Varaktighet i minuter före självförstörelse (1-60 minuter)"
+            },
+            "soundVolume": {
+                "name": "MUTHUR-volym",
+                "hint": "Justerar MUTHUR-volymen (0 = tyst, 1 = max)"
             }
         },
         "motherName": "MODER",

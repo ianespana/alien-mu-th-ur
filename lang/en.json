@@ -65,7 +65,9 @@
         "unknownEntity": "unknown entity",
         "lifeformsDetected": "lifeforms detected",
         "entitiesAffected": "entities affected",
-        "postHack": { "title": "POST-HACK COMMANDS:" },
+        "postHack": {
+            "title": "POST-HACK COMMANDS:"
+        },
         "helpMenu": {
             "title": "COMMANDS HELP",
             "tooltip": "Commands help",
@@ -77,7 +79,10 @@
                     "title": "BASIC COMMANDS",
                     "desc": "HELP: DISPLAY THIS HELP\nSTATUS: SYSTEM STATUS\nCLEAR: CLEAR SCREEN\nEXIT: CLOSE TERMINAL\n/M [MESSAGE]: COMMUNICATE WITH MOTHER"
                 },
-                "hack": { "title": "HACK", "desc": "HACK: ATTEMPT TO OBTAIN ADMIN RIGHTS (GM-CONTROLLED)" },
+                "hack": {
+                    "title": "HACK",
+                    "desc": "HACK: ATTEMPT TO OBTAIN ADMIN RIGHTS (GM-CONTROLLED)"
+                },
                 "specialOrders": {
                     "title": "SPECIAL ORDERS",
                     "desc": "ORDERS: 754, 899, 931, 937, 939, 966. DISPLAYS ORDER DETAILS."
@@ -133,13 +138,34 @@
                     "name": "POST-HACK: SHOW NEW COMMANDS IN HELP",
                     "hint": "If enabled, player HELP includes advanced commands."
                 },
-                "phSpecialOrders": { "name": "POST-HACK: SPECIAL ORDERS", "hint": "Allow SPECIAL ORDERS after HACK." },
-                "phCerberus": { "name": "POST-HACK: CERBERUS PROTOCOL", "hint": "Allow CERBERUS protocol after HACK." },
-                "phDoors": { "name": "POST-HACK: DOOR CONTROL", "hint": "Allow LOCK/UNLOCK/DOORS." },
-                "phLights": { "name": "POST-HACK: LIGHTS CONTROL", "hint": "Allow DIM/SHUTDOWN/RESTORE LIGHTS." },
-                "phAlarm": { "name": "POST-HACK: ACTIVATE ALARM", "hint": "Allow alarm sound + overlay." },
-                "phGas": { "name": "POST-HACK: GAS TARGETS", "hint": "Allow gas effect (poisoned/unconscious)." },
-                "phCryo": { "name": "POST-HACK: CRYO POD/RELEASE", "hint": "Allow stasis/release of a target." }
+                "phSpecialOrders": {
+                    "name": "POST-HACK: SPECIAL ORDERS",
+                    "hint": "Allow SPECIAL ORDERS after HACK."
+                },
+                "phCerberus": {
+                    "name": "POST-HACK: CERBERUS PROTOCOL",
+                    "hint": "Allow CERBERUS protocol after HACK."
+                },
+                "phDoors": {
+                    "name": "POST-HACK: DOOR CONTROL",
+                    "hint": "Allow LOCK/UNLOCK/DOORS."
+                },
+                "phLights": {
+                    "name": "POST-HACK: LIGHTS CONTROL",
+                    "hint": "Allow DIM/SHUTDOWN/RESTORE LIGHTS."
+                },
+                "phAlarm": {
+                    "name": "POST-HACK: ACTIVATE ALARM",
+                    "hint": "Allow alarm sound + overlay."
+                },
+                "phGas": {
+                    "name": "POST-HACK: GAS TARGETS",
+                    "hint": "Allow gas effect (poisoned/unconscious)."
+                },
+                "phCryo": {
+                    "name": "POST-HACK: CRYO POD/RELEASE",
+                    "hint": "Allow stasis/release of a target."
+                }
             },
             "alarmSoundPath": {
                 "name": "ALARM SOUND",
@@ -177,10 +203,6 @@
                 "enable": "Enabled",
                 "disable": "Disabled"
             },
-            "typingSoundVolume": {
-                "name": "Typing Volume",
-                "hint": "Adjusts typing sound volume (0 = mute, 1 = maximum)"
-            },
             "motherResponseColor": {
                 "name": "MOTHER Response Color",
                 "hint": "Sets the color of MOTHER's response messages",
@@ -216,6 +238,10 @@
             "cerberusDuration": {
                 "name": "Cerberus Protocol Duration",
                 "hint": "Duration in minutes before self-destruct (1-60 minutes)"
+            },
+            "soundVolume": {
+                "name": "MUTHUR Volume",
+                "hint": "Adjusts MUTHUR sound volume (0 = mute, 1 = maximum)"
             }
         },
         "motherName": "MOTHER",

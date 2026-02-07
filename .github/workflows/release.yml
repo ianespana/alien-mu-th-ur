@@ -1,18 +1,33 @@
 name: Create Release
 
 on:
-  push:
+  pull_request:
     branches:
       - main
+    types: [closed]
 
 jobs:
   release:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: |
+          rm -rf scripts
+          npm run build:prod
 
       - name: Get version
         id: get_version
@@ -24,7 +39,7 @@ jobs:
           jq --indent 4 ".version = \"$VERSION\" | .download = \"https://github.com/${{ github.repository }}/releases/download/$VERSION/alien-mu-th-ur.zip\"" module.json > module.json.tmp && mv module.json.tmp module.json
 
       - name: Create Zip
-        run: zip -r alien-mu-th-ur.zip module.json lang scripts sounds
+        run: zip -r alien-mu-th-ur.zip module.json lang dist sounds
 
       - name: Create Release
         uses: softprops/action-gh-release@v2

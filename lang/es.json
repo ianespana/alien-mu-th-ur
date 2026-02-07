@@ -65,7 +65,9 @@
         "unknownEntity": "entidad desconocida",
         "lifeformsDetected": "formas de vida detectadas",
         "entitiesAffected": "entidades afectadas",
-        "postHack": { "title": "COMANDOS POST-HACK:" },
+        "postHack": {
+            "title": "COMANDOS POST-HACK:"
+        },
         "alarmSoundPath": {
             "name": "SONIDO DE ALARMA",
             "hint": "Elegir el archivo de audio reproducido cuando ALARMA está activa"
@@ -81,7 +83,10 @@
                     "title": "COMANDOS BÁSICOS",
                     "desc": "HELP: MUESTRA ESTA AYUDA\nSTATUS: ESTADO DEL SISTEMA\nCLEAR: LIMPIAR PANTALLA\nEXIT: CERRAR TERMINAL\n/M [MENSAJE]: COMUNICAR CON MADRE"
                 },
-                "hack": { "title": "HACK", "desc": "HACK: INTENTO DE OBTENER DERECHOS DE ADMIN (CONTROLADO POR MJ)" },
+                "hack": {
+                    "title": "HACK",
+                    "desc": "HACK: INTENTO DE OBTENER DERECHOS DE ADMIN (CONTROLADO POR MJ)"
+                },
                 "specialOrders": {
                     "title": "ÓRDENES ESPECIALES",
                     "desc": "ORDERS: 754, 899, 931, 937, 939, 966. MUESTRA DETALLES DE ÓRDENES."
@@ -102,7 +107,10 @@
                     "title": "ALARMA",
                     "desc": "ACTIVATE ALARM. REPRODUCE ALARMA Y PUEDE APLICAR OVERLAY ROJO."
                 },
-                "gas": { "title": "GAS", "desc": "GAS TARGETS. APLICA EFECTO ENVENENADO/INCONSCIENTE EN LA ZONA." },
+                "gas": {
+                    "title": "GAS",
+                    "desc": "GAS TARGETS. APLICA EFECTO ENVENENADO/INCONSCIENTE EN LA ZONA."
+                },
                 "cryo": {
                     "title": "CRYO POD",
                     "desc": "CRYO POD [NOMBRE?]. LISTA TOKENS, EL MJ ELIGE OBJETIVO PARA ESTASIS."
@@ -142,10 +150,22 @@
                     "name": "POST-HACK: PROTOCOLO CERBERUS",
                     "hint": "Permitir protocolo CERBERUS tras HACK."
                 },
-                "phDoors": { "name": "POST-HACK: CONTROL DE PUERTAS", "hint": "Permitir LOCK/UNLOCK/DOORS." },
-                "phLights": { "name": "POST-HACK: CONTROL DE LUCES", "hint": "Permitir DIM/SHUTDOWN/RESTORE LIGHTS." },
-                "phAlarm": { "name": "POST-HACK: ACTIVAR ALARMA", "hint": "Permitir sonido de alarma + overlay." },
-                "phGas": { "name": "POST-HACK: GAS TARGETS", "hint": "Permitir efecto gas (envenenado/inconsciente)." },
+                "phDoors": {
+                    "name": "POST-HACK: CONTROL DE PUERTAS",
+                    "hint": "Permitir LOCK/UNLOCK/DOORS."
+                },
+                "phLights": {
+                    "name": "POST-HACK: CONTROL DE LUCES",
+                    "hint": "Permitir DIM/SHUTDOWN/RESTORE LIGHTS."
+                },
+                "phAlarm": {
+                    "name": "POST-HACK: ACTIVAR ALARMA",
+                    "hint": "Permitir sonido de alarma + overlay."
+                },
+                "phGas": {
+                    "name": "POST-HACK: GAS TARGETS",
+                    "hint": "Permitir efecto gas (envenenado/inconsciente)."
+                },
                 "phCryo": {
                     "name": "POST-HACK: CRYO POD/RELEASE",
                     "hint": "Permitir estasis/liberación de un objetivo."
@@ -174,10 +194,6 @@
                 "hint": "Activa los sonidos de teclado como en la película Alien",
                 "enable": "Activado",
                 "disable": "Desactivado"
-            },
-            "typingSoundVolume": {
-                "name": "Volumen de Tecleo",
-                "hint": "Ajusta el volumen de los sonidos de tecleo (0 = silencio, 1 = máximo)"
             },
             "allowDragGM": {
                 "name": "Mover terminal (MJ)",
@@ -222,6 +238,10 @@
             "cerberusDuration": {
                 "name": "Duración Protocolo Cerberus",
                 "hint": "Duración en minutos antes de la autodestrucción (1-60 minutos)"
+            },
+            "soundVolume": {
+                "name": "Volumen de MUTHUR",
+                "hint": "Ajusta el volumen de MUTHUR (0 = silencio, 1 = m?ximo)"
             }
         },
         "motherName": "MADRE",

@@ -1,6 +1,6 @@
 import { ERROR_SNIPPETS, SYSTEM_MESSAGES } from './constants.js';
 
-export function startGlitchEffect() {
+export function startGlitchEffect(): () => void {
     const style = document.createElement('style');
     style.textContent = `
         .terminal-window {
@@ -27,8 +27,8 @@ export function startGlitchEffect() {
     `;
     document.head.appendChild(style);
 
-    const windows = new Set();
-    const intervals = new Set();
+    const windows = new Set<HTMLElement>();
+    const intervals = new Set<NodeJS.Timeout>();
     let isRunning = true;
 
     function createWindow() {
@@ -59,7 +59,7 @@ export function startGlitchEffect() {
         let codeContent = '';
         const updateInterval = setInterval(() => {
             if (!isRunning) return;
-            const newContent = [];
+            const newContent: string[] = [];
             const isError = Math.random() < 0.3;
 
             if (isError) {

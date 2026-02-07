@@ -94,17 +94,26 @@
                     "name": "Après HACK: Protocole CERBERUS",
                     "hint": "Autoriser le protocole CERBERUS après HACK."
                 },
-                "phDoors": { "name": "Après HACK: Contrôle des portes", "hint": "Autoriser LOCK/UNLOCK/DOORS." },
+                "phDoors": {
+                    "name": "Après HACK: Contrôle des portes",
+                    "hint": "Autoriser LOCK/UNLOCK/DOORS."
+                },
                 "phLights": {
                     "name": "Après HACK: Contrôle des lumières",
                     "hint": "Autoriser DIM/SHUTDOWN/RESTORE LIGHTS."
                 },
-                "phAlarm": { "name": "Après HACK: ACTIVATE ALARM", "hint": "Autoriser l’alarme sonore + overlay." },
+                "phAlarm": {
+                    "name": "Après HACK: ACTIVATE ALARM",
+                    "hint": "Autoriser l’alarme sonore + overlay."
+                },
                 "phGas": {
                     "name": "Après HACK: GAS TARGETS",
                     "hint": "Autoriser l’effet gaz (empoisonné/inconscient)."
                 },
-                "phCryo": { "name": "Après HACK: CRYO POD", "hint": "Autoriser la mise en stase d’une cible." }
+                "phCryo": {
+                    "name": "Après HACK: CRYO POD",
+                    "hint": "Autoriser la mise en stase d’une cible."
+                }
             },
             "alarmSoundPath": {
                 "name": "SON D'ALARME",
@@ -142,10 +151,6 @@
                 "enable": "Activés",
                 "disable": "Désactivés"
             },
-            "typingSoundVolume": {
-                "name": "Volume des frappes",
-                "hint": "Ajuste le volume des sons de frappe (0 = muet, 1 = maximum)"
-            },
             "motherResponseColor": {
                 "name": "Couleur des réponses de MAMAN",
                 "hint": "Définit la couleur des messages de réponse de MAMAN",
@@ -181,6 +186,10 @@
             "cerberusDuration": {
                 "name": "Durée du protocole Cerberus",
                 "hint": "Durée en minutes avant l'auto-destruction (1-60 minutes)"
+            },
+            "soundVolume": {
+                "name": "Volume de MUTHUR",
+                "hint": "Ajuste le volume de MUTHUR (0 = muet, 1 = maximum)"
             }
         },
         "motherName": "MAMAN",

@@ -19,7 +19,7 @@
         ]
     },
     "socket": true,
-    "esmodules": ["greensock/esm/all.js", "scripts/main.js"],
+    "esmodules": ["greensock/esm/all.js", "dist/main.mjs"],
     "languages": [
         {
             "lang": "en",

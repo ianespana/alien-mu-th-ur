@@ -1,25 +1,26 @@
+import { stopAlarm } from './actions.js';
 import { handleCommand } from './commands.js';
-import { MODULE_ID } from './constants.js';
+import { getGame, MODULE_ID } from './constants.js';
 import { getSession, updateSession } from './session.js';
-import { displayMuthurMessage, syncMessageToSpectators } from './ui-utils.js';
+import { displayMuthurMessage, showWaitingMessage, syncMessageToSpectators } from './ui/ui-utils.js';
 
-export function hexToRgb(hex) {
+export function hexToRgb(hex: string): string {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result
         ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}`
         : '255, 255, 255';
 }
 
-export function showMuthurInterface() {
+export function showMuthurInterface(): HTMLElement | undefined {
     const existingChat = document.getElementById('muthur-chat-container');
     if (existingChat) return existingChat;
 
     const currentMuthurSession = getSession();
-    if (currentMuthurSession.active && currentMuthurSession.userId !== game.user.id) {
-        ui.notifications.warn(
-            game.i18n.format('MUTHUR.sessionActiveWarning', {
-                userName: currentMuthurSession.userName,
-            }),
+    if (currentMuthurSession.active && currentMuthurSession.userId !== getGame().user?.id) {
+        ui.notifications?.warn(
+            getGame().i18n?.format('MUTHUR.sessionActiveWarning', {
+                userName: currentMuthurSession.userName ?? '',
+            }) || `A MUTHUR session is already active with ${currentMuthurSession.userName}`,
         );
         return;
     }
@@ -27,15 +28,15 @@ export function showMuthurInterface() {
     if (!currentMuthurSession.active) {
         updateSession({
             active: true,
-            userId: game.user.id,
-            userName: game.user.name,
+            userId: getGame().user?.id,
+            userName: getGame().user?.name,
         });
 
-        game.socket.emit('module.alien-mu-th-ur', {
+        getGame().socket.emit('module.alien-mu-th-ur', {
             type: 'sessionStatus',
             active: true,
-            userId: game.user.id,
-            userName: game.user.name,
+            userId: getGame().user?.id,
+            userName: getGame().user?.name,
         });
     }
 
@@ -45,7 +46,7 @@ export function showMuthurInterface() {
     const sidebar = document.getElementById('sidebar');
     const rightPosition = sidebar ? `${sidebar.offsetWidth + 20}px` : '320px';
 
-    const allowPlayersDrag = game.settings.get(MODULE_ID, 'allowDragPlayers');
+    const allowPlayersDrag = getGame().settings.get(MODULE_ID, 'allowDragPlayers');
 
     chatContainer.style.cssText = `
         position: ${allowPlayersDrag ? 'absolute' : 'fixed'};
@@ -61,6 +62,41 @@ export function showMuthurInterface() {
         display: flex;
         flex-direction: column;
     `;
+
+    const header = document.createElement('div');
+    header.style.cssText = `
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 6px;
+    `;
+    const title = document.createElement('div');
+    title.textContent = 'MU/TH/UR 6000';
+    title.style.cssText = 'color: #00ff00; font-weight: bold;';
+    header.appendChild(title);
+
+    if (getGame().user?.isGM) {
+        const stopAlarmButton = document.createElement('button');
+        stopAlarmButton.id = 'gm-muthur-stop-alarm-btn';
+        stopAlarmButton.textContent = getGame().i18n?.localize('MUTHUR.stopAlarm') || 'STOP ALARM';
+        stopAlarmButton.title = stopAlarmButton.textContent;
+        stopAlarmButton.style.cssText = `
+            display: none;
+            background: black;
+            border: 1px solid #ff0000;
+            color: #ff0000;
+            cursor: pointer;
+            font-family: monospace;
+            padding: 2px 8px;
+            height: 24px;
+        `;
+        stopAlarmButton.addEventListener('click', () => {
+            stopAlarm();
+            getGame().socket?.emit('module.alien-mu-th-ur', { type: 'alarmControl', action: 'off' });
+            stopAlarmButton.style.display = 'none';
+        });
+        header.appendChild(stopAlarmButton);
+    }
 
     const chatLog = document.createElement('div');
     chatLog.className = 'muthur-chat-log';
@@ -83,7 +119,7 @@ export function showMuthurInterface() {
 
     const input = document.createElement('input');
     input.type = 'text';
-    input.placeholder = game.i18n.localize('MUTHUR.inputPlaceholder');
+    input.placeholder = getGame().i18n?.localize('MUTHUR.inputPlaceholder') || 'Enter a command';
     input.style.cssText = `
         flex: 1;
         background: black;
@@ -97,7 +133,7 @@ export function showMuthurInterface() {
     const sendButton = document.createElement('button');
     sendButton.className = 'muthur-enter-btn';
     sendButton.innerHTML = '<i class="fas fa-level-down-alt" style="transform: rotate(90deg);"></i>';
-    sendButton.title = game.i18n.localize('MUTHUR.send');
+    sendButton.title = getGame().i18n?.localize('MUTHUR.send') || 'REPLY';
     sendButton.style.cssText = `
         background: black;
         border: 1px solid #00ff00;
@@ -110,24 +146,38 @@ export function showMuthurInterface() {
 
     inputContainer.appendChild(input);
     inputContainer.appendChild(sendButton);
+    chatContainer.appendChild(header);
     chatContainer.appendChild(chatLog);
     chatContainer.appendChild(inputContainer);
 
     document.body.appendChild(chatContainer);
 
-    const executeCommand = () => handleCommand(input, chatLog);
+    const executeCommand = () => {
+        void handleCommand(input, chatLog);
+    };
 
     input.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') executeCommand();
     });
     sendButton.addEventListener('click', executeCommand);
 
-    syncMessageToSpectators(chatLog, game.i18n.localize('MUTHUR.welcome'), '', '#00ff00', 'reply');
+    void syncMessageToSpectators(
+        chatLog,
+        getGame().i18n?.localize('MUTHUR.welcome') ||
+            'MUTHUR 6000 v2.1.0\nTERMINAL ACTIVE...\nINTERFACE 2037\nAWAITING COMMAND...',
+        '',
+        '#00ff00',
+        'reply',
+    );
 
     return chatContainer;
 }
 
-export function showSpectatorInterface(activeUserId, activeUserName, skipWelcomeMessage = false) {
+export function showSpectatorInterface(
+    activeUserId: string,
+    activeUserName: string,
+    skipWelcomeMessage: boolean = false,
+): HTMLElement | undefined {
     const existingSpectator = document.getElementById('muthur-spectator-container');
     if (existingSpectator) return existingSpectator;
 
@@ -176,19 +226,25 @@ export function showSpectatorInterface(activeUserId, activeUserName, skipWelcome
     document.body.appendChild(container);
 
     if (!skipWelcomeMessage) {
-        displayMuthurMessage(spectatorLog, game.i18n.localize('MUTHUR.spectatorJoined'), '', '#00ff00', 'reply');
+        void displayMuthurMessage(
+            spectatorLog,
+            getGame().i18n?.localize('MUTHUR.spectatorJoined') || 'A new spectator has joined the session',
+            '',
+            '#00ff00',
+            'reply',
+        );
     }
 
     return container;
 }
 
-export function toggleMuthurChat() {
+export function toggleMuthurChat(): void {
     const chatContainer = document.getElementById('muthur-chat-container');
     const session = getSession();
     if (chatContainer) {
-        if (session.userId === game.user.id) {
+        if (session.userId === getGame().user?.id) {
             updateSession({ active: false, userId: null, userName: null });
-            game.socket.emit('module.alien-mu-th-ur', {
+            getGame().socket?.emit('module.alien-mu-th-ur', {
                 type: 'sessionStatus',
                 active: false,
                 userId: null,
@@ -197,11 +253,33 @@ export function toggleMuthurChat() {
         }
         chatContainer.remove();
     } else {
-        showMuthurInterface();
+        const user = getGame().user;
+        if (!user) return;
+        if (session.active && session.userId && session.userId !== user.id) {
+            ui.notifications?.warn(
+                getGame().i18n?.format('MUTHUR.sessionActiveWarning', {
+                    userName: session.userName ?? '',
+                }) || `A MUTHUR session is already active with ${session.userName ?? 'another user'}`,
+            );
+            return;
+        }
+        if (user.isGM) {
+            showMuthurInterface();
+            return;
+        }
+
+        showWaitingMessage();
+        updateSession({ active: true, userId: user.id, userName: user.name });
+        getGame().socket?.emit('module.alien-mu-th-ur', {
+            type: 'requestSpectatorSelection',
+            userId: user.id,
+            userName: user.name,
+        });
+        ui.notifications?.info(getGame().i18n?.localize('MUTHUR.waitingForGM') || 'Waiting for GM authorization.');
     }
 }
 
-export function showGMSpectatorSelectionDialog(activeUserId, activeUserName) {
+export function showGMSpectatorSelectionDialog(activeUserId: string, activeUserName: string): void {
     const dialog = document.createElement('div');
     dialog.id = 'muthur-spectator-dialog';
     dialog.style.cssText = `
@@ -219,12 +297,13 @@ export function showGMSpectatorSelectionDialog(activeUserId, activeUserName) {
     `;
 
     const title = document.createElement('h2');
-    title.textContent = game.i18n.localize('MUTHUR.selectSpectators');
+    title.textContent = getGame().i18n?.localize('MUTHUR.selectSpectators') || 'Select spectators';
     title.style.cssText = `margin-top: 0; text-align: center; color: #ff9900; font-family: monospace; font-size: 18px;`;
     dialog.appendChild(title);
 
     const description = document.createElement('p');
-    description.textContent = game.i18n.localize('MUTHUR.selectSpectatorsHint');
+    description.textContent =
+        getGame().i18n?.localize('MUTHUR.selectSpectatorsHint') || 'Choose the players who will view as spectators';
     description.style.cssText = `margin-bottom: 15px; color: #ff9900; font-family: monospace;`;
     dialog.appendChild(description);
 
@@ -232,9 +311,15 @@ export function showGMSpectatorSelectionDialog(activeUserId, activeUserName) {
     playerList.style.cssText = `max-height: 200px; overflow-y: auto; margin-bottom: 15px; border: 1px solid #ff9900; padding: 10px;`;
     dialog.appendChild(playerList);
 
-    const players = game.users.filter((user) => !user.isGM && user.id !== activeUserId && user.active);
+    const players: User[] | undefined = getGame().users?.filter(
+        (user: User) => !user.isGM && user.id !== activeUserId && user.active,
+    );
 
-    players.forEach((player) => {
+    players?.forEach((player: User) => {
+        if (!player.id) {
+            return;
+        }
+
         const playerItem = document.createElement('div');
         playerItem.style.cssText = `display: flex; align-items: center; margin-bottom: 5px;`;
         const checkbox = document.createElement('input');
@@ -255,11 +340,11 @@ export function showGMSpectatorSelectionDialog(activeUserId, activeUserName) {
     buttonsContainer.style.cssText = `display: flex; justify-content: space-between; margin-top: 20px;`;
 
     const confirmButton = document.createElement('button');
-    confirmButton.textContent = game.i18n.localize('MUTHUR.confirmSpectators');
+    confirmButton.textContent = getGame().i18n?.localize('MUTHUR.confirmSpectators') || 'Confirm';
     confirmButton.style.cssText = `background: black; border: 1px solid #ff9900; color: #ff9900; padding: 5px 15px; cursor: pointer; font-family: monospace;`;
 
     const cancelButton = document.createElement('button');
-    cancelButton.textContent = game.i18n.localize('MUTHUR.cancelSpectators');
+    cancelButton.textContent = getGame().i18n?.localize('MUTHUR.cancelSpectators') || 'Cancel';
     cancelButton.style.cssText = `background: black; border: 1px solid #ff9900; color: #ff9900; padding: 5px 15px; cursor: pointer; font-family: monospace;`;
 
     buttonsContainer.appendChild(confirmButton);
@@ -269,8 +354,10 @@ export function showGMSpectatorSelectionDialog(activeUserId, activeUserName) {
     document.body.appendChild(dialog);
 
     confirmButton.onclick = () => {
-        const selectedIds = Array.from(dialog.querySelectorAll('input[type="checkbox"]:checked')).map((cb) => cb.value);
-        game.socket.emit('module.alien-mu-th-ur', {
+        const selectedIds = Array.from(dialog.querySelectorAll<HTMLInputElement>('input[type="checkbox"]:checked')).map(
+            (cb) => cb.value,
+        );
+        getGame().socket.emit('module.alien-mu-th-ur', {
             type: 'openSpectatorInterface',
             spectatorIds: selectedIds,
             activeUserId: activeUserId,
@@ -284,8 +371,8 @@ export function showGMSpectatorSelectionDialog(activeUserId, activeUserName) {
     };
 }
 
-export function appendDialogToGM(element, position = 'bottom-right', margin = 10) {
-    if (!game.user.isGM) return;
+export function appendDialogToGM(element: HTMLElement, position: string = 'bottom-right', margin: number = 10): void {
+    if (!getGame().user?.isGM) return;
     element.style.position = 'fixed';
     if (position === 'bottom-right') {
         element.style.bottom = `${margin}px`;

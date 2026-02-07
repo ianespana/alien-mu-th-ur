@@ -1,18 +1,31 @@
 export const MODULE_ID = 'alien-mu-th-ur';
 
-export const SESSION_INITIAL_STATE = {
+export function getGame(): Game {
+    if (!(game instanceof foundry.Game)) {
+        throw new Error('game is not initialized yet!');
+    }
+    return game;
+}
+
+export interface SessionState {
+    active: boolean;
+    userId: string | null;
+    userName: string | null;
+}
+
+export const SESSION_INITIAL_STATE: SessionState = {
     active: false,
     userId: null,
     userName: null,
 };
 
-export const getHackingSequences = () => [
+export const getHackingSequences = (): string[] => [
     '> INITIALIZING BRUTE FORCE ATTACK...',
     'ssh -p 22 root@muthur6000.weyland-corp',
     'TRYING PASSWORD COMBINATIONS...',
 ];
 
-export const getPostPasswordSequences = () => [
+export const getPostPasswordSequences = (): string[] => [
     'PASSWORD FOUND: ********',
     'ACCESS GRANTED TO PRIMARY SYSTEMS',
     '> SWITCHING TO DICTIONARY ATTACK FOR SECONDARY SYSTEMS',
@@ -20,92 +33,98 @@ export const getPostPasswordSequences = () => [
     'ACCESSING MAIN COMPUTER...',
 ];
 
-export const getSuccessSequences = () => [
+export interface SequenceItem {
+    text: string;
+    color: string;
+    type: 'reply' | 'error' | 'system';
+}
+
+export const getSuccessSequences = (): SequenceItem[] => [
     {
-        text: game.i18n.localize('MOTHER.IntrusionDetected'),
+        text: getGame().i18n?.localize('MOTHER.IntrusionDetected') || '!!! INTRUSION DETECTED !!!',
         color: '#ff0000',
         type: 'error',
     },
     {
-        text: game.i18n.localize('MOTHER.SecurityProtocol'),
+        text: getGame().i18n?.localize('MOTHER.SecurityProtocol') || '■ SECURITY PROTOCOL DELTA-7 ACTIVATED ■',
         color: '#ff9900',
         type: 'error',
     },
     {
-        text: game.i18n.localize('MOTHER.CountermeasuresAttempt'),
+        text: getGame().i18n?.localize('MOTHER.CountermeasuresAttempt') || 'ATTEMPTING COUNTERMEASURES...',
         color: '#00ff00',
         type: 'reply',
     },
     {
-        text: game.i18n.localize('MOTHER.CountermeasuresFailed'),
+        text: getGame().i18n?.localize('MOTHER.CountermeasuresFailed') || '!!! COUNTERMEASURES FAILED !!!',
         color: '#ff0000',
         type: 'error',
     },
     {
-        text: game.i18n.localize('MOTHER.RootAccess'),
+        text: getGame().i18n?.localize('MOTHER.RootAccess') || 'ROOT ACCESS COMPROMISED',
         color: '#ff0000',
         type: 'error',
     },
     {
-        text: game.i18n.localize('MOTHER.AdminPrivileges'),
+        text: getGame().i18n?.localize('MOTHER.AdminPrivileges') || '>>> ADMINISTRATOR PRIVILEGES GRANTED',
         color: '#00ff00',
         type: 'reply',
     },
     {
-        text: game.i18n.localize('MOTHER.SecurityDisabled'),
+        text: getGame().i18n?.localize('MOTHER.SecurityDisabled') || 'SECURITY PROTOCOLS DISABLED',
         color: '#00ff00',
         type: 'reply',
     },
     {
-        text: game.i18n.localize('MOTHER.FullAccess'),
+        text: getGame().i18n?.localize('MOTHER.FullAccess') || 'FULL ACCESS GRANTED',
         color: '#00ff00',
         type: 'reply',
     },
     {
-        text: game.i18n.localize('MOTHER.WelcomeAdmin'),
+        text: getGame().i18n?.localize('MOTHER.WelcomeAdmin') || 'WELCOME ADMINISTRATOR',
         color: '#00ff00',
         type: 'reply',
     },
 ];
 
-export const getFailureSequences = () => [
+export const getFailureSequences = (): SequenceItem[] => [
     {
-        text: game.i18n.localize('MOTHER.IntrusionDetected'),
+        text: getGame().i18n?.localize('MOTHER.IntrusionDetected') || '!!! INTRUSION DETECTED !!!',
         color: '#ff0000',
         type: 'error',
     },
     {
-        text: game.i18n.localize('MOTHER.SecurityProtocol'),
+        text: getGame().i18n?.localize('MOTHER.SecurityProtocol') || '■ SECURITY PROTOCOL DELTA-7 ACTIVATED ■',
         color: '#ff9900',
         type: 'error',
     },
     {
-        text: game.i18n.localize('MOTHER.CountermeasuresActivated'),
+        text: getGame().i18n?.localize('MOTHER.CountermeasuresActivated') || 'COUNTERMEASURES ACTIVATED',
         color: '#ff0000',
         type: 'error',
     },
     {
-        text: game.i18n.localize('MOTHER.TerminalLocked'),
+        text: getGame().i18n?.localize('MOTHER.TerminalLocked') || '!!! TERMINAL LOCKED !!!',
         color: '#ff0000',
         type: 'error',
     },
     {
-        text: game.i18n.localize('MOTHER.LocatingIntruder'),
+        text: getGame().i18n?.localize('MOTHER.LocatingIntruder') || 'LOCATING INTRUDER...',
         color: '#ff9900',
         type: 'reply',
     },
     {
-        text: game.i18n.localize('MOTHER.IPRecorded'),
+        text: getGame().i18n?.localize('MOTHER.IPRecorded') || 'IP COORDINATES RECORDED',
         color: '#ff0000',
         type: 'error',
     },
     {
-        text: game.i18n.localize('MOTHER.AccessBlocked'),
+        text: getGame().i18n?.localize('MOTHER.AccessBlocked') || '!!! ACCESS BLOCKED !!!',
         color: '#ff0000',
         type: 'error',
     },
     {
-        text: game.i18n.localize('MOTHER.TerminalLocked24'),
+        text: getGame().i18n?.localize('MOTHER.TerminalLocked24') || 'TERMINAL LOCKED FOR 24 HOURS',
         color: '#ff0000',
         type: 'error',
     },

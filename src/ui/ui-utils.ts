@@ -1,14 +1,16 @@
+import gsap from 'gsap';
 import {
     playCommunicationSoundThrottled,
     playReplySound,
     playTypeSound,
     setShouldContinueReplySound,
     stopReplySound,
-} from './audio-utils.js';
-import { MODULE_ID } from './constants.js';
-import gsap from '/scripts/greensock/esm/all.js';
+} from '../audio-utils.js';
+import { getGame, MODULE_ID } from '../constants.js';
 
-export async function showBootSequence(isSpectator = false) {
+const waitingMessageTweens = new WeakMap<HTMLElement, gsap.core.Tween>();
+
+export async function showBootSequence(isSpectator: boolean = false): Promise<void> {
     const bootContainer = document.createElement('div');
     bootContainer.id = 'muthur-boot-sequence';
     bootContainer.style.cssText = `
@@ -51,15 +53,11 @@ export async function showBootSequence(isSpectator = false) {
 
     document.body.appendChild(bootContainer);
 
-    if (typeof gsap !== 'undefined') {
-        try {
-            gsap.timeline().to(backgroundLogo, {
-                opacity: 0.1,
-                duration: 1.2,
-                ease: 'power2.inOut',
-            });
-        } catch (e) {}
-    }
+    gsap.timeline().to(backgroundLogo, {
+        opacity: 0.1,
+        duration: 1.2,
+        ease: 'power2.inOut',
+    });
 
     const logo = document.createElement('div');
     logo.innerHTML = `
@@ -86,14 +84,12 @@ export async function showBootSequence(isSpectator = false) {
     `;
     bootContainer.appendChild(scanline);
 
-    if (typeof gsap !== 'undefined') {
-        gsap.to(scanline, {
-            top: '100%',
-            duration: 2,
-            repeat: -1,
-            ease: 'none',
-        });
-    }
+    gsap.to(scanline, {
+        top: '100%',
+        duration: 2,
+        repeat: -1,
+        ease: 'none',
+    });
 
     const bootLog = document.createElement('div');
     bootLog.style.cssText = `
@@ -128,38 +124,25 @@ export async function showBootSequence(isSpectator = false) {
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    if (typeof gsap !== 'undefined') {
-        gsap.to(bootContainer, {
-            opacity: 0,
-            duration: 1,
-            onComplete: () => {
-                bootContainer.remove();
-                if (!isSpectator) {
-                    if (window.showMuthurInterface) window.showMuthurInterface();
-                } else {
-                    if (window.showSpectatorInterface) {
-                        const activeUser = window.currentMuthurSession?.userId;
-                        const activeName = window.currentMuthurSession?.userName;
-                        window.showSpectatorInterface(activeUser, activeName, true);
-                    }
+    gsap.to(bootContainer, {
+        opacity: 0,
+        duration: 1,
+        onComplete: () => {
+            bootContainer.remove();
+            if (!isSpectator) {
+                window.showMuthurInterface?.();
+            } else {
+                if (window.showSpectatorInterface) {
+                    const activeUser = window.currentMuthurSession?.userId ?? '';
+                    const activeName = window.currentMuthurSession?.userName ?? '';
+                    window.showSpectatorInterface(activeUser, activeName, true);
                 }
-            },
-        });
-    } else {
-        bootContainer.remove();
-        if (!isSpectator) {
-            if (window.showMuthurInterface) window.showMuthurInterface();
-        } else {
-            if (window.showSpectatorInterface) {
-                const activeUser = window.currentMuthurSession?.userId;
-                const activeName = window.currentMuthurSession?.userName;
-                window.showSpectatorInterface(activeUser, activeName, true);
             }
-        }
-    }
+        },
+    });
 }
 
-export function createFullScreenGlitch() {
+export function createFullScreenGlitch(): HTMLElement {
     const glitchOverlay = document.createElement('div');
     glitchOverlay.id = 'muthur-glitch-overlay';
     glitchOverlay.style.cssText = `
@@ -177,7 +160,7 @@ export function createFullScreenGlitch() {
     return glitchOverlay;
 }
 
-export async function applyGlitchEffect() {
+export async function applyGlitchEffect(): Promise<void> {
     const gameCanvas = document.getElementById('board');
 
     if (Math.random() > 0.7) {
@@ -195,21 +178,47 @@ export async function applyGlitchEffect() {
                     pointer-events: none;
                 `;
                 document.body.appendChild(blackout);
-                await new Promise((resolve) => setTimeout(resolve, 150));
-                blackout.remove();
+                await new Promise<void>((resolve) => {
+                    gsap.to(blackout, {
+                        opacity: 0,
+                        duration: 0.15,
+                        onComplete: () => {
+                            blackout.remove();
+                            resolve();
+                        },
+                    });
+                });
             },
             async () => {
                 if (gameCanvas) {
-                    gameCanvas.style.transform = `translateY(${Math.random() * 300 - 150}px)`;
-                    await new Promise((resolve) => setTimeout(resolve, 100));
-                    gameCanvas.style.transform = '';
+                    await new Promise<void>((resolve) => {
+                        gsap.to(gameCanvas, {
+                            y: Math.random() * 300 - 150,
+                            duration: 0.1,
+                            yoyo: true,
+                            repeat: 1,
+                            onComplete: () => {
+                                gsap.set(gameCanvas, { clearProps: 'transform' });
+                                resolve();
+                            },
+                        });
+                    });
                 }
             },
             async () => {
                 if (gameCanvas) {
-                    gameCanvas.style.filter = 'brightness(2) contrast(3) hue-rotate(90deg)';
-                    await new Promise((resolve) => setTimeout(resolve, 80));
-                    gameCanvas.style.filter = '';
+                    await new Promise<void>((resolve) => {
+                        gsap.to(gameCanvas, {
+                            filter: 'brightness(2) contrast(3) hue-rotate(90deg)',
+                            duration: 0.08,
+                            yoyo: true,
+                            repeat: 1,
+                            onComplete: () => {
+                                gameCanvas.style.filter = '';
+                                resolve();
+                            },
+                        });
+                    });
                 }
             },
             async () => {
@@ -227,8 +236,16 @@ export async function applyGlitchEffect() {
                     pointer-events: none;
                 `;
                 document.body.appendChild(slice);
-                await new Promise((resolve) => setTimeout(resolve, 120));
-                slice.remove();
+                await new Promise<void>((resolve) => {
+                    gsap.to(slice, {
+                        opacity: 0,
+                        duration: 0.12,
+                        onComplete: () => {
+                            slice.remove();
+                            resolve();
+                        },
+                    });
+                });
             },
         ];
 
@@ -237,34 +254,55 @@ export async function applyGlitchEffect() {
     }
 }
 
-export async function typeWriterEffect(element, text, speed = 30) {
+export async function typeWriterEffect(element: HTMLElement, text: string, speed: number = 30): Promise<void> {
     element.textContent = '';
-    for (let i = 0; i < text.length; i++) {
-        element.textContent += text.charAt(i);
-        playTypeSound();
-        await new Promise((resolve) => setTimeout(resolve, speed));
-    }
+    await new Promise<void>((resolve) => {
+        const timeline = gsap.timeline({ onComplete: resolve });
+        for (let i = 0; i < text.length; i++) {
+            const char = text.charAt(i);
+            timeline.call(() => {
+                element.textContent += char;
+                playTypeSound();
+            });
+            timeline.to({}, { duration: speed / 1000 });
+        }
+    });
 }
 
-export async function displayMuthurMessage(chatLog, text, prefix = '', color = '#00ff00', messageType = 'normal') {
+export async function displayMuthurMessage(
+    chatLog: HTMLElement,
+    text: string,
+    prefix: string = '',
+    color: string = '#00ff00',
+    messageType: string = 'normal',
+): Promise<HTMLElement> {
     const messageDiv = document.createElement('div');
     messageDiv.classList.add('message', messageType);
     messageDiv.style.color = color;
     chatLog.appendChild(messageDiv);
 
-    if (game.settings.get(MODULE_ID, 'enableTypewriter')) {
+    if (getGame().settings.get(MODULE_ID, 'enableTypewriter')) {
         setShouldContinueReplySound(true);
-        playReplySound();
+        void playReplySound();
 
         let currentText = prefix;
-        for (let i = 0; i < text.length; i++) {
-            currentText += text.charAt(i);
-            messageDiv.textContent = currentText;
-            chatLog.scrollTop = chatLog.scrollHeight;
-            await new Promise((resolve) => setTimeout(resolve, 30));
-        }
-
-        stopReplySound();
+        await new Promise<void>((resolve) => {
+            const timeline = gsap.timeline({
+                onComplete: () => {
+                    stopReplySound();
+                    resolve();
+                },
+            });
+            for (let i = 0; i < text.length; i++) {
+                const char = text.charAt(i);
+                timeline.call(() => {
+                    currentText += char;
+                    messageDiv.textContent = currentText;
+                    chatLog.scrollTop = chatLog.scrollHeight;
+                });
+                timeline.to({}, { duration: 0.03 });
+            }
+        });
     } else {
         messageDiv.textContent = prefix + text;
         chatLog.scrollTop = chatLog.scrollHeight;
@@ -273,37 +311,51 @@ export async function displayMuthurMessage(chatLog, text, prefix = '', color = '
     return messageDiv;
 }
 
-export async function displayHackMessage(chatLog, message, color, type, isPassword = false) {
+export async function displayHackMessage(
+    chatLog: HTMLElement,
+    message: string,
+    color: string,
+    type: string,
+    isPassword: boolean = false,
+): Promise<void> {
     const messageDiv = document.createElement('div');
     messageDiv.style.color = color;
     messageDiv.classList.add('message', type);
     chatLog.appendChild(messageDiv);
 
-    const soundGloballyMuted = !!(window.MUTHUR && window.MUTHUR.muteForSpectator);
+    const soundGloballyMuted = !!window.MUTHUR?.muteForSpectator;
 
     if (isPassword) {
         messageDiv.textContent = message;
-        if (!soundGloballyMuted && game.settings.get(MODULE_ID, 'enableTypingSounds')) {
+        if (!soundGloballyMuted && getGame().settings.get(MODULE_ID, 'enableTypingSounds')) {
             playCommunicationSoundThrottled();
         }
-        return Promise.resolve();
-    } else {
-        let displayedText = '';
-        for (const char of message) {
-            displayedText += char;
-            messageDiv.textContent = displayedText;
-            if (!soundGloballyMuted && game.settings.get(MODULE_ID, 'enableTypingSounds') && char === ' ') {
-                playCommunicationSoundThrottled();
-            }
-            await new Promise((resolve) => setTimeout(resolve, 20));
-        }
-        return Promise.resolve();
+        return;
     }
+
+    let displayedText = '';
+    await new Promise<void>((resolve) => {
+        const timeline = gsap.timeline({ onComplete: resolve });
+        for (const char of message) {
+            timeline.call(() => {
+                displayedText += char;
+                messageDiv.textContent = displayedText;
+                if (!soundGloballyMuted && getGame().settings.get(MODULE_ID, 'enableTypingSounds') && char === ' ') {
+                    playCommunicationSoundThrottled();
+                }
+            });
+            timeline.to({}, { duration: 0.02 });
+        }
+    });
 }
 
-export function updateSpectatorsWithMessage(text, prefix = '', color = '#00ff00', messageType = 'normal') {
-    if (!game.socket) return;
-    game.socket.emit('module.alien-mu-th-ur', {
+export function updateSpectatorsWithMessage(
+    text: string,
+    prefix: string = '',
+    color: string = '#00ff00',
+    messageType: string = 'normal',
+): void {
+    getGame().socket?.emit('module.alien-mu-th-ur', {
         type: 'updateSpectators',
         text: text,
         prefix: prefix,
@@ -312,44 +364,45 @@ export function updateSpectatorsWithMessage(text, prefix = '', color = '#00ff00'
     });
 }
 
-export function syncMessageToSpectators(chatLog, message, prefix = '', color = '#00ff00', messageType = 'normal') {
+export function syncMessageToSpectators(
+    chatLog: HTMLElement,
+    message: string,
+    prefix: string = '',
+    color: string = '#00ff00',
+    messageType: string = 'normal',
+): Promise<HTMLElement> {
     const messageElement = displayMuthurMessage(chatLog, message, prefix, color, messageType);
     updateSpectatorsWithMessage(message, prefix, color, messageType);
     return messageElement;
 }
 
-export function sendToGM(message, actionType = 'command', commandType = '') {
-    if (!game.socket) {
-        console.warn('MUTHUR | Socket not available!');
-        return;
-    }
-
+export function sendToGM(message: string, actionType: string = 'command', commandType: string = ''): void {
     try {
-        game.socket.emit('module.alien-mu-th-ur', {
+        getGame().socket.emit('module.alien-mu-th-ur', {
             type: 'muthurCommand',
             command: message,
-            user: game.user.name,
-            userId: game.user.id,
+            user: getGame().user?.name,
+            userId: getGame().user?.id,
             actionType: actionType,
             commandType: commandType,
             timestamp: Date.now(),
         });
     } catch (error) {
         console.error('MUTHUR | Error while sending message:', error);
-        ui.notifications.error('Communication error with MUTHUR');
+        ui.notifications?.error('Communication error with MUTHUR');
     }
 }
 
-export function syncCommandResult(command, result) {
-    if (!game.socket) return;
-    game.socket.emit('module.alien-mu-th-ur', {
+export function syncCommandResult(command: string, result: { text: string; color?: string; type?: string }): void {
+    if (!getGame().socket) return;
+    getGame().socket.emit('module.alien-mu-th-ur', {
         type: 'commandResult',
         command: command,
         result: result,
     });
 }
 
-export function showWaitingMessage() {
+export function showWaitingMessage(): HTMLElement {
     let waitingContainer = document.getElementById('muthur-waiting-container');
     if (waitingContainer) return waitingContainer;
 
@@ -379,7 +432,8 @@ export function showWaitingMessage() {
     waitingContainer.appendChild(title);
 
     const message = document.createElement('p');
-    message.textContent = game.i18n.localize('MUTHUR.waitingForGM');
+    message.textContent =
+        getGame().i18n?.localize('MUTHUR.waitingForGM') || 'Waiting for GM authorization to start MUTHUR...';
     message.style.cssText = `
         color: #00ff00;
         font-family: monospace;
@@ -396,24 +450,30 @@ export function showWaitingMessage() {
     loadingIndicator.textContent = '.';
     waitingContainer.appendChild(loadingIndicator);
 
-    let dots = 1;
-    const loadingInterval = setInterval(() => {
-        dots = (dots % 3) + 1;
-        loadingIndicator.textContent = '.'.repeat(dots);
-    }, 500);
+    let dotsCount = 1;
+    const dotsTween = gsap.to(
+        {},
+        {
+            duration: 0.5,
+            repeat: -1,
+            onRepeat: () => {
+                dotsCount = (dotsCount % 3) + 1;
+                loadingIndicator.textContent = '.'.repeat(dotsCount);
+            },
+        },
+    );
 
-    waitingContainer.dataset.intervalId = loadingInterval;
+    waitingMessageTweens.set(waitingContainer, dotsTween);
     document.body.appendChild(waitingContainer);
 
     return waitingContainer;
 }
 
-export function removeWaitingMessage() {
+export function removeWaitingMessage(): void {
     const waitingContainer = document.getElementById('muthur-waiting-container');
     if (waitingContainer) {
-        if (waitingContainer.dataset.intervalId) {
-            clearInterval(parseInt(waitingContainer.dataset.intervalId));
-        }
+        waitingMessageTweens.get(waitingContainer)?.kill();
+        waitingMessageTweens.delete(waitingContainer);
         waitingContainer.remove();
     }
 }

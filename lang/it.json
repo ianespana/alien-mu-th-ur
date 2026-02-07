@@ -65,7 +65,9 @@
         "unknownEntity": "entità sconosciuta",
         "lifeformsDetected": "forme di vita rilevate",
         "entitiesAffected": "entità interessate",
-        "postHack": { "title": "COMANDI POST-HACK:" },
+        "postHack": {
+            "title": "COMANDI POST-HACK:"
+        },
         "alarmSoundPath": {
             "name": "SUONO ALLARME",
             "hint": "Scegli il file audio riprodotto quando l'ALLARME è attivo"
@@ -81,7 +83,10 @@
                     "title": "COMANDI DI BASE",
                     "desc": "HELP: MOSTRA QUESTO AIUTO\nSTATUS: STATO DEL SISTEMA\nCLEAR: PULISCI SCHERMO\nEXIT: CHIUDI TERMINALE\n/M [MESSAGGIO]: COMUNICA CON MADRE"
                 },
-                "hack": { "title": "HACK", "desc": "HACK: TENTA DI OTTENERE DIRITTI ADMIN (CONTROLLATO DAL MJ)" },
+                "hack": {
+                    "title": "HACK",
+                    "desc": "HACK: TENTA DI OTTENERE DIRITTI ADMIN (CONTROLLATO DAL MJ)"
+                },
                 "specialOrders": {
                     "title": "ORDINI SPECIALI",
                     "desc": "ORDERS: 754, 899, 931, 937, 939, 966. MOSTRA I DETTAGLI DEGLI ORDINI."
@@ -102,7 +107,10 @@
                     "title": "ALLARME",
                     "desc": "ACTIVATE ALARM. RIPRODUCE UN ALLARME E PUÒ APPLICARE UN OVERLAY ROSSO."
                 },
-                "gas": { "title": "GAS", "desc": "GAS TARGETS. APPLICA EFFETTO AVVELENATO/INCOSCIENTE NELL'AREA." },
+                "gas": {
+                    "title": "GAS",
+                    "desc": "GAS TARGETS. APPLICA EFFETTO AVVELENATO/INCOSCIENTE NELL'AREA."
+                },
                 "cryo": {
                     "title": "CRYO POD",
                     "desc": "CRYO POD [NOME?]. ELENCA I TOKEN, IL MJ SCEGLIE IL BERSAGLIO PER LA STASI."
@@ -142,11 +150,26 @@
                     "name": "POST-HACK: PROTOCOLLO CERBERUS",
                     "hint": "Consenti protocollo CERBERUS dopo HACK."
                 },
-                "phDoors": { "name": "POST-HACK: CONTROLLO PORTE", "hint": "Consenti LOCK/UNLOCK/DOORS." },
-                "phLights": { "name": "POST-HACK: CONTROLLO LUCI", "hint": "Consenti DIM/SHUTDOWN/RESTORE LIGHTS." },
-                "phAlarm": { "name": "POST-HACK: ATTIVARE ALLARME", "hint": "Consenti suono allarme + overlay." },
-                "phGas": { "name": "POST-HACK: GAS TARGETS", "hint": "Consenti effetto gas (avvelenato/incosciente)." },
-                "phCryo": { "name": "POST-HACK: CRYO POD/RELEASE", "hint": "Consenti stasi/rilascio di un bersaglio." }
+                "phDoors": {
+                    "name": "POST-HACK: CONTROLLO PORTE",
+                    "hint": "Consenti LOCK/UNLOCK/DOORS."
+                },
+                "phLights": {
+                    "name": "POST-HACK: CONTROLLO LUCI",
+                    "hint": "Consenti DIM/SHUTDOWN/RESTORE LIGHTS."
+                },
+                "phAlarm": {
+                    "name": "POST-HACK: ATTIVARE ALLARME",
+                    "hint": "Consenti suono allarme + overlay."
+                },
+                "phGas": {
+                    "name": "POST-HACK: GAS TARGETS",
+                    "hint": "Consenti effetto gas (avvelenato/incosciente)."
+                },
+                "phCryo": {
+                    "name": "POST-HACK: CRYO POD/RELEASE",
+                    "hint": "Consenti stasi/rilascio di un bersaglio."
+                }
             },
             "typewriter": {
                 "name": "Effetto Macchina da Scrivere",
@@ -171,10 +194,6 @@
                 "hint": "Attiva i suoni della tastiera come nel film Alien",
                 "enable": "Attivati",
                 "disable": "Disattivati"
-            },
-            "typingSoundVolume": {
-                "name": "Volume Digitazione",
-                "hint": "Regola il volume dei suoni di digitazione (0 = silenzioso, 1 = massimo)"
             },
             "allowDragGM": {
                 "name": "Spostare terminale (GM)",
@@ -219,6 +238,10 @@
             "cerberusDuration": {
                 "name": "Durata Protocollo Cerberus",
                 "hint": "Durata in minuti prima dell'autodistruzione (1-60 minuti)"
+            },
+            "soundVolume": {
+                "name": "Volume di MUTHUR",
+                "hint": "Regola il volume di MUTHUR (0 = muto, 1 = massimo)"
             }
         },
         "motherName": "MADRE",
