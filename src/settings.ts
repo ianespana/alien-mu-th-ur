@@ -45,7 +45,7 @@ export function registerSettings(): void {
             max: 1,
             step: 0.1,
         },
-        default: 1,
+        default: 0.5,
     });
 
     // Scanline
@@ -139,7 +139,7 @@ export function registerSettings(): void {
             categories: ['AUDIO'],
             nullable: false,
         } as unknown as foundry.data.fields.FilePathField.DefaultOptions),
-        default: '/modules/alien-mu-th-ur/sounds/reply/Computer_Reply_1.wav',
+        default: '/modules/alien-mu-th-ur/sounds/count/alarm.mp3',
     });
 
     getGame().settings.register(MODULE_ID, 'allowHack', {
