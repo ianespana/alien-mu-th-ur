@@ -142,6 +142,15 @@ export function registerSettings(): void {
         default: '/modules/alien-mu-th-ur/sounds/count/alarm.mp3',
     });
 
+    getGame().settings.register(MODULE_ID, 'cerberusDeathScreenEnabled', {
+        name: 'Cerberus death screen',
+        hint: 'Show the final Cerberus death screen overlay.',
+        scope: 'world',
+        config: false,
+        type: Boolean,
+        default: true,
+    });
+
     getGame().settings.register(MODULE_ID, 'allowHack', {
         name: getGame().i18n?.localize('MUTHUR.SETTINGS.allowHack.name') || 'Allow Hacking',
         hint:

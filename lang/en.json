@@ -297,6 +297,8 @@
         "permissionsTitle": "Permissions",
         "permissionsSpecialOrders": "Special Orders",
         "permissionsPostHack": "Post-Hack Commands",
+        "cerberusDeathScreenEnabled": "CERBERUS DEATH SCREEN ENABLED.",
+        "cerberusDeathScreenDisabled": "CERBERUS DEATH SCREEN DISABLED.",
         "helpCommands": {
             "help": "HELP: DISPLAY THIS HELP",
             "status": "STATUS: SYSTEM STATUS",
@@ -304,6 +306,8 @@
             "exit": "EXIT: CLOSE TERMINAL",
             "hack": "HACK: ATTEMPT TO OBTAIN ADMIN RIGHTS (GM-CONTROLLED)",
             "cerberus": "CERBERUS: GM APPROVAL REQUIRED. PLAYER MUST CONFIRM/CANCEL BEFORE COUNTDOWN.",
+            "selfDestruct": "SELF DESTRUCT: GM APPROVAL REQUIRED. PLAYER MUST CONFIRM/CANCEL BEFORE COUNTDOWN.",
+            "cerberusDeathScreen": "CERBERUS DEATHSCREEN: TOGGLE FINAL DEATH SCREEN (GM ONLY).",
             "doors": "DOORS, LOCK DOOR X, UNLOCK DOOR X. TARGETS DOORS NAMED 'AD*'.",
             "lights": "SHUTDOWN LIGHTS, DIM LIGHTS, RESTORE LIGHTS. TURN OFF AND RESTORE LIGHTING.",
             "alarm": "ACTIVATE ALARM, STOP ALARM. PLAYS AN ALERT AND CAN APPLY A RED OVERLAY.",
@@ -329,6 +333,8 @@
         "CerberusHackAlert": "!!! PRIORITY ALERT !!! - {userName} HAS INITIATED CERBERUS PROTOCOL",
         "CerberusConfirmed": "CERBERUS PROTOCOL CONFIRMED - SELF-DESTRUCT IN PROGRESS",
         "CerberusCancelled": "CERBERUS PROTOCOL CANCELLED",
+        "SelfDestructConfirmed": "SELF-DESTRUCT CONFIRMED - COUNTDOWN IN PROGRESS",
+        "SelfDestructCancelled": "SELF-DESTRUCT CANCELLED",
         "CommandNotFound": "COMMAND NOT RECOGNIZED. TYPE 'HELP' FOR COMMAND LIST.",
         "IntrusionDetected": "!!! INTRUSION DETECTED !!!",
         "HackDisabledInfo": "The HACK command is currently disabled in system settings\nWould you like to enable it?",
@@ -413,7 +419,18 @@
                 "StopCerberus": "Stop Cerberus",
                 "completed": "SELF-DESTRUCT SEQUENCE COMPLETED."
             },
+            "SelfDestruct": {
+                "name": "SELF-DESTRUCT",
+                "confirmation": "!!! WARNING !!!\\n\\nYOU ARE ABOUT TO ACTIVATE SELF-DESTRUCT\\nTHIS ACTION WILL TRIGGER DESTRUCTION\\nNO RETURN WILL BE POSSIBLE\\n\\nCONFIRM ACTIVATION?",
+                "confirm": "CONFIRM",
+                "cancel": "CANCEL",
+                "completed": "SELF-DESTRUCT SEQUENCE COMPLETED."
+            },
             "Unknown": "SPECIAL ORDER NOT RECOGNIZED."
         }
     }
 }
+
+
+
+

@@ -134,9 +134,37 @@ export async function handleCommand(input: HTMLInputElement, chatLog: HTMLElemen
                 await handleActionCommand('CRYO_POD', args.join(' '), chatLog);
             }
             break;
+        case 'CERBERUS':
+            if (args[0] && ['DEATH', 'DEATHSCREEN', 'DEATH-SCREEN'].includes(args[0])) {
+                await handleCerberusDeathScreenCommand(args.slice(1), chatLog);
+            } else {
+                await processSpecialCommand(fullCommand, chatLog);
+            }
+            break;
+        case 'SELF':
+            if (args[0] === 'DESTRUCT') {
+                await processSpecialCommand(fullCommand, chatLog);
+            } else {
+                await syncMessageToSpectators(
+                    chatLog,
+                    (getGame().i18n?.localize('MUTHUR.unknownCommandPrefix') || 'COMMAND NOT RECOGNIZED : ') +
+                        '/' +
+                        command,
+                    '',
+                    '#ff0000',
+                    'error',
+                );
+                if (getGame().settings.get(MODULE_ID, 'enableTypingSounds')) {
+                    void playErrorSound();
+                }
+            }
+            break;
+        case 'SELFDESTRUCT':
+            await processSpecialCommand(fullCommand, chatLog);
+            break;
         default:
             // Check if it's a Special Order or Cerberus
-            if (isSpecialOrder(fullCommand) || isCerberus(fullCommand)) {
+            if (isSpecialOrder(fullCommand) || isCerberus(fullCommand) || isSelfDestruct(fullCommand)) {
                 await processSpecialCommand(fullCommand, chatLog);
             } else {
                 // Unknown special command
@@ -351,6 +379,12 @@ async function handleHelp(chatLog: HTMLElement): Promise<void> {
         if (canCerberus) {
             const text = getGame().i18n?.localize('MUTHUR.helpCommands.cerberus');
             if (text && text !== 'MUTHUR.helpCommands.cerberus') lines.push(text);
+            const sdText = getGame().i18n?.localize('MUTHUR.helpCommands.selfDestruct');
+            if (sdText && sdText !== 'MUTHUR.helpCommands.selfDestruct') lines.push(sdText);
+        }
+        if (isGM) {
+            const text = getGame().i18n?.localize('MUTHUR.helpCommands.cerberusDeathScreen');
+            if (text && text !== 'MUTHUR.helpCommands.cerberusDeathScreen') lines.push(text);
         }
         if (canDoors) {
             const text = getGame().i18n?.localize('MUTHUR.helpCommands.doors');
@@ -378,6 +412,46 @@ async function handleHelp(chatLog: HTMLElement): Promise<void> {
 
     const helpText = `${header}\n- ${lines.join('\n- ')}\n\n${footer}`;
     await syncMessageToSpectators(chatLog, helpText, '', '#00ff00', 'reply');
+}
+
+async function handleCerberusDeathScreenCommand(args: string[], chatLog: HTMLElement): Promise<void> {
+    if (!getGame().user?.isGM) {
+        await syncMessageToSpectators(
+            chatLog,
+            getGame().i18n?.localize('MUTHUR.permissionDenied') || 'ACCESS DENIED.',
+            '',
+            '#ff0000',
+            'error',
+        );
+        if (getGame().settings.get(MODULE_ID, 'enableTypingSounds')) {
+            void playErrorSound();
+        }
+        return;
+    }
+
+    const rawMode = (args[0] || 'TOGGLE').toUpperCase();
+    const settingKey = 'cerberusDeathScreenEnabled' as const;
+    const current = !!getGame().settings.get(MODULE_ID, settingKey);
+    let nextValue: boolean;
+
+    if (rawMode === 'ON' || rawMode === 'ENABLE' || rawMode === 'ENABLED') {
+        nextValue = true;
+    } else if (rawMode === 'OFF' || rawMode === 'DISABLE' || rawMode === 'DISABLED') {
+        nextValue = false;
+    } else {
+        nextValue = !current;
+    }
+
+    await getGame().settings.set(MODULE_ID, settingKey, nextValue);
+    await syncMessageToSpectators(
+        chatLog,
+        getGame().i18n?.localize(
+            nextValue ? 'MUTHUR.cerberusDeathScreenEnabled' : 'MUTHUR.cerberusDeathScreenDisabled',
+        ) || (nextValue ? 'CERBERUS DEATH SCREEN ENABLED.' : 'CERBERUS DEATH SCREEN DISABLED.'),
+        '',
+        '#00ff00',
+        'reply',
+    );
 }
 
 async function handleStatus(chatLog: HTMLElement): Promise<void> {
@@ -431,7 +505,7 @@ async function handleHack(chatLog: HTMLElement): Promise<void> {
 async function processSpecialCommand(command: string, chatLog: HTMLElement): Promise<void> {
     const isHacked = getHackStatus();
     let canAccess = getGame().user?.isGM || isHacked;
-    if (!canAccess && isCerberus(command)) {
+    if (!canAccess && (isCerberus(command) || isSelfDestruct(command))) {
         canAccess = canBypassHackForCommand('cerberus');
     } else if (!canAccess) {
         const orderKey = command
@@ -517,5 +591,20 @@ function isCerberus(cmd: string): boolean {
     return (
         words.includes('CERBERUS') ||
         (words.length === 2 && protocolWords.includes(words[0]) && words[1] === 'CERBERUS')
+    );
+}
+
+function isSelfDestruct(cmd: string): boolean {
+    const protocolWords = [
+        (getGame().i18n?.localize('MOTHER.Keywords.Protocol') || 'PROTOCOL').toUpperCase(),
+        'PROTOCOL',
+    ];
+    const words = cmd.split(/\s+/);
+    return (
+        words.includes('SELFDESTRUCT') ||
+        words.includes('SELF-DESTRUCT') ||
+        (words.length >= 2 && words[0] === 'SELF' && words[1] === 'DESTRUCT') ||
+        (words.length === 3 && protocolWords.includes(words[0]) && words[1] === 'SELF' && words[2] === 'DESTRUCT') ||
+        (words.length === 2 && protocolWords.includes(words[0]) && ['SELF-DESTRUCT', 'SELFDESTRUCT'].includes(words[1]))
     );
 }
