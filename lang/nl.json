@@ -387,7 +387,8 @@
                 "MissionFailed": "Missie mislukt - Installatie vernietigd",
                 "Stopped": "JE HEBT HET OVERLEEFD",
                 "goodbye": "SUCCES",
-                "StopCerberus": "Stop Cerberus"
+                "StopCerberus": "Stop Cerberus",
+                "completed": "ZELFVERNIETIGINGSSEQUENTIE VOLTOOID."
             }
         }
     }

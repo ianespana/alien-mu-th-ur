@@ -383,7 +383,8 @@
                 "MissionFailed": "Mission fehlgeschlagen - Anlage zerstört",
                 "Stopped": "SIE HABEN ÜBERLEBT",
                 "goodbye": "VIEL GLÜCK",
-                "StopCerberus": "Cerberus Stoppen"
+                "StopCerberus": "Cerberus Stoppen",
+                "completed": "SELBSTZERST?RUNGSEQUENZ ABGESCHLOSSEN."
             }
         }
     }

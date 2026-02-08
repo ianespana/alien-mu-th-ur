@@ -163,11 +163,6 @@ export function triggerAlarm(withOverlay: boolean = true): void {
             }
         `;
         document.head.appendChild(style);
-
-        setTimeout(() => {
-            overlay.remove();
-            style.remove();
-        }, 10000);
     }
 
     try {
@@ -184,6 +179,11 @@ export function triggerAlarm(withOverlay: boolean = true): void {
 export function stopAlarm(): void {
     const overlay = document.getElementById('muthur-alarm-overlay');
     if (overlay) overlay.remove();
+    document.querySelectorAll('style').forEach((style) => {
+        if (style.textContent?.includes('@keyframes alarmPulse')) {
+            style.remove();
+        }
+    });
     if (currentAlarmSound) {
         void currentAlarmSound.stop();
         currentAlarmSound = null;

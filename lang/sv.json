@@ -387,7 +387,8 @@
                 "MissionFailed": "Uppdrag misslyckat - Installation förstörd",
                 "Stopped": "DU HAR ÖVERLEVT",
                 "goodbye": "LYCKA TILL",
-                "StopCerberus": "Stoppa Cerberus"
+                "StopCerberus": "Stoppa Cerberus",
+                "completed": "SJ?LVDESTRUKTIONSSEKVENS SLUTF?RD."
             }
         }
     }

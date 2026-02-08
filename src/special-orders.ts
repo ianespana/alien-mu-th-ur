@@ -1,4 +1,4 @@
-import { playSoundWithHelper } from './audio-utils.js';
+import { playAlarmSound, playSoundWithHelper } from './audio-utils.js';
 import { getGame } from './constants.js';
 import { appendDialogToGM } from './interfaces.js';
 import { getSession } from './session.js';
@@ -6,6 +6,7 @@ import { displayMuthurMessage, syncCommandResult, syncMessageToSpectators } from
 
 let cerberusCountdownInterval: ReturnType<typeof setInterval> | null = null;
 let cerberusGlobalInterval: ReturnType<typeof setInterval> | null = null;
+let cerberusAlarmSound: foundry.audio.Sound | null = null;
 
 const wait = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -44,6 +45,10 @@ export function stopCerberusGlobal(): void {
     }
     const existing = document.getElementById('muthur-cerberus-window');
     if (existing) existing.remove();
+    if (cerberusAlarmSound) {
+        void cerberusAlarmSound.stop();
+        cerberusAlarmSound = null;
+    }
 }
 
 export function createCerberusWindow(): HTMLElement {
@@ -275,3 +280,6 @@ export async function handleSpecialOrder(chatLog: HTMLElement, command: string):
         );
     }
 }
+void playAlarmSound(0.8).then((sound) => {
+    if (sound) cerberusAlarmSound = sound;
+});

@@ -387,7 +387,8 @@
                 "MissionFailed": "Oppdrag mislykket - Installasjon ødelagt",
                 "Stopped": "DU HAR OVERLEVD",
                 "goodbye": "LYKKE TIL",
-                "StopCerberus": "Stopp Cerberus"
+                "StopCerberus": "Stopp Cerberus",
+                "completed": "SELVDESTRUKSJONSSEKVENS FULLF?RT."
             }
         }
     }

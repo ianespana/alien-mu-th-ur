@@ -387,7 +387,8 @@
                 "MissionFailed": "Mission échouée - Installation détruite",
                 "Stopped": "VOUS AVEZ SURVÉCUE",
                 "goodbye": "BONNE CHANCE",
-                "StopCerberus": "Arrêter Cerberus"
+                "StopCerberus": "Arrêter Cerberus",
+                "completed": "S?QUENCE D'AUTODESTRUCTION TERMIN?E."
             }
         }
     }
