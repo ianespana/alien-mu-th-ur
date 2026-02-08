@@ -9,6 +9,11 @@
             <p class="notes">{{localize "MUTHUR.SETTINGS.allowHack.hint"}}</p>
         </div>
         <div class="form-group">
+            <label>{{localize "MUTHUR.SETTINGS.hackDecisionByGM.name"}}</label>
+            <input type="checkbox" name="hackDecisionByGM" {{#if hackDecisionByGM}}checked{{/if}} />
+            <p class="notes">{{localize "MUTHUR.SETTINGS.hackDecisionByGM.hint"}}</p>
+        </div>
+        <div class="form-group">
             <label>{{localize "MUTHUR.SETTINGS.allowDragGM.name"}}</label>
             <input type="checkbox" name="allowDragGM" {{#if allowDragGM}}checked{{/if}} />
             <p class="notes">{{localize "MUTHUR.SETTINGS.allowDragGM.hint"}}</p>

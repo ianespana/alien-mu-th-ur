@@ -357,11 +357,18 @@ export function showGMSpectatorSelectionDialog(activeUserId: string, activeUserN
         const selectedIds = Array.from(dialog.querySelectorAll<HTMLInputElement>('input[type="checkbox"]:checked')).map(
             (cb) => cb.value,
         );
-        getGame().socket.emit('module.alien-mu-th-ur', {
+        getGame().socket?.emit('module.alien-mu-th-ur', {
             type: 'openSpectatorInterface',
             spectatorIds: selectedIds,
             activeUserId: activeUserId,
             activeUserName: activeUserName,
+        });
+        getGame().socket?.emit('module.alien-mu-th-ur', {
+            type: 'continueBootSequence',
+            targetUserId: activeUserId,
+            activeUserId: activeUserId,
+            activeUserName: activeUserName,
+            spectatorIds: selectedIds,
         });
         dialog.remove();
     };

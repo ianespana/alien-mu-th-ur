@@ -242,6 +242,10 @@
             "soundVolume": {
                 "name": "Volumen de MUTHUR",
                 "hint": "Ajusta el volumen de MUTHUR (0 = silencio, 1 = m?ximo)"
+            },
+            "hackDecisionByGM": {
+                "name": "El DJ aprueba el hackeo",
+                "hint": "Requiere aprobaci?n del DJ para intentos de HACK en lugar de ?xito aleatorio"
             }
         },
         "motherName": "MADRE",
