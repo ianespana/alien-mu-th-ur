@@ -2,7 +2,13 @@ import { stopAlarm } from './actions.js';
 import { handleCommand } from './commands.js';
 import { getGame, MODULE_ID } from './constants.js';
 import { getSession, updateSession } from './session.js';
-import { displayMuthurMessage, showWaitingMessage, syncMessageToSpectators } from './ui/ui-utils.js';
+import {
+    displayMuthurMessage,
+    sendGMResponse,
+    sendToGM,
+    showWaitingMessage,
+    syncMessageToSpectators,
+} from './ui/ui-utils.js';
 
 export function hexToRgb(hex: string): string {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -16,7 +22,7 @@ export function showMuthurInterface(): HTMLElement | undefined {
     if (existingChat) return existingChat;
 
     const currentMuthurSession = getSession();
-    if (currentMuthurSession.active && currentMuthurSession.userId !== getGame().user?.id) {
+    if (currentMuthurSession.active && currentMuthurSession.userId !== getGame().user?.id && !getGame().user?.isGM) {
         ui.notifications?.warn(
             getGame().i18n?.format('MUTHUR.sessionActiveWarning', {
                 userName: currentMuthurSession.userName ?? '',
@@ -152,6 +158,10 @@ export function showMuthurInterface(): HTMLElement | undefined {
 
     document.body.appendChild(chatContainer);
 
+    if (!getGame().user?.isGM) {
+        sendToGM(getGame().i18n?.localize('MUTHUR.sessionStarted') || 'SESSION STARTED', 'open', 'valid');
+    }
+
     const executeCommand = () => {
         void handleCommand(input, chatLog);
     };
@@ -250,12 +260,15 @@ export function toggleMuthurChat(): void {
                 userId: null,
                 userName: null,
             });
+            if (!getGame().user?.isGM) {
+                sendToGM(getGame().i18n?.localize('MUTHUR.muthurSessionEnded') || 'MUTHUR SESSION TERMINATED', 'close');
+            }
         }
         chatContainer.remove();
     } else {
         const user = getGame().user;
         if (!user) return;
-        if (session.active && session.userId && session.userId !== user.id) {
+        if (session.active && session.userId && session.userId !== user.id && !user.isGM) {
             ui.notifications?.warn(
                 getGame().i18n?.format('MUTHUR.sessionActiveWarning', {
                     userName: session.userName ?? '',
@@ -277,6 +290,152 @@ export function toggleMuthurChat(): void {
         });
         ui.notifications?.info(getGame().i18n?.localize('MUTHUR.waitingForGM') || 'Waiting for GM authorization.');
     }
+}
+
+export function showGMMuthurInterface(activeUserName: string, activeUserId: string): HTMLElement {
+    const existing = document.getElementById('gm-muthur-container');
+    if (existing) {
+        existing.dataset.userId = activeUserId;
+        existing.dataset.userName = activeUserName;
+        const title = existing.querySelector('#gm-muthur-title');
+        if (title) {
+            title.textContent =
+                getGame().i18n?.format('MUTHUR.gmInterfaceTitle', { userName: activeUserName }) ||
+                `MUTHUR - ${activeUserName}`;
+        }
+        return existing;
+    }
+
+    const container = document.createElement('div');
+    container.id = 'gm-muthur-container';
+    container.dataset.userId = activeUserId;
+    container.dataset.userName = activeUserName;
+
+    const sidebar = document.getElementById('sidebar');
+    const rightPosition = sidebar ? `${sidebar.offsetWidth + 20}px` : '320px';
+    const allowGMDrag = getGame().settings.get(MODULE_ID, 'allowDragGM');
+
+    container.style.cssText = `
+        position: ${allowGMDrag ? 'absolute' : 'fixed'};
+        bottom: 20px;
+        right: ${rightPosition};
+        width: 400px;
+        height: 600px;
+        background: black;
+        border: 2px solid #ff9900;
+        padding: 10px;
+        font-family: monospace;
+        z-index: 100000;
+        display: flex;
+        flex-direction: column;
+    `;
+
+    const header = document.createElement('div');
+    header.style.cssText = `
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 6px;
+    `;
+
+    const title = document.createElement('div');
+    title.id = 'gm-muthur-title';
+    title.textContent =
+        getGame().i18n?.format('MUTHUR.gmInterfaceTitle', { userName: activeUserName }) || `MUTHUR - ${activeUserName}`;
+    title.style.cssText = 'color: #ff9900; font-weight: bold;';
+
+    const closeButton = document.createElement('button');
+    closeButton.innerHTML = '&#10006;';
+    closeButton.title = getGame().i18n?.localize('MUTHUR.close') || 'Close';
+    closeButton.style.cssText = `
+        background: black;
+        border: 1px solid #ff9900;
+        color: #ff9900;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-family: monospace;
+        padding: 0;
+        line-height: 1;
+    `;
+    closeButton.addEventListener('click', () => {
+        container.remove();
+    });
+
+    header.appendChild(title);
+    header.appendChild(closeButton);
+    container.appendChild(header);
+
+    const chatLog = document.createElement('div');
+    chatLog.className = 'gm-chat-log';
+    chatLog.style.cssText = `
+        flex: 1;
+        overflow-y: auto;
+        margin-bottom: 10px;
+        font-family: monospace;
+        padding: 5px;
+        background: rgba(0, 0, 0, 0.8);
+    `;
+    container.appendChild(chatLog);
+
+    const inputContainer = document.createElement('div');
+    inputContainer.style.cssText = `
+        display: flex;
+        gap: 5px;
+        width: 100%;
+        align-items: center;
+    `;
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = getGame().i18n?.localize('MUTHUR.inputPlaceholder') || 'Enter a command';
+    input.style.cssText = `
+        flex: 1;
+        background: black;
+        border: 1px solid #ff9900;
+        color: #ff9900;
+        padding: 4px 6px;
+        font-family: monospace;
+        height: 24px;
+    `;
+
+    const sendButton = document.createElement('button');
+    sendButton.className = 'gm-muthur-enter-btn';
+    sendButton.innerHTML = '<i class="fas fa-level-down-alt" style="transform: rotate(90deg);"></i>';
+    sendButton.title = getGame().i18n?.localize('MUTHUR.send') || 'REPLY';
+    sendButton.style.cssText = `
+        background: black;
+        border: 1px solid #ff9900;
+        color: #ff9900;
+        cursor: pointer;
+        font-family: monospace;
+        height: 24px;
+        width: 32px;
+    `;
+
+    inputContainer.appendChild(input);
+    inputContainer.appendChild(sendButton);
+    container.appendChild(inputContainer);
+
+    const sendResponse = () => {
+        const message = input.value.trim();
+        if (!message) return;
+        const targetUserId = container.dataset.userId;
+        if (!targetUserId) return;
+        sendGMResponse(targetUserId, message);
+        input.value = '';
+    };
+
+    input.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendResponse();
+    });
+    sendButton.addEventListener('click', sendResponse);
+
+    document.body.appendChild(container);
+    return container;
 }
 
 export function showGMSpectatorSelectionDialog(activeUserId: string, activeUserName: string): void {

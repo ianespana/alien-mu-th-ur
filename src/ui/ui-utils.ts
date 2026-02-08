@@ -91,6 +91,51 @@ export async function showBootSequence(isSpectator: boolean = false): Promise<vo
         ease: 'none',
     });
 
+    const crtOverlay = document.createElement('div');
+    crtOverlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background:
+            linear-gradient(rgba(18, 16, 16, 0.1) 50%, rgba(0, 255, 0, 0.08) 50%),
+            linear-gradient(90deg, rgba(255, 0, 0, 0.08), rgba(0, 255, 0, 0.05), rgba(0, 0, 255, 0.08));
+        background-size: 100% 3px, 3px 100%;
+        pointer-events: none;
+        z-index: 1000;
+        animation: muthur-crt-flicker 0.15s infinite;
+        mix-blend-mode: screen;
+        opacity: 0.5;
+    `;
+
+    const vignette = document.createElement('div');
+    vignette.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: radial-gradient(circle, transparent 40%, rgba(0, 255, 0, 0.1) 100%);
+        pointer-events: none;
+        z-index: 999;
+        mix-blend-mode: screen;
+    `;
+
+    const crtStyle = document.createElement('style');
+    crtStyle.textContent = `
+        @keyframes muthur-crt-flicker {
+            0% { opacity: 0.5; }
+            25% { opacity: 0.45; }
+            50% { opacity: 0.5; }
+            75% { opacity: 0.45; }
+            100% { opacity: 0.5; }
+        }
+    `;
+    bootContainer.appendChild(crtStyle);
+    bootContainer.appendChild(vignette);
+    bootContainer.appendChild(crtOverlay);
+
     const bootLog = document.createElement('div');
     bootLog.style.cssText = `
         margin-top: 40px;
@@ -118,6 +163,9 @@ export async function showBootSequence(isSpectator: boolean = false): Promise<vo
         const line = document.createElement('div');
         bootLog.appendChild(line);
         await typeWriterEffect(line, msg, 20);
+        if (getGame().settings.get(MODULE_ID, 'enableTypingSounds')) {
+            playCommunicationSoundThrottled();
+        }
         bootLog.scrollTop = bootLog.scrollHeight;
         await new Promise((resolve) => setTimeout(resolve, 200));
     }
@@ -279,6 +327,7 @@ export async function displayMuthurMessage(
     const messageDiv = document.createElement('div');
     messageDiv.classList.add('message', messageType);
     messageDiv.style.color = color;
+    messageDiv.style.whiteSpace = 'pre-wrap';
     chatLog.appendChild(messageDiv);
 
     if (getGame().settings.get(MODULE_ID, 'enableTypewriter')) {
@@ -390,6 +439,33 @@ export function sendToGM(message: string, actionType: string = 'command', comman
     } catch (error) {
         console.error('MUTHUR | Error while sending message:', error);
         ui.notifications?.error('Communication error with MUTHUR');
+    }
+}
+
+export function sendGMResponse(
+    targetUserId: string,
+    message: string,
+    color: string = '#ff9900',
+    messageType: string = 'reply',
+): void {
+    try {
+        getGame().socket.emit('module.alien-mu-th-ur', {
+            type: 'muthurResponse',
+            targetUserId,
+            message,
+            color,
+            messageType,
+            timestamp: Date.now(),
+        });
+
+        const gmChatLog = document.querySelector('.gm-chat-log');
+        const motherName = getGame().i18n?.localize('MUTHUR.motherName') || 'MUTHUR';
+        if (gmChatLog) {
+            void displayMuthurMessage(gmChatLog as HTMLElement, message, `${motherName}: `, color, messageType);
+        }
+    } catch (error) {
+        console.error('MUTHUR | Error while sending GM response:', error);
+        ui.notifications?.error('Communication error with player');
     }
 }
 

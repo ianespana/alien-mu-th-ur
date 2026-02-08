@@ -1,7 +1,12 @@
 import { stopAlarm, triggerAlarm } from './actions.js';
 import { getGame, MODULE_ID } from './constants.js';
 import { clearHackingElements, createHackingWindows } from './hacking.js';
-import { appendDialogToGM, showGMSpectatorSelectionDialog, showSpectatorInterface } from './interfaces.js';
+import {
+    appendDialogToGM,
+    showGMMuthurInterface,
+    showGMSpectatorSelectionDialog,
+    showSpectatorInterface,
+} from './interfaces.js';
 import { updateSession } from './session.js';
 import {
     createCerberusWindow,
@@ -449,53 +454,78 @@ export function handleSocketMessage(raw: unknown): void {
 }
 
 async function handleMuthurResponse(data: SocketPayload): Promise<void> {
-    const chatLog = document.querySelector('.muthur-chat-log');
-    if (chatLog) {
-        const command = getString(data.command);
-        const user = getString(data.user);
-        if (!command || !user) return;
-        await displayMuthurMessage(chatLog as HTMLElement, command, `[${user}] > `, '#00ff00', 'command');
+    const command = getString(data.command);
+    const user = getString(data.user);
+    const userId = getString(data.userId);
+    if (!command || !user || !userId) return;
 
-        // If it's an action that needs approval, we could show a dialog here for the GM
-        if (getString(data.actionType) === 'action' && getGame().user?.isGM) {
-            const action = getString(data.commandType) ?? '';
-            const target = command.substring(action.length).trim();
+    const gmContainer = showGMMuthurInterface(user, userId);
+    const chatLog = gmContainer.querySelector('.gm-chat-log');
+    if (!chatLog) return;
 
-            let label = getGame().i18n?.localize(`MUTHUR.approve.${action}`) || `Approve ${action}?`;
-            if (target) label = label.replace('{label}', target).replace('{target}', target);
+    const commandType = getString(data.commandType) ?? '';
+    const actionType = getString(data.actionType) ?? '';
+    const playerColor = '#00ff00';
 
-            const dialog = new foundry.applications.api.DialogV2({
-                window: { title: 'MUTHUR Action Approval' },
-                content: `<p>${label}</p>`,
-                buttons: [
-                    {
-                        action: 'approve',
-                        label: getGame().i18n?.localize('MUTHUR.confirmSpectators') || 'Confirm',
-                        callback: async () => {
-                            // Import commands to execute the action
-                            const { executeAction } = await import('./commands.js');
-                            await executeAction(action, target, chatLog as HTMLElement);
-                        },
+    let rendered = `${user}: ${command}`;
+    if (commandType === 'm') {
+        const prefix = getGame().i18n?.localize('MUTHUR.motherPrefix') || '/M : ';
+        rendered = `${user}: ${prefix}${command}`;
+    } else if (commandType === 'unknown') {
+        const unknownPrefix = getGame().i18n?.localize('MUTHUR.unknownCommandPrefix') || 'COMMAND NOT RECOGNIZED : ';
+        rendered = `${user}: ${unknownPrefix}${command}`;
+    }
+
+    await displayMuthurMessage(chatLog as HTMLElement, rendered, '', playerColor, 'command');
+
+    if (actionType === 'action' && getGame().user?.isGM) {
+        const action = getString(data.commandType) ?? '';
+        const target = command.substring(action.length).trim();
+
+        let label = getGame().i18n?.localize(`MUTHUR.approve.${action}`) || `Approve ${action}?`;
+        if (target) label = label.replace('{label}', target).replace('{target}', target);
+
+        const dialog = new foundry.applications.api.DialogV2({
+            window: { title: 'MUTHUR Action Approval' },
+            content: `<p>${label}</p>`,
+            buttons: [
+                {
+                    action: 'approve',
+                    label: getGame().i18n?.localize('MUTHUR.confirmSpectators') || 'Confirm',
+                    callback: async () => {
+                        const { executeAction } = await import('./commands.js');
+                        await executeAction(action, target, chatLog as HTMLElement);
                     },
-                    {
-                        action: 'deny',
-                        label: getGame().i18n?.localize('MUTHUR.cancelSpectators') || 'Cancel',
-                        callback: async () => {
-                            const { syncMessageToSpectators } = await import('./ui/ui-utils.js');
-                            await syncMessageToSpectators(
-                                chatLog as HTMLElement,
-                                getGame().i18n?.localize('MUTHUR.requestDenied') || 'Request denied.',
-                                '',
-                                '#ff0000',
-                                'error',
-                            );
-                        },
+                },
+                {
+                    action: 'deny',
+                    label: getGame().i18n?.localize('MUTHUR.cancelSpectators') || 'Cancel',
+                    callback: async () => {
+                        const { syncMessageToSpectators } = await import('./ui/ui-utils.js');
+                        await syncMessageToSpectators(
+                            chatLog as HTMLElement,
+                            getGame().i18n?.localize('MUTHUR.requestDenied') || 'Request denied.',
+                            '',
+                            '#ff0000',
+                            'error',
+                        );
                     },
-                ],
-            });
+                },
+            ],
+        });
 
-            void dialog.render({ force: true });
-        }
+        void dialog.render({ force: true });
+    }
+
+    if (actionType === 'close') {
+        await displayMuthurMessage(
+            chatLog as HTMLElement,
+            getGame().i18n?.localize('MUTHUR.muthurSessionEnded') || 'MUTHUR SESSION TERMINATED',
+            '',
+            '#ff9900',
+            'reply',
+        );
+        setTimeout(() => gmContainer.remove(), 2000);
     }
 }
 
@@ -507,5 +537,7 @@ async function handleGMResponse(data: SocketPayload): Promise<void> {
         const color = getString(data.color) ?? '#00ff00';
         const messageType = getString(data.messageType) ?? 'reply';
         await displayMuthurMessage(chatLog as HTMLElement, message, '', color, messageType);
+        const motherName = getGame().i18n?.localize('MUTHUR.motherName') || 'MUTHUR';
+        updateSpectatorsWithMessage(message, `${motherName}: `, color, messageType);
     }
 }
