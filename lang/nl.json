@@ -93,7 +93,7 @@
                 },
                 "cerberus": {
                     "title": "CERBERUS-PROTOCOL",
-                    "desc": "CERBERUS: ZELFVERNIETIGINGSPROTOCOL MET AFTELLING."
+                    "desc": "CERBERUS: GM-GOEDKEURING VEREIST. SPELER MOET BEVESTIGEN/ANNULEREN VOOR DE AFTELLING."
                 },
                 "doors": {
                     "title": "DEURCONTROLE",
@@ -101,11 +101,11 @@
                 },
                 "lights": {
                     "title": "LICHTCONTROLE",
-                    "desc": "SHUTDOWN LIGHTS, RESTORE LIGHTS. LICHT UITSCHAKELEN EN HERSTELLEN."
+                    "desc": "SHUTDOWN LIGHTS, DIM LIGHTS, RESTORE LIGHTS. SCHAKELT LICHTEN UIT, DIMT EN HERSTELT."
                 },
                 "alarm": {
                     "title": "ALARM",
-                    "desc": "ACTIVATE ALARM. SPEELT ALARM EN KAN EEN ROOD OVERLAY TOEPASSEN."
+                    "desc": "ACTIVATE ALARM, STOP ALARM. SPEELT EEN ALARM EN KAN EEN RODE OVERLAY TONEN."
                 },
                 "gas": {
                     "title": "GAS",

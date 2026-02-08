@@ -1,5 +1,6 @@
 import { getGame } from './constants.js';
-import { getHackStatus } from './hacking.js';
+import { appendDialogToGM } from './interfaces.js';
+import { getSession } from './session.js';
 import { displayMuthurMessage, syncCommandResult, syncMessageToSpectators } from './ui/ui-utils.js';
 
 let cerberusCountdownInterval: ReturnType<typeof setInterval> | null = null;
@@ -143,37 +144,58 @@ export async function handleSpecialOrder(chatLog: HTMLElement, command: string):
                 return;
             }
 
-            if (getHackStatus()) {
-                getGame().socket?.emit('module.alien-mu-th-ur', {
-                    type: 'muthurCommand',
-                    command:
-                        getGame().i18n?.format('MOTHER.CerberusHackAlert', {
-                            userName: getGame().user?.name || 'unknown',
-                        }) || `!!! PRIORITY ALERT !!! - ${getGame().user?.name} HAS INITIATED CERBERUS PROTOCOL`,
-                    user: 'MUTHUR 6000',
-                    userId: getGame().user?.id,
-                    timestamp: Date.now(),
-                });
+            const session = getSession();
+            const activeUserId = session.userId;
+            const activeUserName = session.userName ?? 'PLAYER';
+            if (!activeUserId) {
+                await displayMuthurMessage(chatLog, 'NO ACTIVE MUTHUR SESSION.', '', '#ff0000', 'error');
+                return;
             }
 
-            await syncMessageToSpectators(
-                chatLog,
-                getGame().i18n?.localize('MOTHER.SpecialOrders.Cerberus.confirmation') ||
-                    "!!! WARNING !!!\n\nYOU ARE ABOUT TO ACTIVATE THE CERBERUS PROTOCOL\nTHIS ACTION WILL TRIGGER THE STATION'S SELF-DESTRUCT\nNO RETURN WILL BE POSSIBLE\n\nCONFIRM ACTIVATION?",
-                '',
-                '#ff0000',
-                'error',
-            );
-            syncCommandResult('SPECIAL_ORDER', {
-                text:
-                    getGame().i18n?.localize('MOTHER.SpecialOrders.Cerberus.confirmation') ||
-                    "!!! WARNING !!!\n\nYOU ARE ABOUT TO ACTIVATE THE CERBERUS PROTOCOL\nTHIS ACTION WILL TRIGGER THE STATION'S SELF-DESTRUCT\nNO RETURN WILL BE POSSIBLE\n\nCONFIRM ACTIVATION?",
-                color: '#ff0000',
-                type: 'error',
-            });
+            const wrap = document.createElement('div');
+            wrap.style.cssText =
+                'background:black; border:2px solid #ff9900; color:#ff9900; padding:10px; z-index:100005; font-family:monospace;';
+            const title = document.createElement('div');
+            title.textContent = `${activeUserName} -> CERBERUS ?`;
+            title.style.cssText = 'margin-bottom:6px; font-weight:bold;';
+            const input = document.createElement('input');
+            input.type = 'number';
+            input.min = '1';
+            input.max = '60';
+            input.value = '10';
+            input.style.cssText = 'width: 60px; margin-right: 8px; background:black; color:#ff9900;';
+            const ok = document.createElement('button');
+            ok.textContent = 'CONFIRM';
+            ok.style.cssText =
+                'background:black; color:#00ff00; border:1px solid #00ff00; padding:4px 10px; margin-right:6px;';
+            const ko = document.createElement('button');
+            ko.textContent = 'CANCEL';
+            ko.style.cssText = 'background:black; color:#ff0000; border:1px solid #ff0000; padding:4px 10px;';
+            wrap.appendChild(title);
+            wrap.appendChild(input);
+            wrap.appendChild(ok);
+            wrap.appendChild(ko);
+            appendDialogToGM(wrap, 'bottom-right', 8);
 
-            // Dialog logic would go here, for now I'm extracting the core handling.
-            // In a real refactor, I might want to separate UI dialogs from logic.
+            ok.onclick = () => {
+                const minutes = Math.max(1, Math.min(60, parseInt(input.value, 10) || 10));
+                getGame().socket?.emit('module.alien-mu-th-ur', {
+                    type: 'cerberusApproval',
+                    targetUserId: activeUserId,
+                    approved: true,
+                    minutes,
+                });
+                wrap.remove();
+            };
+            ko.onclick = () => {
+                getGame().socket?.emit('module.alien-mu-th-ur', {
+                    type: 'cerberusApproval',
+                    targetUserId: activeUserId,
+                    approved: false,
+                });
+                wrap.remove();
+            };
+            return;
         } else {
             const translationKey = orders[orderKey];
             const localized = getGame().i18n?.localize(translationKey) || `SPECIAL ORDER ${orderKey}`;

@@ -22,7 +22,7 @@ export async function playSoundWithHelper(
     volume: number,
     loop: boolean = false,
     label: string = 'generic',
-) {
+): Promise<SoundHandle | undefined> {
     try {
         const baseVolume = getGame().settings.get(MODULE_ID, 'soundVolume');
         const safeVolume = volume > baseVolume ? baseVolume : volume;
@@ -32,10 +32,10 @@ export async function playSoundWithHelper(
     }
 }
 
-export async function playAlarmSound(volume?: number): Promise<void> {
+export async function playAlarmSound(volume?: number): Promise<SoundHandle | undefined> {
     const soundPath = getGame().settings.get(MODULE_ID, 'alarmSoundPath');
     if (!soundPath) return;
-    await playSoundWithHelper(soundPath, volume ?? 0.8, true, 'alarm');
+    return playSoundWithHelper(soundPath, volume ?? 0.8, true, 'alarm');
 }
 
 export async function playCommunicationSound() {

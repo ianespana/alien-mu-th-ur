@@ -1,4 +1,4 @@
-import { stopAlarm, triggerAlarm } from './actions.js';
+import { releaseCryoForTokens, stopAlarm, triggerAlarm } from './actions.js';
 import { getGame, MODULE_ID } from './constants.js';
 import { clearHackingElements, createHackingWindows } from './hacking.js';
 import {
@@ -21,6 +21,7 @@ import {
     displayHackMessage,
     displayMuthurMessage,
     removeWaitingMessage,
+    sendGMResponse,
     showBootSequence,
     updateSpectatorsWithMessage,
 } from './ui/ui-utils.js';
@@ -275,6 +276,78 @@ export function handleSocketMessage(raw: unknown): void {
         picker.appendChild(approve);
 
         appendDialogToGM(picker, 'bottom-right', 8);
+    } else if (type === 'cryoReleaseRequest' && isGM) {
+        const requesterId = getString(raw.fromId);
+        const requesterName = getString(raw.fromName) || 'PLAYER';
+        const tokens = Array.from(canvas?.tokens?.placeables ?? []);
+
+        const dialog = document.createElement('div');
+        dialog.style.cssText =
+            'background:black; border:2px solid #ff9900; color:#ff9900; padding:10px; z-index:100004; font-family:monospace; min-width:300px;';
+        const title = document.createElement('div');
+        title.textContent = `CRYO RELEASE${requesterName ? `: ${requesterName}` : ''}`;
+        title.style.cssText = 'margin-bottom:6px; font-weight:bold;';
+        dialog.appendChild(title);
+
+        const list = document.createElement('div');
+        list.style.maxHeight = '260px';
+        list.style.overflow = 'auto';
+        list.style.marginBottom = '8px';
+
+        const selections = new Map<string, boolean>();
+        tokens.forEach((t) => {
+            const row = document.createElement('label');
+            row.style.cssText = 'display:flex; align-items:center; gap:8px; margin:3px 0;';
+            const cb = document.createElement('input');
+            cb.type = 'checkbox';
+            cb.onchange = () => {
+                if (t.id) selections.set(t.id, cb.checked);
+            };
+            const name = document.createElement('span');
+            name.textContent = t.name || '-';
+            row.appendChild(cb);
+            row.appendChild(name);
+            list.appendChild(row);
+        });
+
+        dialog.appendChild(list);
+
+        const actions = document.createElement('div');
+        actions.style.cssText = 'display:flex; gap:8px; justify-content:flex-end;';
+        const confirm = document.createElement('button');
+        confirm.textContent = 'OK';
+        confirm.style.cssText = 'background:black; border:1px solid #00ff00; color:#00ff00; padding:2px 8px;';
+        const cancel = document.createElement('button');
+        cancel.textContent = 'X';
+        cancel.style.cssText = 'background:black; border:1px solid #ff0000; color:#ff0000; padding:2px 8px;';
+
+        confirm.onclick = async () => {
+            const picked = tokens.filter((t) => t.id && selections.get(t.id));
+            const released = await releaseCryoForTokens(picked.length ? picked : []);
+            const label = picked.length
+                ? picked
+                      .map((t) => t.name || '')
+                      .filter(Boolean)
+                      .join(', ')
+                : 'NONE';
+            const msg = released > 0 ? `CRYO RELEASED: ${label}.` : 'NO CRYO TO RELEASE.';
+
+            if (requesterId) {
+                sendGMResponse(requesterId, msg, '#00ff00');
+            } else {
+                const gmChatLog = document.querySelector('.gm-chat-log');
+                if (gmChatLog) {
+                    await displayMuthurMessage(gmChatLog as HTMLElement, msg, '', '#00ff00', 'reply');
+                }
+            }
+
+            dialog.remove();
+        };
+        cancel.onclick = () => dialog.remove();
+        actions.appendChild(confirm);
+        actions.appendChild(cancel);
+        dialog.appendChild(actions);
+        appendDialogToGM(dialog, 'bottom-right', 8);
     } else if (type === 'statusResponse' && !isGM && getString(raw.targetUserId) === userId) {
         const chatLog = document.querySelector('.muthur-chat-log');
         const text = getString(raw.text);
@@ -485,36 +558,40 @@ async function handleMuthurResponse(data: SocketPayload): Promise<void> {
         let label = getGame().i18n?.localize(`MUTHUR.approve.${action}`) || `Approve ${action}?`;
         if (target) label = label.replace('{label}', target).replace('{target}', target);
 
-        const dialog = new foundry.applications.api.DialogV2({
-            window: { title: 'MUTHUR Action Approval' },
-            content: `<p>${label}</p>`,
-            buttons: [
-                {
-                    action: 'approve',
-                    label: getGame().i18n?.localize('MUTHUR.confirmSpectators') || 'Confirm',
-                    callback: async () => {
-                        const { executeAction } = await import('./commands.js');
-                        await executeAction(action, target, chatLog as HTMLElement);
-                    },
-                },
-                {
-                    action: 'deny',
-                    label: getGame().i18n?.localize('MUTHUR.cancelSpectators') || 'Cancel',
-                    callback: async () => {
-                        const { syncMessageToSpectators } = await import('./ui/ui-utils.js');
-                        await syncMessageToSpectators(
-                            chatLog as HTMLElement,
-                            getGame().i18n?.localize('MUTHUR.requestDenied') || 'Request denied.',
-                            '',
-                            '#ff0000',
-                            'error',
-                        );
-                    },
-                },
-            ],
-        });
+        const wrap = document.createElement('div');
+        wrap.style.cssText =
+            'background:black; border:2px solid #ff9900; color:#ff9900; padding:10px; z-index:100005; font-family:monospace;';
+        const title = document.createElement('div');
+        title.textContent = label;
+        title.style.cssText = 'margin-bottom:6px; font-weight:bold;';
+        const ok = document.createElement('button');
+        ok.textContent = getGame().i18n?.localize('MUTHUR.confirmSpectators') || 'Confirm';
+        ok.style.cssText =
+            'background:black; color:#00ff00; border:1px solid #00ff00; padding:4px 10px; margin-right:6px;';
+        const ko = document.createElement('button');
+        ko.textContent = getGame().i18n?.localize('MUTHUR.cancelSpectators') || 'Cancel';
+        ko.style.cssText = 'background:black; color:#ff0000; border:1px solid #ff0000; padding:4px 10px;';
+        wrap.appendChild(title);
+        wrap.appendChild(ok);
+        wrap.appendChild(ko);
+        appendDialogToGM(wrap, 'bottom-right', 8);
 
-        void dialog.render({ force: true });
+        ok.onclick = async () => {
+            wrap.remove();
+            const { executeAction } = await import('./commands.js');
+            await executeAction(action, target, chatLog as HTMLElement);
+        };
+        ko.onclick = async () => {
+            wrap.remove();
+            const { syncMessageToSpectators } = await import('./ui/ui-utils.js');
+            await syncMessageToSpectators(
+                chatLog as HTMLElement,
+                getGame().i18n?.localize('MUTHUR.requestDenied') || 'Request denied.',
+                '',
+                '#ff0000',
+                'error',
+            );
+        };
     }
 
     if (actionType === 'close') {

@@ -93,7 +93,7 @@
                 },
                 "cerberus": {
                     "title": "CERBERUS-PROTOKOLL",
-                    "desc": "CERBERUS: SJÄLVFÖRSTÖRELSEPROTOKOLL MED NEDRÄKNING."
+                    "desc": "CERBERUS: KR?VER GM-GODK?NNANDE. SPELAREN M?STE BEKR?FTA/AVBRYTA INNAN NEDR?KNING."
                 },
                 "doors": {
                     "title": "DÖRRKONTROLL",
@@ -101,11 +101,11 @@
                 },
                 "lights": {
                     "title": "LJUSKONTROLL",
-                    "desc": "SHUTDOWN LIGHTS, RESTORE LIGHTS. STÄNGER AV OCH ÅTERSTÄLLER BELYSNING."
+                    "desc": "SHUTDOWN LIGHTS, DIM LIGHTS, RESTORE LIGHTS. SL?CKER, DIMMAR OCH ?TERST?LLER LJUS."
                 },
                 "alarm": {
                     "title": "ALARM",
-                    "desc": "ACTIVATE ALARM. SPELAR ALARM OCH KAN LÄGGA RÖD OVERLAY."
+                    "desc": "ACTIVATE ALARM, STOP ALARM. SPELAR ETT LARM OCH KAN VISA EN R?D OVERLAY."
                 },
                 "gas": {
                     "title": "GAS",

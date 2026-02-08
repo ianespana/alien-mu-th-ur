@@ -45,7 +45,7 @@ export function registerSettings(): void {
             max: 1,
             step: 0.1,
         },
-        default: 0.2,
+        default: 1,
     });
 
     // Scanline

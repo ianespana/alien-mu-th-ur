@@ -93,7 +93,7 @@
                 },
                 "cerberus": {
                     "title": "PROTOCOLLO CERBERUS",
-                    "desc": "CERBERUS: PROTOCOLLO DI AUTODISTRUZIONE CON CONTO ALLA ROVESCIA."
+                    "desc": "CERBERUS: RICHIEDE APPROVAZIONE DEL GM. IL GIOCATORE DEVE CONFERMARE/ANNULLARE PRIMA DEL CONTO ALLA ROVESCIA."
                 },
                 "doors": {
                     "title": "CONTROLLO PORTE",
@@ -101,11 +101,11 @@
                 },
                 "lights": {
                     "title": "CONTROLLO LUCI",
-                    "desc": "SHUTDOWN LIGHTS, RESTORE LIGHTS. SPEGNE E RIPRISTINA L'ILLUMINAZIONE."
+                    "desc": "SHUTDOWN LIGHTS, DIM LIGHTS, RESTORE LIGHTS. SPEGNE, ATTENUA E RIPRISTINA LE LUCI."
                 },
                 "alarm": {
                     "title": "ALLARME",
-                    "desc": "ACTIVATE ALARM. RIPRODUCE UN ALLARME E PUÒ APPLICARE UN OVERLAY ROSSO."
+                    "desc": "ACTIVATE ALARM, STOP ALARM. RIPRODUCE UN ALLARME E PU? MOSTRARE UN OVERLAY ROSSO."
                 },
                 "gas": {
                     "title": "GAS",

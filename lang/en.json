@@ -89,7 +89,7 @@
                 },
                 "cerberus": {
                     "title": "CERBERUS PROTOCOL",
-                    "desc": "CERBERUS: SELF-DESTRUCT PROTOCOL WITH COUNTDOWN."
+                    "desc": "CERBERUS: GM APPROVAL REQUIRED. PLAYER MUST CONFIRM/CANCEL BEFORE COUNTDOWN."
                 },
                 "doors": {
                     "title": "DOOR CONTROL",
@@ -97,11 +97,11 @@
                 },
                 "lights": {
                     "title": "LIGHTS CONTROL",
-                    "desc": "SHUTDOWN LIGHTS, RESTORE LIGHTS. TURN OFF AND RESTORE LIGHTING."
+                    "desc": "SHUTDOWN LIGHTS, DIM LIGHTS, RESTORE LIGHTS. TURN OFF AND RESTORE LIGHTING."
                 },
                 "alarm": {
                     "title": "ALARM",
-                    "desc": "ACTIVATE ALARM. PLAYS AN ALERT AND CAN APPLY A RED OVERLAY."
+                    "desc": "ACTIVATE ALARM, STOP ALARM. PLAYS AN ALERT AND CAN APPLY A RED OVERLAY."
                 },
                 "gas": {
                     "title": "GAS",
