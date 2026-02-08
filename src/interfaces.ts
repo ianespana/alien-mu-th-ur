@@ -57,7 +57,11 @@ export function showMuthurInterface(): HTMLElement | undefined {
     chatContainer.id = 'muthur-chat-container';
 
     const sidebar = document.getElementById('sidebar');
-    const rightPosition = sidebar ? `${sidebar.offsetWidth + 20}px` : '320px';
+    let rightOffset = sidebar ? sidebar.offsetWidth + 20 : 320;
+    if (getGame().user?.isGM && document.getElementById('gm-muthur-container')) {
+        rightOffset += 420;
+    }
+    const rightPosition = `${rightOffset}px`;
 
     const allowPlayersDrag = getGame().settings.get(MODULE_ID, 'allowDragPlayers');
 
@@ -206,7 +210,11 @@ export function showSpectatorInterface(
     container.id = 'muthur-spectator-container';
 
     const sidebar = document.getElementById('sidebar');
-    const rightPosition = sidebar ? `${sidebar.offsetWidth + 20}px` : '320px';
+    let rightOffset = sidebar ? sidebar.offsetWidth + 20 : 320;
+    if (document.getElementById('muthur-chat-container')) {
+        rightOffset += 420;
+    }
+    const rightPosition = `${rightOffset}px`;
 
     container.style.cssText = `
         position: fixed;
