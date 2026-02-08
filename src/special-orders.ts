@@ -14,6 +14,39 @@ let cerberusCountdownInterval: ReturnType<typeof setInterval> | null = null;
 let cerberusGlobalInterval: ReturnType<typeof setInterval> | null = null;
 let cerberusAlarmSound: foundry.audio.Sound | null = null;
 
+type ProtocolKey = 'CERBERUS' | 'SELF_DESTRUCT';
+
+const getProtocolInfo = (protocol: ProtocolKey) => {
+    const baseKey = protocol === 'CERBERUS' ? 'Cerberus' : 'SelfDestruct';
+    const name =
+        getGame().i18n?.localize(`MOTHER.SpecialOrders.${baseKey}.name`) ||
+        (protocol === 'CERBERUS' ? 'CERBERUS PROTOCOL' : 'SELF-DESTRUCT');
+    const confirmation =
+        getGame().i18n?.localize(`MOTHER.SpecialOrders.${baseKey}.confirmation`) || `${name} CONFIRMATION REQUIRED.`;
+    const confirmLabel = getGame().i18n?.localize(`MOTHER.SpecialOrders.${baseKey}.confirm`) || 'CONFIRM';
+    const cancelLabel = getGame().i18n?.localize(`MOTHER.SpecialOrders.${baseKey}.cancel`) || 'CANCEL';
+    const completed =
+        getGame().i18n?.localize(`MOTHER.SpecialOrders.${baseKey}.completed`) || 'Self-destruct sequence completed.';
+    const confirmed =
+        getGame().i18n?.localize(
+            protocol === 'CERBERUS' ? 'MOTHER.CerberusConfirmed' : 'MOTHER.SelfDestructConfirmed',
+        ) || `${name} CONFIRMED.`;
+    const cancelled =
+        getGame().i18n?.localize(
+            protocol === 'CERBERUS' ? 'MOTHER.CerberusCancelled' : 'MOTHER.SelfDestructCancelled',
+        ) || `${name} CANCELLED.`;
+    return {
+        baseKey,
+        name,
+        confirmation,
+        confirmLabel,
+        cancelLabel,
+        completed,
+        confirmed,
+        cancelled,
+    };
+};
+
 const wait = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
 
 const getSoundDurationMs = (sound: foundry.audio.Sound | undefined, fallbackMs: number): number => {
@@ -134,7 +167,7 @@ export function stopCerberusGlobal(): void {
     }
 }
 
-export function createCerberusWindow(): HTMLElement {
+export function createCerberusWindow(titleText?: string): HTMLElement {
     const existing = document.getElementById('muthur-cerberus-window');
     if (existing) return existing;
 
@@ -155,7 +188,7 @@ export function createCerberusWindow(): HTMLElement {
         min-width: 320px;
     `;
     const title = document.createElement('div');
-    title.textContent = 'CERBERUS PROTOCOL';
+    title.textContent = titleText || 'CERBERUS PROTOCOL';
     title.style.cssText = 'font-weight: bold; margin-bottom: 8px;';
     const timer = document.createElement('div');
     timer.className = 'muthur-cerberus-timer';
@@ -183,9 +216,14 @@ export function createCerberusWindow(): HTMLElement {
     return windowEl;
 }
 
-export function startCerberusCountdownGlobal(minutes: number, startTime: number = Date.now()): void {
+export function startCerberusCountdownGlobal(
+    minutes: number,
+    startTime: number = Date.now(),
+    protocol: ProtocolKey = 'CERBERUS',
+): void {
     stopCerberusGlobal();
-    const windowEl = createCerberusWindow();
+    const protocolInfo = getProtocolInfo(protocol);
+    const windowEl = createCerberusWindow(protocolInfo.name);
     const timer = windowEl.querySelector('.muthur-cerberus-timer');
     const totalMs = Math.max(1, minutes) * 60 * 1000;
     let lastSecond: number | null = null;
@@ -271,23 +309,21 @@ export function startCerberusCountdownGlobal(minutes: number, startTime: number 
     cerberusGlobalInterval = setInterval(update, 1000);
 }
 
-export function startCerberusCountdown(minutes: number, chatLog: HTMLElement): ReturnType<typeof setInterval> {
+export function startCerberusCountdown(
+    minutes: number,
+    chatLog: HTMLElement,
+    protocol: ProtocolKey = 'CERBERUS',
+): ReturnType<typeof setInterval> {
     stopCerberusCountdown();
     let totalSeconds = minutes * 60;
+    const protocolInfo = getProtocolInfo(protocol);
 
     cerberusCountdownInterval = setInterval(() => {
         totalSeconds--;
         if (totalSeconds <= 0) {
             stopCerberusCountdown();
             if (chatLog) {
-                void displayMuthurMessage(
-                    chatLog,
-                    getGame().i18n?.localize('MOTHER.SpecialOrders.Cerberus.completed') ||
-                        'Self-destruct sequence completed.',
-                    '',
-                    '#ff0000',
-                    'error',
-                );
+                void displayMuthurMessage(chatLog, protocolInfo.completed, '', '#ff0000', 'error');
             }
         }
     }, 1000);
@@ -300,14 +336,16 @@ export function appendCerberusConfirmationControls(
     minutes: number,
     onConfirm: () => void,
     onCancel: () => void,
+    protocol: ProtocolKey = 'CERBERUS',
 ): void {
+    const protocolInfo = getProtocolInfo(protocol);
     const controls = document.createElement('div');
     controls.style.cssText = 'display:flex; gap:8px; justify-content:center; margin:10px 0;';
     const yesBtn = document.createElement('button');
-    yesBtn.textContent = getGame().i18n?.localize('MOTHER.SpecialOrders.Cerberus.confirm') || 'CONFIRM';
+    yesBtn.textContent = protocolInfo.confirmLabel;
     yesBtn.style.cssText = 'background:black; color:#ff3333; border:1px solid #ff3333; padding:4px 10px;';
     const noBtn = document.createElement('button');
-    noBtn.textContent = getGame().i18n?.localize('MOTHER.SpecialOrders.Cerberus.cancel') || 'CANCEL';
+    noBtn.textContent = protocolInfo.cancelLabel;
     noBtn.style.cssText = 'background:black; color:#33ff33; border:1px solid #33ff33; padding:4px 10px;';
     controls.appendChild(yesBtn);
     controls.appendChild(noBtn);
@@ -332,9 +370,10 @@ export async function handleSpecialOrder(chatLog: HTMLElement, command: string):
         939: 'MOTHER.SpecialOrders.939',
         966: 'MOTHER.SpecialOrders.966',
         CERBERUS: 'MOTHER.SpecialOrders.Cerberus',
+        SELF_DESTRUCT: 'MOTHER.SpecialOrders.SelfDestruct',
     };
 
-    const orderKey = command
+    const parsedKey = command
         .toUpperCase()
         .replace(/^ORDRE\s+SPECIAL\s+/i, '')
         .replace(/^ORDRE\s+SPÉCIAL\s+/i, '')
@@ -349,14 +388,21 @@ export async function handleSpecialOrder(chatLog: HTMLElement, command: string):
         .replace(/^PROTOCOLE\s+/i, '')
         .replace(/^PROTOCOL\s+/i, '')
         .trim();
+    const orderKey =
+        parsedKey === 'SELF DESTRUCT' || parsedKey === 'SELF-DESTRUCT' || parsedKey === 'SELFDESTRUCT'
+            ? 'SELF_DESTRUCT'
+            : parsedKey;
 
     if (orders[orderKey]) {
-        if (orderKey === 'CERBERUS') {
+        if (orderKey === 'CERBERUS' || orderKey === 'SELF_DESTRUCT') {
+            const protocol = orderKey as ProtocolKey;
+            const protocolInfo = getProtocolInfo(protocol);
             if (!getGame().user?.isGM) {
                 getGame().socket?.emit('module.alien-mu-th-ur', {
                     type: 'cerberusApprovalRequest',
                     fromId: getGame().user?.id,
                     fromName: getGame().user?.name,
+                    protocol,
                 });
                 await displayMuthurMessage(
                     chatLog,
@@ -382,7 +428,7 @@ export async function handleSpecialOrder(chatLog: HTMLElement, command: string):
             wrap.style.cssText =
                 'background:black; border:2px solid #ff9900; color:#ff9900; padding:10px; z-index:100005; font-family:monospace;';
             const title = document.createElement('div');
-            title.textContent = `${activeUserName} -> CERBERUS ?`;
+            title.textContent = `${activeUserName} -> ${protocolInfo.name} ?`;
             title.style.cssText = 'margin-bottom:6px; font-weight:bold;';
             const input = document.createElement('input');
             input.type = 'number';
@@ -405,42 +451,29 @@ export async function handleSpecialOrder(chatLog: HTMLElement, command: string):
 
             ok.onclick = () => {
                 const minutes = Math.max(1, Math.min(60, parseInt(input.value, 10) || 10));
-                const warningText =
-                    getGame().i18n?.localize('MOTHER.SpecialOrders.Cerberus.confirmation') ||
-                    'CERBERUS PROTOCOL CONFIRMATION REQUIRED.';
-                void displayMuthurMessage(chatLog, warningText, '', '#ff0000', 'error');
+                void displayMuthurMessage(chatLog, protocolInfo.confirmation, '', '#ff0000', 'error');
 
                 appendCerberusConfirmationControls(
                     chatLog,
                     minutes,
                     () => {
-                        void displayMuthurMessage(
-                            chatLog,
-                            getGame().i18n?.localize('MOTHER.CerberusConfirmed') || 'CERBERUS CONFIRMED.',
-                            '',
-                            '#ff0000',
-                            'error',
-                        );
-                        createCerberusWindow();
-                        startCerberusCountdown(minutes, chatLog);
-                        startCerberusCountdownGlobal(minutes);
+                        void displayMuthurMessage(chatLog, protocolInfo.confirmed, '', '#ff0000', 'error');
+                        createCerberusWindow(protocolInfo.name);
+                        startCerberusCountdown(minutes, chatLog, protocol);
+                        startCerberusCountdownGlobal(minutes, Date.now(), protocol);
                         getGame().socket?.emit('module.alien-mu-th-ur', {
                             type: 'showCerberusGlobal',
                             fromId: getGame().user?.id,
                             fromName: getGame().user?.name,
                             minutes,
                             startTime: Date.now(),
+                            protocol,
                         });
                     },
                     () => {
-                        void displayMuthurMessage(
-                            chatLog,
-                            getGame().i18n?.localize('MOTHER.CerberusCancelled') || 'CERBERUS CANCELLED.',
-                            '',
-                            '#00ff00',
-                            'reply',
-                        );
+                        void displayMuthurMessage(chatLog, protocolInfo.cancelled, '', '#00ff00', 'reply');
                     },
+                    protocol,
                 );
                 wrap.remove();
             };

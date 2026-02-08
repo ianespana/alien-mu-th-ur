@@ -605,6 +605,9 @@ function isSelfDestruct(cmd: string): boolean {
         words.includes('SELF-DESTRUCT') ||
         (words.length >= 2 && words[0] === 'SELF' && words[1] === 'DESTRUCT') ||
         (words.length === 3 && protocolWords.includes(words[0]) && words[1] === 'SELF' && words[2] === 'DESTRUCT') ||
-        (words.length === 2 && protocolWords.includes(words[0]) && ['SELF-DESTRUCT', 'SELFDESTRUCT'].includes(words[1]))
+        (words.length === 2 &&
+            protocolWords.includes(words[0]) &&
+            ['SELF-DESTRUCT', 'SELFDESTRUCT'].includes(words[1])) ||
+        (words.includes('SELF') && words.includes('DESTRUCT'))
     );
 }
