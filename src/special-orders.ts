@@ -31,6 +31,83 @@ const getSoundDurationMs = (sound: foundry.audio.Sound | undefined, fallbackMs: 
     return duration > 1000 ? Math.round(duration) : Math.round(duration * 1000);
 };
 
+const createDeathScreen = (): HTMLElement => {
+    const existing = document.getElementById('cerberus-death-screen');
+    if (existing) return existing;
+
+    const deathScreen = document.createElement('div');
+    deathScreen.id = 'cerberus-death-screen';
+    deathScreen.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 999999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        animation: cerberus-fade-in 2s ease-in;
+    `;
+
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes cerberus-fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes cerberus-explosion-pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes cerberus-glitch-text {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            60% { transform: translate(-2px, -2px); }
+            80% { transform: translate(2px, 2px); }
+            100% { transform: translate(0); }
+        }
+        .cerberus-death-text {
+            color: #ff0000;
+            font-size: 120px;
+            font-family: 'Arial Black', sans-serif;
+            text-shadow: 0 0 20px #ff0000;
+            animation: cerberus-explosion-pulse 2s infinite, cerberus-glitch-text 0.3s infinite;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .cerberus-death-subtext {
+            color: #ff3333;
+            font-size: 36px;
+            font-family: monospace;
+            text-shadow: 0 0 10px #ff3333;
+            opacity: 0.8;
+            animation: cerberus-glitch-text 0.5s infinite;
+            text-align: center;
+        }
+    `;
+
+    const deathText = document.createElement('div');
+    deathText.className = 'cerberus-death-text';
+    deathText.textContent = getGame().i18n?.localize('MOTHER.SpecialOrders.Cerberus.YouAreDead') || 'You are dead';
+
+    const subText = document.createElement('div');
+    subText.className = 'cerberus-death-subtext';
+    subText.textContent =
+        getGame().i18n?.localize('MOTHER.SpecialOrders.Cerberus.MissionFailed') ||
+        'Mission failed - Installation destroyed';
+
+    deathScreen.appendChild(style);
+    deathScreen.appendChild(deathText);
+    deathScreen.appendChild(subText);
+    document.body.appendChild(deathScreen);
+    return deathScreen;
+};
+
 export function stopCerberusCountdown(): void {
     if (cerberusCountdownInterval) {
         clearInterval(cerberusCountdownInterval);
@@ -128,7 +205,35 @@ export function startCerberusCountdownGlobal(minutes: number, startTime: number 
                         'cerberus',
                     );
                     await wait(getSoundDurationMs(bye, 1500));
-                    void playSoundWithHelper('/modules/alien-mu-th-ur/sounds/count/boom.mp3', 1, false, 'cerberus');
+                    const boom = await playSoundWithHelper(
+                        '/modules/alien-mu-th-ur/sounds/count/boom.mp3',
+                        1,
+                        false,
+                        'cerberus',
+                    );
+                    await wait(getSoundDurationMs(boom, 1200));
+                    const deathScreen = createDeathScreen();
+                    const deathMusic = await playSoundWithHelper(
+                        '/modules/alien-mu-th-ur/sounds/count/musicmort.mp3',
+                        1,
+                        false,
+                        'cerberus',
+                    );
+                    const musicDuration = getSoundDurationMs(deathMusic, 8000);
+                    setTimeout(() => {
+                        deathScreen.style.animation = 'cerberus-fade-out 1s ease-out';
+                        const fadeStyle = document.createElement('style');
+                        fadeStyle.textContent = `
+                            @keyframes cerberus-fade-out {
+                                from { opacity: 1; }
+                                to { opacity: 0; }
+                            }
+                        `;
+                        deathScreen.appendChild(fadeStyle);
+                        setTimeout(() => {
+                            deathScreen.remove();
+                        }, 1000);
+                    }, musicDuration);
                 })();
             }
             stopCerberusGlobal();
