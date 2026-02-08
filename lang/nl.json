@@ -301,6 +301,8 @@
         "permissionsTitle": "Permissions",
         "permissionsSpecialOrders": "Special Orders",
         "permissionsPostHack": "Post-Hack Commands",
+        "cerberusDeathScreenEnabled": "CERBERUS DEATH SCREEN ENABLED.",
+        "cerberusDeathScreenDisabled": "CERBERUS DEATH SCREEN DISABLED.",
         "helpCommands": {
             "help": "HELP: TOON DEZE HULP",
             "status": "STATUS: SYSTEEMSTATUS",
@@ -308,6 +310,8 @@
             "exit": "EXIT: TERMINAL SLUITEN",
             "hack": "HACK: PROBEERT ADMINRECHTEN TE KRIJGEN (GM-GECONTROLEERD)",
             "cerberus": "CERBERUS: GM-GOEDKEURING VEREIST. SPELER MOET BEVESTIGEN/ANNULEREN VOOR DE AFTELLING.",
+            "selfDestruct": "SELF DESTRUCT: GM APPROVAL REQUIRED. PLAYER MUST CONFIRM/CANCEL BEFORE COUNTDOWN.",
+            "cerberusDeathScreen": "CERBERUS DEATHSCREEN: TOGGLE FINAL DEATH SCREEN (GM ONLY).",
             "doors": "DOORS, LOCK DOOR X, UNLOCK DOOR X. RICHT ZICH OP DEUREN 'AD*'.",
             "lights": "SHUTDOWN LIGHTS, DIM LIGHTS, RESTORE LIGHTS. SCHAKELT LICHTEN UIT, DIMT EN HERSTELT.",
             "alarm": "ACTIVATE ALARM, STOP ALARM. SPEELT EEN ALARM EN KAN EEN RODE OVERLAY TONEN.",
@@ -333,6 +337,8 @@
         "CerberusHackAlert": "!!! PRIORITEITSALARM !!! - {userName} HEEFT HET CERBERUS PROTOCOL GEÏNITIEERD",
         "CerberusConfirmed": "CERBERUS PROTOCOL BEVESTIGD - ZELFVERNIETIGING IN UITVOERING",
         "CerberusCancelled": "CERBERUS PROTOCOL GEANNULEERD",
+        "SelfDestructConfirmed": "SELF-DESTRUCT CONFIRMED - COUNTDOWN IN PROGRESS",
+        "SelfDestructCancelled": "SELF-DESTRUCT CANCELLED",
         "CommandNotFound": "COMMANDO NIET HERKEND. TYP 'HELP' VOOR DE LIJST MET COMMANDO'S.",
         "IntrusionDetected": "!!! INDRINGING GEDETECTEERD !!!",
         "HackDisabledInfo": "Het HACK commando is momenteel uitgeschakeld in de systeeminstellingen\nWilt u het activeren?",
@@ -416,6 +422,13 @@
                 "goodbye": "SUCCES",
                 "StopCerberus": "Stop Cerberus",
                 "completed": "ZELFVERNIETIGINGSSEQUENTIE VOLTOOID."
+            },
+            "SelfDestruct": {
+                "name": "SELF-DESTRUCT",
+                "confirmation": "!!! WARNING !!!\\n\\nYOU ARE ABOUT TO ACTIVATE SELF-DESTRUCT\\nTHIS ACTION WILL TRIGGER DESTRUCTION\\nNO RETURN WILL BE POSSIBLE\\n\\nCONFIRM ACTIVATION?",
+                "confirm": "CONFIRM",
+                "cancel": "CANCEL",
+                "completed": "SELF-DESTRUCT SEQUENCE COMPLETED."
             },
             "Unknown": "SPECIALE OPDRACHT NIET HERKEND."
         }

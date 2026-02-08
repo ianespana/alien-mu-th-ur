@@ -61,6 +61,7 @@ declare global {
         'alien-mu-th-ur.alarmSoundPath': foundry.data.fields.FilePathField;
 
         // World (GM controls)
+        'alien-mu-th-ur.cerberusDeathScreenEnabled': boolean;
         'alien-mu-th-ur.allowHack': boolean;
         'alien-mu-th-ur.hackDecisionByGM': boolean;
         'alien-mu-th-ur.allowDragGM': boolean;
