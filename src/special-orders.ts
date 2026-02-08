@@ -2,7 +2,13 @@ import { playAlarmSound, playSoundWithHelper } from './audio-utils.js';
 import { getGame } from './constants.js';
 import { appendDialogToGM } from './interfaces.js';
 import { getSession } from './session.js';
-import { displayMuthurMessage, syncCommandResult, syncMessageToSpectators } from './ui/ui-utils.js';
+import {
+    displayMuthurMessage,
+    lockPlayerInput,
+    startReplyWait,
+    syncCommandResult,
+    syncMessageToSpectators,
+} from './ui/ui-utils.js';
 
 let cerberusCountdownInterval: ReturnType<typeof setInterval> | null = null;
 let cerberusGlobalInterval: ReturnType<typeof setInterval> | null = null;
@@ -310,6 +316,8 @@ export async function handleSpecialOrder(chatLog: HTMLElement, command: string):
                     '#ff0000',
                     'communication',
                 );
+                lockPlayerInput();
+                startReplyWait(chatLog);
                 return;
             }
 
@@ -366,11 +374,14 @@ export async function handleSpecialOrder(chatLog: HTMLElement, command: string):
             };
             return;
         } else {
-            const translationKey = orders[orderKey];
-            const localized = getGame().i18n?.localize(translationKey) || `SPECIAL ORDER ${orderKey}`;
-            await syncMessageToSpectators(chatLog, localized, '', '#00ff00', 'reply');
+            const nameKey = `MOTHER.SpecialOrders.${orderKey}.name`;
+            const descKey = `MOTHER.SpecialOrders.${orderKey}.description`;
+            const nameText = getGame().i18n?.localize(nameKey) || `SPECIAL ORDER ${orderKey}`;
+            const descText = getGame().i18n?.localize(descKey) || '';
+            const text = descText && descText !== descKey ? `${nameText}\n${descText}` : nameText;
+            await syncMessageToSpectators(chatLog, text, '', '#00ff00', 'reply');
             syncCommandResult('SPECIAL_ORDER', {
-                text: localized,
+                text: text,
                 color: '#00ff00',
                 type: 'reply',
             });

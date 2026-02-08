@@ -288,7 +288,28 @@
             "allowCaptainOrders": "Kapitän → Spezialbefehle ohne HACK",
             "allowCaptainOrdersHint": "Erlaubt Kapitänen den Zugriff auf Spezialbefehle ohne HACK"
         },
-        "alarmStopped": "ALARM GESTOPPT."
+        "alarmStopped": "ALARM GESTOPPT.",
+        "permissions": "Permissions",
+        "permissionsTitle": "Permissions",
+        "permissionsSpecialOrders": "Special Orders",
+        "permissionsPostHack": "Post-Hack Commands",
+        "helpCommands": {
+            "help": "HELP: HILFE ANZEIGEN",
+            "status": "STATUS: SYSTEMSTATUS",
+            "clear": "CLEAR: BILDSCHIRM LÖSCHEN",
+            "exit": "EXIT: TERMINAL SCHLIESSEN",
+            "message": "NACHRICHT: MIT MUTHUR KOMMUNIZIEREN",
+            "hack": "HACK: VERSUCH, ADMINRECHTE ZU ERHALTEN (VOM MJ KONTROLLIERT)",
+            "cerberus": "CERBERUS: GM-GENEHMIGUNG ERFORDERLICH. SPIELER MUSS BEST?TIGEN/ABBRECHEN VOR DEM COUNTDOWN.",
+            "doors": "DOORS, LOCK DOOR X, UNLOCK DOOR X. ZIELT AUF TÜREN MIT NAMEN 'AD*'.",
+            "lights": "SHUTDOWN LIGHTS, DIM LIGHTS, RESTORE LIGHTS. LICHT AUS, DIMMEN UND WIEDERHERSTELLEN.",
+            "alarm": "ACTIVATE ALARM, STOP ALARM. SPIELT EINEN ALARM UND KANN EIN ROTES OVERLAY ANZEIGEN.",
+            "gas": "GAS TARGETS. WIRKT VERGIFTET/BEWUSSTLOS IN DER UMGEBUNG.",
+            "cryo": "CRYO POD [NAME?]. LISTET TOKENS, MJ WÄHLT ZIEL FÜR STASE.",
+            "cryoRelease": "CRYO RELEASE. LISTET CHARAKTERE IN STASE ZUR MEHRFACH-FREIGABE."
+        },
+        "helpHeader": "AVAILABLE COMMANDS:",
+        "helpFooter": "AWAITING COMMAND..."
     },
     "MOTHER": {
         "HackSuccess": "HACK ERFOLGREICH - ZUGRIFF GEWÄHRT",

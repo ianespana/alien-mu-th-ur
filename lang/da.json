@@ -292,7 +292,28 @@
             "allowCaptainOrders": "Kaptajn → Specialordrer uden HACK",
             "allowCaptainOrdersHint": "Tillad Kaptajner at bruge Specialordrer uden HACK"
         },
-        "alarmStopped": "ALARM STOPPET."
+        "alarmStopped": "ALARM STOPPET.",
+        "permissions": "Permissions",
+        "permissionsTitle": "Permissions",
+        "permissionsSpecialOrders": "Special Orders",
+        "permissionsPostHack": "Post-Hack Commands",
+        "helpCommands": {
+            "help": "HELP: VIS DENNE HJÆLP",
+            "status": "STATUS: SYSTEMSTATUS",
+            "clear": "CLEAR: RYD SKÆRM",
+            "exit": "EXIT: LUK TERMINAL",
+            "message": "BESKED: KOMMUNIKER MED MOR",
+            "hack": "HACK: FORSØG AT FÅ ADMIN-RETTIGHEDER (GM-STYRET)",
+            "cerberus": "CERBERUS: KR?VER GM-GODKENDELSE. SPILLER SKAL BEKR?FTE/ANNULLERE F?R NEDT?LLING.",
+            "doors": "DOORS, LOCK DOOR X, UNLOCK DOOR X. MÅLRETTER DØRE 'AD*'.",
+            "lights": "SHUTDOWN LIGHTS, DIM LIGHTS, RESTORE LIGHTS. SLUK, D?MP OG GENOPRET LYS.",
+            "alarm": "ACTIVATE ALARM, STOP ALARM. AFGIVER ALARM OG KAN L?GGE R?D OVERLAY.",
+            "gas": "GAS TARGETS. ANVENDER FORGIFTET/BEVIDSTLØS EFFEKT I OMRÅDET.",
+            "cryo": "CRYO POD [NAVN?]. LISTE TOKENS, MJ VÆLGER MÅL TIL STASE.",
+            "cryoRelease": "CRYO RELEASE. LISTE OVER PERSONER I STASE TIL FLERVALGS FRIGIVELSE."
+        },
+        "helpHeader": "AVAILABLE COMMANDS:",
+        "helpFooter": "AWAITING COMMAND..."
     },
     "MOTHER": {
         "HackSuccess": "HACK LYKKEDES - ADGANG BEVILGET",

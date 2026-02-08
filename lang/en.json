@@ -292,7 +292,28 @@
             "allowCaptainOrders": "Captain → Special Orders without HACK",
             "allowCaptainOrdersHint": "Allow Captains to access Special Orders without passing HACK"
         },
-        "alarmStopped": "ALARM STOPPED."
+        "alarmStopped": "ALARM STOPPED.",
+        "permissions": "Permissions",
+        "permissionsTitle": "Permissions",
+        "permissionsSpecialOrders": "Special Orders",
+        "permissionsPostHack": "Post-Hack Commands",
+        "helpCommands": {
+            "help": "HELP: DISPLAY THIS HELP",
+            "status": "STATUS: SYSTEM STATUS",
+            "clear": "CLEAR: CLEAR SCREEN",
+            "exit": "EXIT: CLOSE TERMINAL",
+            "message": "MESSAGE: COMMUNICATE WITH MUTHUR",
+            "hack": "HACK: ATTEMPT TO OBTAIN ADMIN RIGHTS (GM-CONTROLLED)",
+            "cerberus": "CERBERUS: GM APPROVAL REQUIRED. PLAYER MUST CONFIRM/CANCEL BEFORE COUNTDOWN.",
+            "doors": "DOORS, LOCK DOOR X, UNLOCK DOOR X. TARGETS DOORS NAMED 'AD*'.",
+            "lights": "SHUTDOWN LIGHTS, DIM LIGHTS, RESTORE LIGHTS. TURN OFF AND RESTORE LIGHTING.",
+            "alarm": "ACTIVATE ALARM, STOP ALARM. PLAYS AN ALERT AND CAN APPLY A RED OVERLAY.",
+            "gas": "GAS TARGETS. APPLIES POISONED/UNCONSCIOUS EFFECT IN AREA.",
+            "cryo": "CRYO POD [NAME?]. LISTS TOKENS, GM PICKS TARGET TO PUT IN STASIS.",
+            "cryoRelease": "CRYO RELEASE. LISTS CHARACTERS IN STASIS FOR MULTI-SELECTION RELEASE."
+        },
+        "helpHeader": "AVAILABLE COMMANDS:",
+        "helpFooter": "AWAITING COMMAND..."
     },
     "MOTHER": {
         "HackSuccess": "HACK SUCCESSFUL - ACCESS GRANTED",

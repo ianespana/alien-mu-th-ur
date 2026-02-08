@@ -292,7 +292,28 @@
             "allowCaptainOrders": "Capitano → Ordini speciali senza HACK",
             "allowCaptainOrdersHint": "Consenti ai Capitani l'accesso agli Ordini Speciali senza HACK"
         },
-        "alarmStopped": "ALLARME ARRESTATO."
+        "alarmStopped": "ALLARME ARRESTATO.",
+        "permissions": "Permissions",
+        "permissionsTitle": "Permissions",
+        "permissionsSpecialOrders": "Special Orders",
+        "permissionsPostHack": "Post-Hack Commands",
+        "helpCommands": {
+            "help": "HELP: MOSTRA QUESTO AIUTO",
+            "status": "STATUS: STATO DEL SISTEMA",
+            "clear": "CLEAR: PULISCI SCHERMO",
+            "exit": "EXIT: CHIUDI TERMINALE",
+            "message": "MESSAGGIO: COMUNICA CON MUTHUR",
+            "hack": "HACK: TENTA DI OTTENERE DIRITTI ADMIN (CONTROLLATO DAL MJ)",
+            "cerberus": "CERBERUS: RICHIEDE APPROVAZIONE DEL GM. IL GIOCATORE DEVE CONFERMARE/ANNULLARE PRIMA DEL CONTO ALLA ROVESCIA.",
+            "doors": "DOORS, LOCK DOOR X, UNLOCK DOOR X. PRENDE DI MIRA PORTE 'AD*'.",
+            "lights": "SHUTDOWN LIGHTS, DIM LIGHTS, RESTORE LIGHTS. SPEGNE, ATTENUA E RIPRISTINA LE LUCI.",
+            "alarm": "ACTIVATE ALARM, STOP ALARM. RIPRODUCE UN ALLARME E PU? MOSTRARE UN OVERLAY ROSSO.",
+            "gas": "GAS TARGETS. APPLICA EFFETTO AVVELENATO/INCOSCIENTE NELL'AREA.",
+            "cryo": "CRYO POD [NOME?]. ELENCA I TOKEN, IL MJ SCEGLIE IL BERSAGLIO PER LA STASI.",
+            "cryoRelease": "CRYO RELEASE. ELENCA I PERSONAGGI IN STASI PER RILASCIO MULTIPLO."
+        },
+        "helpHeader": "AVAILABLE COMMANDS:",
+        "helpFooter": "AWAITING COMMAND..."
     },
     "MOTHER": {
         "HackSuccess": "HACK RIUSCITO - ACCESSO CONCESSO",

@@ -292,7 +292,28 @@
             "allowCaptainOrders": "Kaptain → Spesialordrer uten HACK",
             "allowCaptainOrdersHint": "Tillat Kaptainer å bruke Spesialordrer uten HACK"
         },
-        "alarmStopped": "ALARM STOPPET."
+        "alarmStopped": "ALARM STOPPET.",
+        "permissions": "Permissions",
+        "permissionsTitle": "Permissions",
+        "permissionsSpecialOrders": "Special Orders",
+        "permissionsPostHack": "Post-Hack Commands",
+        "helpCommands": {
+            "help": "HELP: VIS DENNE HJELPEN",
+            "status": "STATUS: SYSTEMSTATUS",
+            "clear": "CLEAR: TØM SKJERM",
+            "exit": "EXIT: LUKK TERMINAL",
+            "message": "MELDING: KOMMUNISER MED MUTHUR",
+            "hack": "HACK: FORSØK Å FÅ ADMIN-RETTIGHETER (GM-STYRT)",
+            "cerberus": "CERBERUS: KREVER GM-GODKJENNING. SPILLEREN M? BEKREFTE/AVBRYTE F?R NEDTELLING.",
+            "doors": "DOORS, LOCK DOOR X, UNLOCK DOOR X. MÅLRETTER DØRER 'AD*'.",
+            "lights": "SHUTDOWN LIGHTS, DIM LIGHTS, RESTORE LIGHTS. SL?R AV, DIMMER OG GJENOPPRETTER LYS.",
+            "alarm": "ACTIVATE ALARM, STOP ALARM. SPILLER EN ALARM OG KAN VISE R?DT OVERLAY.",
+            "gas": "GAS TARGETS. PÅFØRER FORGIFTET/BEVISSTLØS EFFEKT I OMRÅDET.",
+            "cryo": "CRYO POD [NAVN?]. LISTE OVER TOKEN, MJ VELGER MÅL FOR STASE.",
+            "cryoRelease": "CRYO RELEASE. LISTE OVER KARAKTERER I STASE FOR FLERUTVALG FRIGIVELSE."
+        },
+        "helpHeader": "AVAILABLE COMMANDS:",
+        "helpFooter": "AWAITING COMMAND..."
     },
     "MOTHER": {
         "HackSuccess": "HACK VELLYKKET - TILGANG INNVILGET",

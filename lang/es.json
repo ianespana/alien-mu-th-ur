@@ -292,7 +292,28 @@
             "allowCaptainOrders": "Capitán → Órdenes especiales sin HACK",
             "allowCaptainOrdersHint": "Permite a los Capitanes acceder a Órdenes Especiales sin HACK"
         },
-        "alarmStopped": "ALARMA DETENIDA."
+        "alarmStopped": "ALARMA DETENIDA.",
+        "permissions": "Permissions",
+        "permissionsTitle": "Permissions",
+        "permissionsSpecialOrders": "Special Orders",
+        "permissionsPostHack": "Post-Hack Commands",
+        "helpCommands": {
+            "help": "HELP: MUESTRA ESTA AYUDA",
+            "status": "STATUS: ESTADO DEL SISTEMA",
+            "clear": "CLEAR: LIMPIAR PANTALLA",
+            "exit": "EXIT: CERRAR TERMINAL",
+            "message": "MENSAJE: COMUNICAR CON MUTHUR",
+            "hack": "HACK: INTENTO DE OBTENER DERECHOS DE ADMIN (CONTROLADO POR MJ)",
+            "cerberus": "CERBERUS: REQUIERE APROBACI?N DEL GM. EL JUGADOR DEBE CONFIRMAR/CANCELAR ANTES DE LA CUENTA ATR?S.",
+            "doors": "DOORS, LOCK DOOR X, UNLOCK DOOR X. OBJETIVO: PUERTAS 'AD*'.",
+            "lights": "SHUTDOWN LIGHTS, DIM LIGHTS, RESTORE LIGHTS. APAGA, ATEN?A Y RESTAURA LAS LUCES.",
+            "alarm": "ACTIVATE ALARM, STOP ALARM. REPRODUCE UNA ALARMA Y PUEDE MOSTRAR UN OVERLAY ROJO.",
+            "gas": "GAS TARGETS. APLICA EFECTO ENVENENADO/INCONSCIENTE EN LA ZONA.",
+            "cryo": "CRYO POD [NOMBRE?]. LISTA TOKENS, EL MJ ELIGE OBJETIVO PARA ESTASIS.",
+            "cryoRelease": "CRYO RELEASE. LISTA PERSONAJES EN ESTASIS PARA LIBERACIÓN MÚLTIPLE."
+        },
+        "helpHeader": "AVAILABLE COMMANDS:",
+        "helpFooter": "AWAITING COMMAND..."
     },
     "MOTHER": {
         "HackSuccess": "HACK EXITOSO - ACCESO CONCEDIDO",

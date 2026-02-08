@@ -292,7 +292,28 @@
             "allowCaptainOrders": "Kapten → Specialorder utan HACK",
             "allowCaptainOrdersHint": "Tillåt Kaptener att komma åt Specialorder utan HACK"
         },
-        "alarmStopped": "LARM STOPPAT."
+        "alarmStopped": "LARM STOPPAT.",
+        "permissions": "Permissions",
+        "permissionsTitle": "Permissions",
+        "permissionsSpecialOrders": "Special Orders",
+        "permissionsPostHack": "Post-Hack Commands",
+        "helpCommands": {
+            "help": "HELP: VISA DENNA HJÄLP",
+            "status": "STATUS: SYSTEMSTATUS",
+            "clear": "CLEAR: RENSA SKÄRM",
+            "exit": "EXIT: STÄNG TERMINAL",
+            "message": "MEDDELANDE: KOMMUNICERA MED MUTHUR",
+            "hack": "HACK: FÖRSÖK ATT FÅ ADMINRÄTTIGHETER (GM-STYRT)",
+            "cerberus": "CERBERUS: KR?VER GM-GODK?NNANDE. SPELAREN M?STE BEKR?FTA/AVBRYTA INNAN NEDR?KNING.",
+            "doors": "DOORS, LOCK DOOR X, UNLOCK DOOR X. MÅLRiktar DÖRRAR 'AD*'.",
+            "lights": "SHUTDOWN LIGHTS, DIM LIGHTS, RESTORE LIGHTS. SL?CKER, DIMMAR OCH ?TERST?LLER LJUS.",
+            "alarm": "ACTIVATE ALARM, STOP ALARM. SPELAR ETT LARM OCH KAN VISA EN R?D OVERLAY.",
+            "gas": "GAS TARGETS. APPLICERAR FÖRGIFTAD/MEDETSLÖS EFFEKT I OMRÅDET.",
+            "cryo": "CRYO POD [NAMN?]. LISTAR TOKENS, GM VÄLJER MÅL FÖR STASIS.",
+            "cryoRelease": "CRYO RELEASE. LISTAR KARAKTÄRER I STASIS FÖR FLERVALSFRIGIVNING."
+        },
+        "helpHeader": "AVAILABLE COMMANDS:",
+        "helpFooter": "AWAITING COMMAND..."
     },
     "MOTHER": {
         "HackSuccess": "HACK LYCKADES - ÅTKOMST BEVILJAD",
