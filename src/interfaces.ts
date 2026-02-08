@@ -1,6 +1,13 @@
 import { stopAlarm } from './actions.js';
 import { handleCommand } from './commands.js';
 import { getGame, MODULE_ID } from './constants.js';
+import {
+    getPermissionsForUser,
+    PlayerPermissions,
+    POST_HACK_COMMANDS,
+    setPermissionsForUser,
+    SPECIAL_ORDER_CODES,
+} from './permissions.js';
 import { getSession, updateSession } from './session.js';
 import {
     displayMuthurMessage,
@@ -362,11 +369,48 @@ export function showGMMuthurInterface(activeUserName: string, activeUserId: stri
         line-height: 1;
     `;
     closeButton.addEventListener('click', () => {
+        getGame().socket?.emit('module.alien-mu-th-ur', {
+            type: 'closePlayerInterface',
+            targetUserId: activeUserId,
+        });
+        getGame().socket?.emit('module.alien-mu-th-ur', {
+            type: 'sessionStatus',
+            active: false,
+            userId: null,
+            userName: null,
+        });
         container.remove();
     });
 
+    const permsButton = document.createElement('button');
+    permsButton.textContent = 'PERM';
+    permsButton.title = getGame().i18n?.localize('MUTHUR.permissions') || 'Permissions';
+    permsButton.style.cssText = `
+        background: black;
+        border: 1px solid #ff9900;
+        color: #ff9900;
+        width: 48px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-family: monospace;
+        padding: 0;
+        line-height: 1;
+        margin-right: 6px;
+        font-size: 12px;
+    `;
+    permsButton.addEventListener('click', () => {
+        showGMPermissionsDialog(activeUserId, activeUserName);
+    });
+
     header.appendChild(title);
-    header.appendChild(closeButton);
+    const headerButtons = document.createElement('div');
+    headerButtons.style.cssText = 'display: flex; align-items: center; gap: 6px;';
+    headerButtons.appendChild(permsButton);
+    headerButtons.appendChild(closeButton);
+    header.appendChild(headerButtons);
     container.appendChild(header);
 
     const chatLog = document.createElement('div');
@@ -436,6 +480,112 @@ export function showGMMuthurInterface(activeUserName: string, activeUserId: stri
 
     document.body.appendChild(container);
     return container;
+}
+
+function showGMPermissionsDialog(userId: string, userName: string): void {
+    if (!getGame().user?.isGM) return;
+    const existing = document.getElementById('gm-muthur-permissions');
+    if (existing) {
+        existing.remove();
+    }
+
+    const dialog = document.createElement('div');
+    dialog.id = 'gm-muthur-permissions';
+    dialog.style.cssText =
+        'background:black; border:2px solid #ff9900; color:#ff9900; padding:10px; z-index:100005; font-family:monospace; min-width:360px;';
+
+    const title = document.createElement('div');
+    title.textContent = `${getGame().i18n?.localize('MUTHUR.permissionsTitle') || 'Permissions'}: ${userName}`;
+    title.style.cssText = 'margin-bottom:8px; font-weight:bold;';
+    dialog.appendChild(title);
+
+    const perms = getPermissionsForUser(userId);
+
+    const buildSection = (label: string) => {
+        const section = document.createElement('div');
+        section.style.cssText = 'margin-bottom:10px;';
+        const heading = document.createElement('div');
+        heading.textContent = label;
+        heading.style.cssText = 'font-weight:bold; margin-bottom:6px;';
+        section.appendChild(heading);
+        return section;
+    };
+
+    const ordersSection = buildSection(getGame().i18n?.localize('MUTHUR.permissionsSpecialOrders') || 'Special Orders');
+    const orderChecks: Record<string, HTMLInputElement> = {};
+    for (const code of SPECIAL_ORDER_CODES) {
+        const row = document.createElement('label');
+        row.style.cssText = 'display:flex; align-items:center; gap:8px; margin:3px 0;';
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.checked = perms.specialOrders[code];
+        orderChecks[code] = cb;
+        const name =
+            getGame().i18n?.localize(`MOTHER.SpecialOrders.${code}.name`) ||
+            `${getGame().i18n?.localize('MOTHER.Keywords.Order') || 'ORDER'} ${code}`;
+        const span = document.createElement('span');
+        span.textContent = name;
+        row.appendChild(cb);
+        row.appendChild(span);
+        ordersSection.appendChild(row);
+    }
+    dialog.appendChild(ordersSection);
+
+    const commandsSection = buildSection(
+        getGame().i18n?.localize('MUTHUR.permissionsPostHack') || 'Post-Hack Commands',
+    );
+    const commandChecks: Record<string, HTMLInputElement> = {};
+    for (const key of POST_HACK_COMMANDS) {
+        const row = document.createElement('label');
+        row.style.cssText = 'display:flex; align-items:center; gap:8px; margin:3px 0;';
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.checked = perms.commands[key];
+        commandChecks[key] = cb;
+        const titleKey = `MUTHUR.helpMenu.sections.${key}.title`;
+        const span = document.createElement('span');
+        span.textContent = getGame().i18n?.localize(titleKey) || key.toUpperCase();
+        row.appendChild(cb);
+        row.appendChild(span);
+        commandsSection.appendChild(row);
+    }
+    dialog.appendChild(commandsSection);
+
+    const actions = document.createElement('div');
+    actions.style.cssText = 'display:flex; gap:8px; justify-content:flex-end;';
+    const save = document.createElement('button');
+    save.textContent = getGame().i18n?.localize('MUTHUR.confirmSpectators') || 'Confirm';
+    save.style.cssText = 'background:black; border:1px solid #00ff00; color:#00ff00; padding:2px 8px;';
+    const cancel = document.createElement('button');
+    cancel.textContent = getGame().i18n?.localize('MUTHUR.cancelSpectators') || 'Cancel';
+    cancel.style.cssText = 'background:black; border:1px solid #ff0000; color:#ff0000; padding:2px 8px;';
+
+    save.onclick = () => {
+        const updated: PlayerPermissions = {
+            specialOrders: { ...perms.specialOrders },
+            commands: { ...perms.commands },
+        };
+        for (const code of SPECIAL_ORDER_CODES) {
+            updated.specialOrders[code] = !!orderChecks[code]?.checked;
+        }
+        for (const key of POST_HACK_COMMANDS) {
+            updated.commands[key] = !!commandChecks[key]?.checked;
+        }
+        setPermissionsForUser(userId, updated);
+        getGame().socket?.emit('module.alien-mu-th-ur', {
+            type: 'permissionsUpdate',
+            targetUserId: userId,
+            permissions: updated,
+        });
+        dialog.remove();
+    };
+    cancel.onclick = () => dialog.remove();
+
+    actions.appendChild(save);
+    actions.appendChild(cancel);
+    dialog.appendChild(actions);
+
+    appendDialogToGM(dialog, 'bottom-right', 8);
 }
 
 export function showGMSpectatorSelectionDialog(activeUserId: string, activeUserName: string): void {

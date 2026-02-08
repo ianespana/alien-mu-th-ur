@@ -9,6 +9,10 @@ import {
 import { getGame, MODULE_ID } from '../constants.js';
 
 const waitingMessageTweens = new WeakMap<HTMLElement, gsap.core.Tween>();
+const replyWaitIntervals = new WeakMap<HTMLElement, number>();
+
+const getPlayerInput = (): HTMLInputElement | null =>
+    document.querySelector('#muthur-chat-container input[type="text"]');
 
 export async function showBootSequence(isSpectator: boolean = false): Promise<void> {
     const bootContainer = document.createElement('div');
@@ -552,4 +556,56 @@ export function removeWaitingMessage(): void {
         waitingMessageTweens.delete(waitingContainer);
         waitingContainer.remove();
     }
+}
+
+export function startReplyWait(chatLog: HTMLElement, label?: string): void {
+    const existing = chatLog.querySelector('.muthur-reply-waiting');
+    if (existing) return;
+
+    const container = document.createElement('div');
+    container.className = 'muthur-reply-waiting';
+    container.style.cssText = 'color:#00ff00; font-family: monospace;';
+
+    if (label) {
+        const text = document.createElement('span');
+        text.textContent = label + ' ';
+        container.appendChild(text);
+    }
+
+    const spinner = document.createElement('span');
+    spinner.textContent = '|';
+    container.appendChild(spinner);
+
+    const chars = ['|', '/', '-', '\\'];
+    let idx = 0;
+    const interval = window.setInterval(() => {
+        idx = (idx + 1) % chars.length;
+        spinner.textContent = chars[idx];
+    }, 200);
+
+    replyWaitIntervals.set(container, interval);
+    chatLog.appendChild(container);
+    chatLog.scrollTop = chatLog.scrollHeight;
+}
+
+export function stopReplyWait(chatLog: HTMLElement): void {
+    const existing = chatLog.querySelector('.muthur-reply-waiting');
+    if (!existing) return;
+    const interval = replyWaitIntervals.get(existing);
+    if (interval) window.clearInterval(interval);
+    replyWaitIntervals.delete(existing);
+    existing.remove();
+}
+
+export function lockPlayerInput(): void {
+    const input = getPlayerInput();
+    if (!input) return;
+    input.disabled = true;
+}
+
+export function unlockPlayerInput(): void {
+    const input = getPlayerInput();
+    if (!input) return;
+    input.disabled = false;
+    input.focus();
 }

@@ -221,23 +221,12 @@ export function registerSettings(): void {
         default: '',
     });
 
-    getGame().settings.register(MODULE_ID, 'captainUserIds', {
-        name: getGame().i18n?.localize('MUTHUR.ROLES.captains') || 'Captains',
-        hint: getGame().i18n?.localize('MUTHUR.ROLES.captainsHint') || 'List of users authorized as Captains',
+    getGame().settings.register(MODULE_ID, 'permissionsByUser', {
+        name: 'MUTHUR Permissions',
+        hint: 'Per-user permissions for Special Orders and post-hack commands.',
         scope: 'world',
         config: false,
-        type: Array,
-        default: [],
-    });
-
-    getGame().settings.register(MODULE_ID, 'allowCaptainSpecialOrders', {
-        name: getGame().i18n?.localize('MUTHUR.ROLES.allowCaptainOrders') || 'Captain → Special Orders without HACK',
-        hint:
-            getGame().i18n?.localize('MUTHUR.ROLES.allowCaptainOrdersHint') ||
-            'Allow Captains to access Special Orders without passing HACK',
-        scope: 'world',
-        config: false,
-        type: Boolean,
-        default: false,
+        type: Object,
+        default: {},
     });
 }

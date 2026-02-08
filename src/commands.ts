@@ -2,8 +2,15 @@ import * as actions from './actions.js';
 import { playErrorSound } from './audio-utils.js';
 import { getGame, MODULE_ID } from './constants.js';
 import { getHackStatus, simulateHackingAttempt } from './hacking.js';
+import { canBypassHackForCommand, canBypassHackForSpecialOrder, SPECIAL_ORDER_CODES } from './permissions.js';
 import { handleSpecialOrder } from './special-orders.js';
-import { displayMuthurMessage, sendToGM, syncMessageToSpectators } from './ui/ui-utils.js';
+import {
+    displayMuthurMessage,
+    lockPlayerInput,
+    sendToGM,
+    startReplyWait,
+    syncMessageToSpectators,
+} from './ui/ui-utils.js';
 
 export async function handleCommand(input: HTMLInputElement, chatLog: HTMLElement): Promise<void> {
     if (!input.value.trim()) return;
@@ -19,6 +26,8 @@ export async function handleCommand(input: HTMLInputElement, chatLog: HTMLElemen
 
         if (!getGame().user?.isGM) {
             sendToGM(message);
+            lockPlayerInput();
+            startReplyWait(chatLog, getGame().i18n?.localize('MUTHUR.waitingForMother') || 'WAITING FOR MOTHER');
         }
 
         return;
@@ -144,7 +153,8 @@ export async function handleCommand(input: HTMLInputElement, chatLog: HTMLElemen
 
 async function handleActionCommand(action: string, target: string, chatLog: HTMLElement): Promise<void> {
     const isHacked = getHackStatus();
-    if (!isHacked && !getGame().user?.isGM) {
+    const hasAccess = isHacked || canBypassHackForCommand(mapActionToCommandKey(action));
+    if (!hasAccess) {
         await syncMessageToSpectators(
             chatLog,
             getGame().i18n?.localize('MOTHER.AccessDenied') ||
@@ -197,6 +207,8 @@ async function handleActionCommand(action: string, target: string, chatLog: HTML
                 '#00ff00',
                 'reply',
             );
+            lockPlayerInput();
+            startReplyWait(chatLog);
         }
         return;
     }
@@ -213,6 +225,8 @@ async function handleActionCommand(action: string, target: string, chatLog: HTML
             '#00ff00',
             'reply',
         );
+        lockPlayerInput();
+        startReplyWait(chatLog);
     }
 }
 
@@ -292,31 +306,69 @@ export async function executeAction(action: string, target: string, chatLog: HTM
 }
 
 async function handleHelp(chatLog: HTMLElement): Promise<void> {
+    const isGM = getGame().user?.isGM ?? false;
     const isHacked = getHackStatus();
-    const showPostHack = getGame().user?.isGM || (getGame().settings.get(MODULE_ID, 'phShowInHelp') && isHacked);
+    const showPostHack = isGM || (getGame().settings.get(MODULE_ID, 'phShowInHelp') && isHacked);
+    const header = getGame().i18n?.localize('MUTHUR.helpHeader') || 'AVAILABLE COMMANDS:';
+    const footer = getGame().i18n?.localize('MUTHUR.helpFooter') || 'AWAITING COMMAND...';
 
-    let helpText =
-        getGame().i18n?.localize('MUTHUR.help') ||
-        'AVAILABLE COMMANDS:\n- HELP: DISPLAY THIS HELP\n- STATUS: SYSTEM STATUS\n- CLEAR: CLEAR SCREEN\n- EXIT: CLOSE TERMINAL\n- /M [MESSAGE]: COMMUNICATE WITH MUTHUR\n \nAWAITING COMMAND...';
-
-    if (showPostHack) {
-        const sections = [
-            'sections.specialOrders',
-            'sections.cerberus',
-            'sections.doors',
-            'sections.lights',
-            'sections.alarm',
-            'sections.gas',
-            'sections.cryo',
-            'sections.cryoRelease',
-        ];
-        let postHackHelp = '\n\n' + (getGame().i18n?.localize('MUTHUR.postHack.title') || 'POST-HACK COMMANDS:');
-        for (const s of sections) {
-            postHackHelp += '\n- ' + (getGame().i18n?.localize(`MUTHUR.helpMenu.${s}.desc`) || '');
+    const lines: string[] = [];
+    const baseKeys = ['help', 'status', 'clear', 'exit', 'message', 'hack'] as const;
+    for (const key of baseKeys) {
+        const text = getGame().i18n?.localize(`MUTHUR.helpCommands.${key}`);
+        if (text && text !== `MUTHUR.helpCommands.${key}`) {
+            lines.push(text);
         }
-        helpText += postHackHelp;
     }
 
+    if (showPostHack) {
+        const canOrders = isGM || isHacked;
+        const canCerberus = isGM || isHacked || canBypassHackForCommand('cerberus');
+        const canDoors = isGM || isHacked || canBypassHackForCommand('doors');
+        const canLights = isGM || isHacked || canBypassHackForCommand('lights');
+        const canAlarm = isGM || isHacked || canBypassHackForCommand('alarm');
+        const canGas = isGM || isHacked || canBypassHackForCommand('gas');
+        const canCryo = isGM || isHacked || canBypassHackForCommand('cryo');
+
+        if (canOrders) {
+            for (const code of SPECIAL_ORDER_CODES) {
+                const allowed = isGM || isHacked || canBypassHackForSpecialOrder(code);
+                if (!allowed) continue;
+                const nameKey = `MOTHER.SpecialOrders.${code}.name`;
+                const nameText = getGame().i18n?.localize(nameKey);
+                lines.push(nameText && nameText !== nameKey ? nameText : `SPECIAL ORDER ${code}`);
+            }
+        }
+
+        if (canCerberus) {
+            const text = getGame().i18n?.localize('MUTHUR.helpCommands.cerberus');
+            if (text && text !== 'MUTHUR.helpCommands.cerberus') lines.push(text);
+        }
+        if (canDoors) {
+            const text = getGame().i18n?.localize('MUTHUR.helpCommands.doors');
+            if (text && text !== 'MUTHUR.helpCommands.doors') lines.push(text);
+        }
+        if (canLights) {
+            const text = getGame().i18n?.localize('MUTHUR.helpCommands.lights');
+            if (text && text !== 'MUTHUR.helpCommands.lights') lines.push(text);
+        }
+        if (canAlarm) {
+            const text = getGame().i18n?.localize('MUTHUR.helpCommands.alarm');
+            if (text && text !== 'MUTHUR.helpCommands.alarm') lines.push(text);
+        }
+        if (canGas) {
+            const text = getGame().i18n?.localize('MUTHUR.helpCommands.gas');
+            if (text && text !== 'MUTHUR.helpCommands.gas') lines.push(text);
+        }
+        if (canCryo) {
+            const text = getGame().i18n?.localize('MUTHUR.helpCommands.cryo');
+            if (text && text !== 'MUTHUR.helpCommands.cryo') lines.push(text);
+            const releaseText = getGame().i18n?.localize('MUTHUR.helpCommands.cryoRelease');
+            if (releaseText && releaseText !== 'MUTHUR.helpCommands.cryoRelease') lines.push(releaseText);
+        }
+    }
+
+    const helpText = `${header}\n- ${lines.join('\n- ')}\n\n${footer}`;
     await syncMessageToSpectators(chatLog, helpText, '', '#00ff00', 'reply');
 }
 
@@ -335,6 +387,8 @@ async function handleStatus(chatLog: HTMLElement): Promise<void> {
             '#00ff00',
             'communication',
         );
+        lockPlayerInput();
+        startReplyWait(chatLog);
         return;
     }
 
@@ -367,28 +421,30 @@ async function handleHack(chatLog: HTMLElement): Promise<void> {
 }
 
 async function processSpecialCommand(command: string, chatLog: HTMLElement): Promise<void> {
-    const isCaptain = (() => {
-        try {
-            const ids = getGame().settings.get(MODULE_ID, 'captainUserIds') || [];
-
-            const userId = getGame().user?.id;
-            if (!userId) return false;
-
-            return ids.includes(userId);
-        } catch {
-            return false;
+    const isHacked = getHackStatus();
+    let canAccess = getGame().user?.isGM || isHacked;
+    if (!canAccess && isCerberus(command)) {
+        canAccess = canBypassHackForCommand('cerberus');
+    } else if (!canAccess) {
+        const orderKey = command
+            .toUpperCase()
+            .replace(/^ORDRE\s+SPECIAL\s+/i, '')
+            .replace(/^ORDRE\s+SPÃ‰CIAL\s+/i, '')
+            .replace(/^ORDER\s+SPECIAL\s+/i, '')
+            .replace(/^SPECIAL\s+ORDRE\s+/i, '')
+            .replace(/^SPÃ‰CIAL\s+ORDRE\s+/i, '')
+            .replace(/^SPECIAL\s+ORDER\s+/i, '')
+            .replace(/^ORDRE\s+/i, '')
+            .replace(/^ORDER\s+/i, '')
+            .replace(/^SPECIAL\s+/i, '')
+            .replace(/^SPÃ‰CIAL\s+/i, '')
+            .replace(/^PROTOCOLE\s+/i, '')
+            .replace(/^PROTOCOL\s+/i, '')
+            .trim();
+        if ((SPECIAL_ORDER_CODES as readonly string[]).includes(orderKey)) {
+            canAccess = canBypassHackForSpecialOrder(orderKey as (typeof SPECIAL_ORDER_CODES)[number]);
         }
-    })();
-
-    const allowCaptain = (() => {
-        try {
-            return getGame().settings.get(MODULE_ID, 'allowCaptainSpecialOrders') as boolean;
-        } catch {
-            return false;
-        }
-    })();
-
-    const canAccess = getGame().user?.isGM || getHackStatus() || (allowCaptain && isCaptain);
+    }
     if (!canAccess) {
         await syncMessageToSpectators(
             chatLog,
@@ -411,6 +467,14 @@ async function processSpecialCommand(command: string, chatLog: HTMLElement): Pro
     }
 
     await handleSpecialOrder(chatLog, command);
+}
+
+function mapActionToCommandKey(action: string): 'doors' | 'lights' | 'alarm' | 'gas' | 'cryo' {
+    if (action === 'LOCK' || action === 'UNLOCK' || action === 'LIST_DOORS') return 'doors';
+    if (action === 'SHUTDOWN_LIGHTS' || action === 'DIM_LIGHTS' || action === 'RESTORE_LIGHTS') return 'lights';
+    if (action === 'ACTIVATE_ALARM' || action === 'STOP_ALARM') return 'alarm';
+    if (action === 'GAS_TARGETS') return 'gas';
+    return 'cryo';
 }
 
 function isSpecialOrder(cmd: string): boolean {

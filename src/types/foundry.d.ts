@@ -81,7 +81,6 @@ declare global {
         'alien-mu-th-ur.customStatusText': string;
 
         // Roles (World)
-        'alien-mu-th-ur.captainUserIds': string[];
-        'alien-mu-th-ur.allowCaptainSpecialOrders': boolean;
+        'alien-mu-th-ur.permissionsByUser': Record<string, unknown>;
     }
 }

@@ -38,7 +38,6 @@ export class MuthurAdminSettingsApp extends foundry.appv1.api.FormApplication {
             hackDecisionByGM: game.settings.get(MODULE_ID, 'hackDecisionByGM'),
             allowDragGM: game.settings.get(MODULE_ID, 'allowDragGM'),
             allowDragPlayers: game.settings.get(MODULE_ID, 'allowDragPlayers'),
-            allowCaptainSpecialOrders: game.settings.get(MODULE_ID, 'allowCaptainSpecialOrders'),
 
             phShowInHelp: game.settings.get(MODULE_ID, 'phShowInHelp'),
             phSpecialOrders: game.settings.get(MODULE_ID, 'phSpecialOrders'),
@@ -52,9 +51,6 @@ export class MuthurAdminSettingsApp extends foundry.appv1.api.FormApplication {
             currentStatusKey: game.settings.get(MODULE_ID, 'currentStatusKey'),
             customStatusText: game.settings.get(MODULE_ID, 'customStatusText'),
             alarmSoundPath: game.settings.get(MODULE_ID, 'alarmSoundPath'),
-
-            // simple: string[] como JSON en textarea
-            captainUserIds: JSON.stringify(game.settings.get(MODULE_ID, 'captainUserIds'), null, 2),
         };
     }
 
@@ -68,7 +64,6 @@ export class MuthurAdminSettingsApp extends foundry.appv1.api.FormApplication {
         await game.settings.set(MODULE_ID, 'hackDecisionByGM', bool('hackDecisionByGM'));
         await game.settings.set(MODULE_ID, 'allowDragGM', bool('allowDragGM'));
         await game.settings.set(MODULE_ID, 'allowDragPlayers', bool('allowDragPlayers'));
-        await game.settings.set(MODULE_ID, 'allowCaptainSpecialOrders', bool('allowCaptainSpecialOrders'));
 
         await game.settings.set(MODULE_ID, 'phShowInHelp', bool('phShowInHelp'));
         await game.settings.set(MODULE_ID, 'phSpecialOrders', bool('phSpecialOrders'));
@@ -88,15 +83,5 @@ export class MuthurAdminSettingsApp extends foundry.appv1.api.FormApplication {
 
         const alarmSoundPath = typeof formData.alarmSoundPath === 'string' ? formData.alarmSoundPath : '';
         await game.settings.set(MODULE_ID, 'alarmSoundPath', alarmSoundPath);
-
-        /*// captains (string[])
-        try {
-            const rawCaptainUserIds = typeof formData.captainUserIds === 'string' ? formData.captainUserIds : '';
-            const parsed = JSON.parse(rawCaptainUserIds);
-            const ids = Array.isArray(parsed) ? parsed.map(String) : [];
-            await game.settings.set(MODULE_ID, 'captainUserIds', ids);
-        } catch {
-            ui.notifications?.warn('Captain User IDs must be valid JSON (array of strings).');
-        }*/
     }
 }

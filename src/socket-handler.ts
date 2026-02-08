@@ -7,6 +7,7 @@ import {
     showGMSpectatorSelectionDialog,
     showSpectatorInterface,
 } from './interfaces.js';
+import { getPermissionsForUser, setLocalPermissions } from './permissions.js';
 import { updateSession } from './session.js';
 import {
     createCerberusWindow,
@@ -23,6 +24,8 @@ import {
     removeWaitingMessage,
     sendGMResponse,
     showBootSequence,
+    stopReplyWait,
+    unlockPlayerInput,
     updateSpectatorsWithMessage,
 } from './ui/ui-utils.js';
 
@@ -55,6 +58,7 @@ export function handleSocketMessage(raw: unknown): void {
         if (chatContainer) {
             chatContainer.remove();
             updateSession({ active: false, userId: null, userName: null });
+            unlockPlayerInput();
             ui.notifications?.info(
                 getGame().i18n?.localize('MUTHUR.sessionClosedByGM') || 'GM has closed the MUTHUR session',
             );
@@ -353,12 +357,18 @@ export function handleSocketMessage(raw: unknown): void {
         const text = getString(raw.text);
         if (!chatLog || !text) return;
         void displayMuthurMessage(chatLog as HTMLElement, text, '', '#00ff00', 'reply');
+        stopReplyWait(chatLog as HTMLElement);
+        unlockPlayerInput();
         const motherName = getGame().i18n?.localize('MUTHUR.motherName') || 'MUTHUR';
         updateSpectatorsWithMessage(text, `${motherName}: `, '#00ff00', 'reply');
     } else if (type === 'cerberusApproval' && getString(raw.targetUserId) === userId) {
         const approved = getBoolean(raw.approved) ?? false;
         const minutes = Math.max(1, Math.min(60, Number(raw.minutes) || 10));
         const chatLog = document.querySelector('.muthur-chat-log');
+        if (chatLog) {
+            stopReplyWait(chatLog as HTMLElement);
+            unlockPlayerInput();
+        }
         if (!approved) {
             if (chatLog) {
                 void displayMuthurMessage(
@@ -436,6 +446,10 @@ export function handleSocketMessage(raw: unknown): void {
     } else if (type === 'stopCerberus') {
         stopCerberusCountdown();
         stopCerberusGlobal();
+    } else if (type === 'permissionsUpdate' && getString(raw.targetUserId) === userId) {
+        const perms = isRecord(raw.permissions) ? raw.permissions : null;
+        if (!perms) return;
+        setLocalPermissions(perms as never);
     } else if (type === 'closeMuthurChats') {
         document.querySelectorAll('#muthur-chat-container, #gm-muthur-container').forEach((chat) => {
             chat.remove();
@@ -454,12 +468,12 @@ export function handleSocketMessage(raw: unknown): void {
                 showSpectatorInterface(activeUserId, activeUserName);
             }
         }
-    } else if (type === 'sessionStatus' && !isGM) {
+    } else if (type === 'sessionStatus') {
         const active = getBoolean(raw.active) ?? false;
         const activeUserId = getString(raw.userId) ?? null;
         const activeUserName = getString(raw.userName) ?? null;
         updateSession({ active, userId: activeUserId, userName: activeUserName });
-        if (!active) {
+        if (!active && !isGM) {
             const spectatorContainer = document.getElementById('muthur-spectator-container');
             if (spectatorContainer) spectatorContainer.remove();
         }
@@ -551,6 +565,15 @@ async function handleMuthurResponse(data: SocketPayload): Promise<void> {
 
     await displayMuthurMessage(chatLog as HTMLElement, rendered, '', playerColor, 'command');
 
+    if (actionType === 'open') {
+        const perms = getPermissionsForUser(userId);
+        getGame().socket?.emit('module.alien-mu-th-ur', {
+            type: 'permissionsUpdate',
+            targetUserId: userId,
+            permissions: perms,
+        });
+    }
+
     if (actionType === 'action' && getGame().user?.isGM) {
         const action = getString(data.commandType) ?? '';
         const target = command.substring(action.length).trim();
@@ -614,6 +637,8 @@ async function handleGMResponse(data: SocketPayload): Promise<void> {
         const color = getString(data.color) ?? '#00ff00';
         const messageType = getString(data.messageType) ?? 'reply';
         await displayMuthurMessage(chatLog as HTMLElement, message, '', color, messageType);
+        stopReplyWait(chatLog as HTMLElement);
+        unlockPlayerInput();
         const motherName = getGame().i18n?.localize('MUTHUR.motherName') || 'MUTHUR';
         updateSpectatorsWithMessage(message, `${motherName}: `, color, messageType);
     }

@@ -292,7 +292,28 @@
             "allowCaptainOrders": "Capitaine → Ordres spéciaux sans HACK",
             "allowCaptainOrdersHint": "Permet aux Capitaines d'accéder aux Ordres Spéciaux sans réussir HACK"
         },
-        "alarmStopped": "ALARME ARR?T?E."
+        "alarmStopped": "ALARME ARR?T?E.",
+        "permissions": "Permissions",
+        "permissionsTitle": "Permissions",
+        "permissionsSpecialOrders": "Special Orders",
+        "permissionsPostHack": "Post-Hack Commands",
+        "helpCommands": {
+            "help": "HELP : AFFICHE L'AIDE",
+            "status": "STATUS : ÉTAT DU SYSTÈME",
+            "clear": "CLEAR : EFFACE L'ÉCRAN",
+            "exit": "EXIT : FERME LE TERMINAL",
+            "message": "MESSAGE : COMMUNIQUER AVEC MUTHUR",
+            "hack": "HACK : TENTE D'OBTENIR DES DROITS ADMINISTRATEURS (SOUS CONTRÔLE DU MJ)",
+            "cerberus": "CERBERUS: APPROBATION MJ REQUISE. LE JOUEUR DOIT CONFIRMER/ANNULER AVANT LE COMPTE ? REBOURS.",
+            "doors": "DOORS, LOCK DOOR X, UNLOCK DOOR X. CIBLE LES PORTES NOMMÉES 'AD*'.",
+            "lights": "SHUTDOWN LIGHTS, DIM LIGHTS, RESTORE LIGHTS. ?TEINT, ATT?NUE ET RESTAURE L'?CLAIRAGE.",
+            "alarm": "ACTIVATE ALARM, STOP ALARM. JOUE UNE ALARME ET PEUT AFFICHER UN OVERLAY ROUGE.",
+            "gas": "GAS TARGETS. APPLIQUE UN EFFET EMPOISONNÉ/INCONSCIENT DANS LA ZONE.",
+            "cryo": "CRYO POD [NOM?]. LISTE LES TOKENS, LE MJ CHOISIT LA CIBLE À METTRE EN STASE.",
+            "cryoRelease": "CRYO RELEASE. LISTE LES PERSONNAGES EN STASE POUR LIBÉRATION MULTI-SÉLECTION."
+        },
+        "helpHeader": "AVAILABLE COMMANDS:",
+        "helpFooter": "AWAITING COMMAND..."
     },
     "MOTHER": {
         "HackSuccess": "HACK RÉUSSI - ACCÈS ACCORDÉ",
@@ -387,7 +408,8 @@
                 "MissionFailed": "Mission échouée - Installation détruite",
                 "Stopped": "VOUS AVEZ SURVÉCUE",
                 "goodbye": "BONNE CHANCE",
-                "StopCerberus": "Arrêter Cerberus"
+                "StopCerberus": "Arrêter Cerberus",
+                "completed": "S?QUENCE D'AUTODESTRUCTION TERMIN?E."
             }
         }
     }

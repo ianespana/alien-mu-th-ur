@@ -292,7 +292,28 @@
             "allowCaptainOrders": "Kapitein → Speciale orders zonder HACK",
             "allowCaptainOrdersHint": "Sta Kapiteins toe Speciale Orders te gebruiken zonder HACK"
         },
-        "alarmStopped": "ALARM GESTOPT."
+        "alarmStopped": "ALARM GESTOPT.",
+        "permissions": "Permissions",
+        "permissionsTitle": "Permissions",
+        "permissionsSpecialOrders": "Special Orders",
+        "permissionsPostHack": "Post-Hack Commands",
+        "helpCommands": {
+            "help": "HELP: TOON DEZE HULP",
+            "status": "STATUS: SYSTEEMSTATUS",
+            "clear": "CLEAR: SCHERM WISSEN",
+            "exit": "EXIT: TERMINAL SLUITEN",
+            "message": "BERICHT: COMMUNICEER MET MUTHUR",
+            "hack": "HACK: PROBEERT ADMINRECHTEN TE KRIJGEN (GM-GECONTROLEERD)",
+            "cerberus": "CERBERUS: GM-GOEDKEURING VEREIST. SPELER MOET BEVESTIGEN/ANNULEREN VOOR DE AFTELLING.",
+            "doors": "DOORS, LOCK DOOR X, UNLOCK DOOR X. RICHT ZICH OP DEUREN 'AD*'.",
+            "lights": "SHUTDOWN LIGHTS, DIM LIGHTS, RESTORE LIGHTS. SCHAKELT LICHTEN UIT, DIMT EN HERSTELT.",
+            "alarm": "ACTIVATE ALARM, STOP ALARM. SPEELT EEN ALARM EN KAN EEN RODE OVERLAY TONEN.",
+            "gas": "GAS TARGETS. PAST VERGIFTIGD/BEWUSTELOOS EFFECT TOE IN HET GEBIED.",
+            "cryo": "CRYO POD [NAAM?]. TOONT TOKENS, GM KIEST DOEL VOOR STASIS.",
+            "cryoRelease": "CRYO RELEASE. TOONT PERSONAGES IN STASIS VOOR MEERVOUDIGE VRIJLATING."
+        },
+        "helpHeader": "AVAILABLE COMMANDS:",
+        "helpFooter": "AWAITING COMMAND..."
     },
     "MOTHER": {
         "HackSuccess": "HACK SUCCESVOL - TOEGANG VERLEEND",
@@ -387,7 +408,8 @@
                 "MissionFailed": "Missie mislukt - Installatie vernietigd",
                 "Stopped": "JE HEBT HET OVERLEEFD",
                 "goodbye": "SUCCES",
-                "StopCerberus": "Stop Cerberus"
+                "StopCerberus": "Stop Cerberus",
+                "completed": "ZELFVERNIETIGINGSSEQUENTIE VOLTOOID."
             }
         }
     }
