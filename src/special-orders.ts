@@ -162,6 +162,23 @@ export function createCerberusWindow(): HTMLElement {
     timer.style.cssText = 'font-size: 22px;';
     windowEl.appendChild(title);
     windowEl.appendChild(timer);
+
+    if (getGame().user?.isGM) {
+        const controls = document.createElement('div');
+        controls.style.cssText = 'margin-top: 10px; display:flex; justify-content:center;';
+        const stopBtn = document.createElement('button');
+        stopBtn.textContent = getGame().i18n?.localize('MOTHER.SpecialOrders.Cerberus.StopCerberus') || 'STOP';
+        stopBtn.style.cssText =
+            'background:black; color:#ff3333; border:1px solid #ff3333; padding:4px 10px; cursor:pointer;';
+        stopBtn.addEventListener('click', () => {
+            getGame().socket?.emit('module.alien-mu-th-ur', { type: 'stopCerberus' });
+            stopCerberusCountdown();
+            stopCerberusGlobal();
+        });
+        controls.appendChild(stopBtn);
+        windowEl.appendChild(controls);
+    }
+
     document.body.appendChild(windowEl);
     return windowEl;
 }
@@ -182,8 +199,9 @@ export function startCerberusCountdownGlobal(minutes: number, startTime: number 
     const update = () => {
         const elapsed = Date.now() - startTime;
         const remaining = Math.max(0, totalMs - elapsed);
+        const remainingSeconds = Math.floor(remaining / 1000);
         const mins = Math.floor(remaining / 60000);
-        const secs = Math.ceil((remaining % 60000) / 1000);
+        const secs = Math.floor((remaining % 60000) / 1000);
         if (timer) timer.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
 
         if (!introPlayed) {
@@ -191,11 +209,16 @@ export function startCerberusCountdownGlobal(minutes: number, startTime: number 
             void playSoundWithHelper('/modules/alien-mu-th-ur/sounds/count/Cerberuslunch.mp3', 1, false, 'cerberus');
         }
 
-        if (secs !== lastSecond) {
-            if (secs <= 10 && secs > 0) {
-                void playSoundWithHelper(`/modules/alien-mu-th-ur/sounds/count/${secs}.mp3`, 1, false, 'cerberus');
+        if (remainingSeconds !== lastSecond) {
+            if (remainingSeconds <= 10 && remainingSeconds > 0) {
+                void playSoundWithHelper(
+                    `/modules/alien-mu-th-ur/sounds/count/${remainingSeconds}.mp3`,
+                    1,
+                    false,
+                    'cerberus',
+                );
             }
-            lastSecond = secs;
+            lastSecond = remainingSeconds;
         }
         if (remaining <= 0) {
             if (!endPlayed) {
