@@ -1,3 +1,4 @@
+import { playSoundWithHelper } from './audio-utils.js';
 import { getGame } from './constants.js';
 import { appendDialogToGM } from './interfaces.js';
 import { getSession } from './session.js';
@@ -5,6 +6,29 @@ import { displayMuthurMessage, syncCommandResult, syncMessageToSpectators } from
 
 let cerberusCountdownInterval: ReturnType<typeof setInterval> | null = null;
 let cerberusGlobalInterval: ReturnType<typeof setInterval> | null = null;
+
+const wait = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
+
+const getSoundDurationMs = (sound: foundry.audio.Sound | undefined, fallbackMs: number): number => {
+    if (!sound) return fallbackMs;
+    const anySound = sound as unknown as {
+        duration?: number | (() => number);
+        _duration?: number;
+        source?: { duration?: number };
+    };
+    let duration: number | undefined;
+    if (typeof anySound.duration === 'function') {
+        duration = anySound.duration();
+    } else if (typeof anySound.duration === 'number') {
+        duration = anySound.duration;
+    } else if (typeof anySound._duration === 'number') {
+        duration = anySound._duration;
+    } else if (typeof anySound.source?.duration === 'number') {
+        duration = anySound.source.duration;
+    }
+    if (!duration || !Number.isFinite(duration)) return fallbackMs;
+    return duration > 1000 ? Math.round(duration) : Math.round(duration * 1000);
+};
 
 export function stopCerberusCountdown(): void {
     if (cerberusCountdownInterval) {
@@ -59,14 +83,49 @@ export function startCerberusCountdownGlobal(minutes: number, startTime: number 
     const windowEl = createCerberusWindow();
     const timer = windowEl.querySelector('.muthur-cerberus-timer');
     const totalMs = Math.max(1, minutes) * 60 * 1000;
+    let lastSecond: number | null = null;
+    let introPlayed = false;
+    let endPlayed = false;
 
     const update = () => {
         const elapsed = Date.now() - startTime;
         const remaining = Math.max(0, totalMs - elapsed);
         const mins = Math.floor(remaining / 60000);
-        const secs = Math.floor((remaining % 60000) / 1000);
+        const secs = Math.ceil((remaining % 60000) / 1000);
         if (timer) timer.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+
+        if (!introPlayed) {
+            introPlayed = true;
+            void playSoundWithHelper('/modules/alien-mu-th-ur/sounds/count/Cerberuslunch.mp3', 1, false, 'cerberus');
+        }
+
+        if (secs !== lastSecond) {
+            if (secs <= 10 && secs > 0) {
+                void playSoundWithHelper(`/modules/alien-mu-th-ur/sounds/count/${secs}.mp3`, 1, false, 'cerberus');
+            }
+            lastSecond = secs;
+        }
         if (remaining <= 0) {
+            if (!endPlayed) {
+                endPlayed = true;
+                void (async () => {
+                    const wey = await playSoundWithHelper(
+                        '/modules/alien-mu-th-ur/sounds/count/Weythanks.mp3',
+                        1,
+                        false,
+                        'cerberus',
+                    );
+                    await wait(getSoundDurationMs(wey, 2000));
+                    const bye = await playSoundWithHelper(
+                        '/modules/alien-mu-th-ur/sounds/count/byebye.mp3',
+                        1,
+                        false,
+                        'cerberus',
+                    );
+                    await wait(getSoundDurationMs(bye, 1500));
+                    void playSoundWithHelper('/modules/alien-mu-th-ur/sounds/count/boom.mp3', 1, false, 'cerberus');
+                })();
+            }
             stopCerberusGlobal();
         }
     };

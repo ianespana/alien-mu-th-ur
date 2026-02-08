@@ -293,7 +293,7 @@ export async function executeAction(action: string, target: string, chatLog: HTM
 
 async function handleHelp(chatLog: HTMLElement): Promise<void> {
     const isHacked = getHackStatus();
-    const showPostHack = getGame().settings.get(MODULE_ID, 'phShowInHelp') && isHacked;
+    const showPostHack = getGame().user?.isGM || (getGame().settings.get(MODULE_ID, 'phShowInHelp') && isHacked);
 
     let helpText =
         getGame().i18n?.localize('MUTHUR.help') ||
