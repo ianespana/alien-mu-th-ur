@@ -81,7 +81,7 @@
                 "intro": "LISTA Y DESCRIPCIÓN DE LOS COMANDOS DISPONIBLES TRAS HACK (CON APROBACIÓN DEL MJ).",
                 "basic": {
                     "title": "COMANDOS BÁSICOS",
-                    "desc": "HELP: MUESTRA ESTA AYUDA\nSTATUS: ESTADO DEL SISTEMA\nCLEAR: LIMPIAR PANTALLA\nEXIT: CERRAR TERMINAL\nMENSAJE: COMUNICAR CON MUTHUR"
+                    "desc": "HELP: MUESTRA ESTA AYUDA\nSTATUS: ESTADO DEL SISTEMA\nCLEAR: LIMPIAR PANTALLA\nEXIT: CERRAR TERMINAL"
                 },
                 "hack": {
                     "title": "HACK",
@@ -302,7 +302,6 @@
             "status": "STATUS: ESTADO DEL SISTEMA",
             "clear": "CLEAR: LIMPIAR PANTALLA",
             "exit": "EXIT: CERRAR TERMINAL",
-            "message": "MENSAJE: COMUNICAR CON MUTHUR",
             "hack": "HACK: INTENTO DE OBTENER DERECHOS DE ADMIN (CONTROLADO POR MJ)",
             "cerberus": "CERBERUS: REQUIERE APROBACI?N DEL GM. EL JUGADOR DEBE CONFIRMAR/CANCELAR ANTES DE LA CUENTA ATR?S.",
             "doors": "DOORS, LOCK DOOR X, UNLOCK DOOR X. OBJETIVO: PUERTAS 'AD*'.",
@@ -313,7 +312,8 @@
             "cryoRelease": "CRYO RELEASE. LISTA PERSONAJES EN ESTASIS PARA LIBERACIÓN MÚLTIPLE."
         },
         "helpHeader": "AVAILABLE COMMANDS:",
-        "helpFooter": "AWAITING COMMAND..."
+        "helpFooter": "AWAITING COMMAND...",
+        "messageHint": "ESCRIBE CUALQUIER TEXTO PARA ENVIAR A MUTHUR. PARA COMANDOS, ESCRIBE /HELP."
     },
     "MOTHER": {
         "HackSuccess": "HACK EXITOSO - ACCESO CONCEDIDO",

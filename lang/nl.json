@@ -81,7 +81,7 @@
                 "intro": "LIJST EN BESCHRIJVING VAN BESCHIKBARE POST-HACK-COMMANDO'S (MET GM-GOEDKEURING).",
                 "basic": {
                     "title": "BASISCOMMANDO'S",
-                    "desc": "HELP: TOON DEZE HULP\nSTATUS: SYSTEEMSTATUS\nCLEAR: SCHERM WISSEN\nEXIT: TERMINAL SLUITEN\nBERICHT: COMMUNICEER MET MUTHUR"
+                    "desc": "HELP: TOON DEZE HULP\nSTATUS: SYSTEEMSTATUS\nCLEAR: SCHERM WISSEN\nEXIT: TERMINAL SLUITEN"
                 },
                 "hack": {
                     "title": "HACK",
@@ -302,7 +302,6 @@
             "status": "STATUS: SYSTEEMSTATUS",
             "clear": "CLEAR: SCHERM WISSEN",
             "exit": "EXIT: TERMINAL SLUITEN",
-            "message": "BERICHT: COMMUNICEER MET MUTHUR",
             "hack": "HACK: PROBEERT ADMINRECHTEN TE KRIJGEN (GM-GECONTROLEERD)",
             "cerberus": "CERBERUS: GM-GOEDKEURING VEREIST. SPELER MOET BEVESTIGEN/ANNULEREN VOOR DE AFTELLING.",
             "doors": "DOORS, LOCK DOOR X, UNLOCK DOOR X. RICHT ZICH OP DEUREN 'AD*'.",
@@ -313,7 +312,8 @@
             "cryoRelease": "CRYO RELEASE. TOONT PERSONAGES IN STASIS VOOR MEERVOUDIGE VRIJLATING."
         },
         "helpHeader": "AVAILABLE COMMANDS:",
-        "helpFooter": "AWAITING COMMAND..."
+        "helpFooter": "AWAITING COMMAND...",
+        "messageHint": "TYPE VRIJE TEKST OM NAAR MUTHUR TE STUREN. VOOR COMMANDO'S, TYP /HELP."
     },
     "MOTHER": {
         "HackSuccess": "HACK SUCCESVOL - TOEGANG VERLEEND",

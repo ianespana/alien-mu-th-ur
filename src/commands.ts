@@ -2,7 +2,13 @@ import * as actions from './actions.js';
 import { playErrorSound } from './audio-utils.js';
 import { getGame, MODULE_ID } from './constants.js';
 import { getHackStatus, simulateHackingAttempt } from './hacking.js';
-import { canBypassHackForCommand, canBypassHackForSpecialOrder, SPECIAL_ORDER_CODES } from './permissions.js';
+import {
+    canBypassHackForCommand,
+    canBypassHackForSpecialOrder,
+    hasAnyLocalCommandPermission,
+    hasAnyLocalSpecialOrderPermission,
+    SPECIAL_ORDER_CODES,
+} from './permissions.js';
 import { handleSpecialOrder } from './special-orders.js';
 import {
     displayMuthurMessage,
@@ -230,7 +236,7 @@ async function handleActionCommand(action: string, target: string, chatLog: HTML
     }
 }
 
-export async function executeAction(action: string, target: string, chatLog: HTMLElement): Promise<void> {
+export async function executeAction(action: string, target: string, chatLog: HTMLElement): Promise<string | null> {
     let resultText = '';
     switch (action) {
         case 'LOCK':
@@ -303,17 +309,19 @@ export async function executeAction(action: string, target: string, chatLog: HTM
     if (resultText) {
         await syncMessageToSpectators(chatLog, resultText, '', '#00ff00', 'reply');
     }
+    return resultText || null;
 }
 
 async function handleHelp(chatLog: HTMLElement): Promise<void> {
     const isGM = getGame().user?.isGM ?? false;
     const isHacked = getHackStatus();
-    const showPostHack = isGM || (getGame().settings.get(MODULE_ID, 'phShowInHelp') && isHacked);
+    const hasAnyPerms = hasAnyLocalCommandPermission() || hasAnyLocalSpecialOrderPermission();
+    const showPostHack = isGM || isHacked || hasAnyPerms;
     const header = getGame().i18n?.localize('MUTHUR.helpHeader') || 'AVAILABLE COMMANDS:';
     const footer = getGame().i18n?.localize('MUTHUR.helpFooter') || 'AWAITING COMMAND...';
 
     const lines: string[] = [];
-    const baseKeys = ['help', 'status', 'clear', 'exit', 'message', 'hack'] as const;
+    const baseKeys = ['help', 'status', 'clear', 'exit', 'hack'] as const;
     for (const key of baseKeys) {
         const text = getGame().i18n?.localize(`MUTHUR.helpCommands.${key}`);
         if (text && text !== `MUTHUR.helpCommands.${key}`) {
@@ -322,7 +330,7 @@ async function handleHelp(chatLog: HTMLElement): Promise<void> {
     }
 
     if (showPostHack) {
-        const canOrders = isGM || isHacked;
+        const canOrders = isGM || isHacked || hasAnyLocalSpecialOrderPermission();
         const canCerberus = isGM || isHacked || canBypassHackForCommand('cerberus');
         const canDoors = isGM || isHacked || canBypassHackForCommand('doors');
         const canLights = isGM || isHacked || canBypassHackForCommand('lights');

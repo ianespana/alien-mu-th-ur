@@ -187,6 +187,10 @@ export function showMuthurInterface(): HTMLElement | undefined {
         'reply',
     );
 
+    const messageHint =
+        getGame().i18n?.localize('MUTHUR.messageHint') || 'TYPE ANY TEXT TO SEND TO MUTHUR. FOR COMMANDS, TYPE /HELP.';
+    void syncMessageToSpectators(chatLog, messageHint, '', '#00ff00', 'reply');
+
     return chatContainer;
 }
 

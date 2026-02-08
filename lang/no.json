@@ -81,7 +81,7 @@
                 "intro": "LISTE OG BESKRIVELSE AV TILGJENGELIGE POST-HACK-KOMMANDOER (MED MJ-GODKJENNING).",
                 "basic": {
                     "title": "GRUNNKOMMANDOER",
-                    "desc": "HELP: VIS DENNE HJELPEN\nSTATUS: SYSTEMSTATUS\nCLEAR: TØM SKJERM\nEXIT: LUKK TERMINAL\nMELDING: KOMMUNISER MED MUTHUR"
+                    "desc": "HELP: VIS DENNE HJELPEN\nSTATUS: SYSTEMSTATUS\nCLEAR: TØM SKJERM\nEXIT: LUKK TERMINAL"
                 },
                 "hack": {
                     "title": "HACK",
@@ -302,7 +302,6 @@
             "status": "STATUS: SYSTEMSTATUS",
             "clear": "CLEAR: TØM SKJERM",
             "exit": "EXIT: LUKK TERMINAL",
-            "message": "MELDING: KOMMUNISER MED MUTHUR",
             "hack": "HACK: FORSØK Å FÅ ADMIN-RETTIGHETER (GM-STYRT)",
             "cerberus": "CERBERUS: KREVER GM-GODKJENNING. SPILLEREN M? BEKREFTE/AVBRYTE F?R NEDTELLING.",
             "doors": "DOORS, LOCK DOOR X, UNLOCK DOOR X. MÅLRETTER DØRER 'AD*'.",
@@ -313,7 +312,8 @@
             "cryoRelease": "CRYO RELEASE. LISTE OVER KARAKTERER I STASE FOR FLERUTVALG FRIGIVELSE."
         },
         "helpHeader": "AVAILABLE COMMANDS:",
-        "helpFooter": "AWAITING COMMAND..."
+        "helpFooter": "AWAITING COMMAND...",
+        "messageHint": "SKRIV FRI TEKST FOR ? SENDE TIL MUTHUR. FOR KOMMANDOER, SKRIV /HELP."
     },
     "MOTHER": {
         "HackSuccess": "HACK VELLYKKET - TILGANG INNVILGET",

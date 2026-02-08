@@ -473,6 +473,14 @@ export function handleSocketMessage(raw: unknown): void {
         const activeUserId = getString(raw.userId) ?? null;
         const activeUserName = getString(raw.userName) ?? null;
         updateSession({ active, userId: activeUserId, userName: activeUserName });
+        if (isGM && active && activeUserId) {
+            const perms = getPermissionsForUser(activeUserId);
+            getGame().socket?.emit('module.alien-mu-th-ur', {
+                type: 'permissionsUpdate',
+                targetUserId: activeUserId,
+                permissions: perms,
+            });
+        }
         if (!active && !isGM) {
             const spectatorContainer = document.getElementById('muthur-spectator-container');
             if (spectatorContainer) spectatorContainer.remove();
@@ -602,18 +610,17 @@ async function handleMuthurResponse(data: SocketPayload): Promise<void> {
         ok.onclick = async () => {
             wrap.remove();
             const { executeAction } = await import('./commands.js');
-            await executeAction(action, target, chatLog as HTMLElement);
+            const result = await executeAction(action, target, chatLog as HTMLElement);
+            if (result) {
+                sendGMResponse(userId, result, '#00ff00', 'reply');
+            }
         };
         ko.onclick = async () => {
             wrap.remove();
+            const denied = getGame().i18n?.localize('MUTHUR.requestDenied') || 'Request denied.';
             const { syncMessageToSpectators } = await import('./ui/ui-utils.js');
-            await syncMessageToSpectators(
-                chatLog as HTMLElement,
-                getGame().i18n?.localize('MUTHUR.requestDenied') || 'Request denied.',
-                '',
-                '#ff0000',
-                'error',
-            );
+            await syncMessageToSpectators(chatLog as HTMLElement, denied, '', '#ff0000', 'error');
+            sendGMResponse(userId, denied, '#ff0000', 'error');
         };
     }
 

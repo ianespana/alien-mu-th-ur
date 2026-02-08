@@ -77,7 +77,7 @@
                 "intro": "LIST AND DESCRIPTION OF AVAILABLE POST-HACK COMMANDS (WITH GM APPROVAL).",
                 "basic": {
                     "title": "BASIC COMMANDS",
-                    "desc": "HELP: DISPLAY THIS HELP\nSTATUS: SYSTEM STATUS\nCLEAR: CLEAR SCREEN\nEXIT: CLOSE TERMINAL\nMESSAGE: COMMUNICATE WITH MUTHUR"
+                    "desc": "HELP: DISPLAY THIS HELP\nSTATUS: SYSTEM STATUS\nCLEAR: CLEAR SCREEN\nEXIT: CLOSE TERMINAL"
                 },
                 "hack": {
                     "title": "HACK",
@@ -302,7 +302,6 @@
             "status": "STATUS: SYSTEM STATUS",
             "clear": "CLEAR: CLEAR SCREEN",
             "exit": "EXIT: CLOSE TERMINAL",
-            "message": "MESSAGE: COMMUNICATE WITH MUTHUR",
             "hack": "HACK: ATTEMPT TO OBTAIN ADMIN RIGHTS (GM-CONTROLLED)",
             "cerberus": "CERBERUS: GM APPROVAL REQUIRED. PLAYER MUST CONFIRM/CANCEL BEFORE COUNTDOWN.",
             "doors": "DOORS, LOCK DOOR X, UNLOCK DOOR X. TARGETS DOORS NAMED 'AD*'.",
@@ -313,7 +312,8 @@
             "cryoRelease": "CRYO RELEASE. LISTS CHARACTERS IN STASIS FOR MULTI-SELECTION RELEASE."
         },
         "helpHeader": "AVAILABLE COMMANDS:",
-        "helpFooter": "AWAITING COMMAND..."
+        "helpFooter": "AWAITING COMMAND...",
+        "messageHint": "TYPE ANY TEXT TO SEND TO MUTHUR. FOR COMMANDS, TYPE /HELP."
     },
     "MOTHER": {
         "HackSuccess": "HACK SUCCESSFUL - ACCESS GRANTED",

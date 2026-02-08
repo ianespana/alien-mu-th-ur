@@ -95,6 +95,14 @@ export function hasLocalSpecialOrderPermission(code: SpecialOrderCode): boolean 
     return localPermissions.specialOrders[code];
 }
 
+export function hasAnyLocalCommandPermission(): boolean {
+    return POST_HACK_COMMANDS.some((key) => hasLocalCommandPermission(key));
+}
+
+export function hasAnyLocalSpecialOrderPermission(): boolean {
+    return SPECIAL_ORDER_CODES.some((code) => hasLocalSpecialOrderPermission(code));
+}
+
 export function canBypassHackForCommand(key: PostHackCommandKey): boolean {
     return getGame().user?.isGM || hasLocalCommandPermission(key);
 }

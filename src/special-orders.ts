@@ -175,6 +175,10 @@ export function startCerberusCountdownGlobal(minutes: number, startTime: number 
     let introPlayed = false;
     let endPlayed = false;
 
+    void playAlarmSound(0.8).then((sound) => {
+        if (sound) cerberusAlarmSound = sound;
+    });
+
     const update = () => {
         const elapsed = Date.now() - startTime;
         const remaining = Math.max(0, totalMs - elapsed);
@@ -211,13 +215,7 @@ export function startCerberusCountdownGlobal(minutes: number, startTime: number 
                         'cerberus',
                     );
                     await wait(getSoundDurationMs(bye, 1500));
-                    const boom = await playSoundWithHelper(
-                        '/modules/alien-mu-th-ur/sounds/count/boom.mp3',
-                        1,
-                        false,
-                        'cerberus',
-                    );
-                    await wait(getSoundDurationMs(boom, 1200));
+                    await playSoundWithHelper('/modules/alien-mu-th-ur/sounds/count/boom.mp3', 1, false, 'cerberus');
                     const deathScreen = createDeathScreen();
                     const deathMusic = await playSoundWithHelper(
                         '/modules/alien-mu-th-ur/sounds/count/musicmort.mp3',
@@ -272,6 +270,34 @@ export function startCerberusCountdown(minutes: number, chatLog: HTMLElement): R
     }, 1000);
 
     return cerberusCountdownInterval;
+}
+
+export function appendCerberusConfirmationControls(
+    chatLog: HTMLElement,
+    minutes: number,
+    onConfirm: () => void,
+    onCancel: () => void,
+): void {
+    const controls = document.createElement('div');
+    controls.style.cssText = 'display:flex; gap:8px; justify-content:center; margin:10px 0;';
+    const yesBtn = document.createElement('button');
+    yesBtn.textContent = getGame().i18n?.localize('MOTHER.SpecialOrders.Cerberus.confirm') || 'CONFIRM';
+    yesBtn.style.cssText = 'background:black; color:#ff3333; border:1px solid #ff3333; padding:4px 10px;';
+    const noBtn = document.createElement('button');
+    noBtn.textContent = getGame().i18n?.localize('MOTHER.SpecialOrders.Cerberus.cancel') || 'CANCEL';
+    noBtn.style.cssText = 'background:black; color:#33ff33; border:1px solid #33ff33; padding:4px 10px;';
+    controls.appendChild(yesBtn);
+    controls.appendChild(noBtn);
+    chatLog.appendChild(controls);
+
+    yesBtn.onclick = () => {
+        controls.remove();
+        onConfirm();
+    };
+    noBtn.onclick = () => {
+        controls.remove();
+        onCancel();
+    };
 }
 
 export async function handleSpecialOrder(chatLog: HTMLElement, command: string): Promise<void> {
@@ -356,20 +382,46 @@ export async function handleSpecialOrder(chatLog: HTMLElement, command: string):
 
             ok.onclick = () => {
                 const minutes = Math.max(1, Math.min(60, parseInt(input.value, 10) || 10));
-                getGame().socket?.emit('module.alien-mu-th-ur', {
-                    type: 'cerberusApproval',
-                    targetUserId: activeUserId,
-                    approved: true,
+                const warningText =
+                    getGame().i18n?.localize('MOTHER.SpecialOrders.Cerberus.confirmation') ||
+                    'CERBERUS PROTOCOL CONFIRMATION REQUIRED.';
+                void displayMuthurMessage(chatLog, warningText, '', '#ff0000', 'error');
+
+                appendCerberusConfirmationControls(
+                    chatLog,
                     minutes,
-                });
+                    () => {
+                        void displayMuthurMessage(
+                            chatLog,
+                            getGame().i18n?.localize('MOTHER.CerberusConfirmed') || 'CERBERUS CONFIRMED.',
+                            '',
+                            '#ff0000',
+                            'error',
+                        );
+                        createCerberusWindow();
+                        startCerberusCountdown(minutes, chatLog);
+                        startCerberusCountdownGlobal(minutes);
+                        getGame().socket?.emit('module.alien-mu-th-ur', {
+                            type: 'showCerberusGlobal',
+                            fromId: getGame().user?.id,
+                            fromName: getGame().user?.name,
+                            minutes,
+                            startTime: Date.now(),
+                        });
+                    },
+                    () => {
+                        void displayMuthurMessage(
+                            chatLog,
+                            getGame().i18n?.localize('MOTHER.CerberusCancelled') || 'CERBERUS CANCELLED.',
+                            '',
+                            '#00ff00',
+                            'reply',
+                        );
+                    },
+                );
                 wrap.remove();
             };
             ko.onclick = () => {
-                getGame().socket?.emit('module.alien-mu-th-ur', {
-                    type: 'cerberusApproval',
-                    targetUserId: activeUserId,
-                    approved: false,
-                });
                 wrap.remove();
             };
             return;
@@ -396,6 +448,3 @@ export async function handleSpecialOrder(chatLog: HTMLElement, command: string):
         );
     }
 }
-void playAlarmSound(0.8).then((sound) => {
-    if (sound) cerberusAlarmSound = sound;
-});

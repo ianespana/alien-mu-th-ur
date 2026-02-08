@@ -81,7 +81,7 @@
                 "intro": "LISTA OCH BESKRIVNING AV TILLGÄNGLIGA POST-HACK-KOMMANDON (MED GM-GODKÄNNANDE).",
                 "basic": {
                     "title": "GRUNDKOMMANDON",
-                    "desc": "HELP: VISA DENNA HJÄLP\nSTATUS: SYSTEMSTATUS\nCLEAR: RENSA SKÄRM\nEXIT: STÄNG TERMINAL\nMEDDELANDE: KOMMUNICERA MED MUTHUR"
+                    "desc": "HELP: VISA DENNA HJÄLP\nSTATUS: SYSTEMSTATUS\nCLEAR: RENSA SKÄRM\nEXIT: STÄNG TERMINAL"
                 },
                 "hack": {
                     "title": "HACK",
@@ -302,7 +302,6 @@
             "status": "STATUS: SYSTEMSTATUS",
             "clear": "CLEAR: RENSA SKÄRM",
             "exit": "EXIT: STÄNG TERMINAL",
-            "message": "MEDDELANDE: KOMMUNICERA MED MUTHUR",
             "hack": "HACK: FÖRSÖK ATT FÅ ADMINRÄTTIGHETER (GM-STYRT)",
             "cerberus": "CERBERUS: KR?VER GM-GODK?NNANDE. SPELAREN M?STE BEKR?FTA/AVBRYTA INNAN NEDR?KNING.",
             "doors": "DOORS, LOCK DOOR X, UNLOCK DOOR X. MÅLRiktar DÖRRAR 'AD*'.",
@@ -313,7 +312,8 @@
             "cryoRelease": "CRYO RELEASE. LISTAR KARAKTÄRER I STASIS FÖR FLERVALSFRIGIVNING."
         },
         "helpHeader": "AVAILABLE COMMANDS:",
-        "helpFooter": "AWAITING COMMAND..."
+        "helpFooter": "AWAITING COMMAND...",
+        "messageHint": "SKRIV FRI TEXT F?R ATT SKICKA TILL MUTHUR. F?R KOMMANDON, SKRIV /HELP."
     },
     "MOTHER": {
         "HackSuccess": "HACK LYCKADES - ÅTKOMST BEVILJAD",
