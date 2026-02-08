@@ -221,7 +221,7 @@
                 },
                 "cerberus": {
                     "title": "PROTOCOLE CERBERUS",
-                    "desc": "CERBERUS: PROTOCOLE D'AUTO-DESTRUCTION AVEC COMPTE À REBOURS."
+                    "desc": "CERBERUS: APPROBATION MJ REQUISE. LE JOUEUR DOIT CONFIRMER/ANNULER AVANT LE COMPTE ? REBOURS."
                 },
                 "doors": {
                     "title": "CONTRÔLE DES PORTES",
@@ -229,11 +229,11 @@
                 },
                 "lights": {
                     "title": "CONTRÔLE DES LUMIÈRES",
-                    "desc": "SHUTDOWN LIGHTS, RESTORE LIGHTS. ÉTEINDRE ET RESTAURER L'ÉCLAIRAGE."
+                    "desc": "SHUTDOWN LIGHTS, DIM LIGHTS, RESTORE LIGHTS. ?TEINT, ATT?NUE ET RESTAURE L'?CLAIRAGE."
                 },
                 "alarm": {
                     "title": "ALARME",
-                    "desc": "ACTIVATE ALARM. JOUE UNE ALERTE SONORE ET PEUT APPLIQUER UN OVERLAY ROUGE."
+                    "desc": "ACTIVATE ALARM, STOP ALARM. JOUE UNE ALARME ET PEUT AFFICHER UN OVERLAY ROUGE."
                 },
                 "gas": {
                     "title": "GAZAGE",

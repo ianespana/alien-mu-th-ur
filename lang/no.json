@@ -93,7 +93,7 @@
                 },
                 "cerberus": {
                     "title": "CERBERUS-PROTOKOLL",
-                    "desc": "CERBERUS: SELVDESTRUKSJONSPROTOKOLL MED NEDTELLING."
+                    "desc": "CERBERUS: KREVER GM-GODKJENNING. SPILLEREN M? BEKREFTE/AVBRYTE F?R NEDTELLING."
                 },
                 "doors": {
                     "title": "DØRKONTROLL",
@@ -101,11 +101,11 @@
                 },
                 "lights": {
                     "title": "LYSKONTROLL",
-                    "desc": "SHUTDOWN LIGHTS, RESTORE LIGHTS. SLÅ AV OG GJENOPPRETT LYS."
+                    "desc": "SHUTDOWN LIGHTS, DIM LIGHTS, RESTORE LIGHTS. SL?R AV, DIMMER OG GJENOPPRETTER LYS."
                 },
                 "alarm": {
                     "title": "ALARM",
-                    "desc": "ACTIVATE ALARM. SPILLER ALARM OG KAN LEGGE RØD OVERLAY."
+                    "desc": "ACTIVATE ALARM, STOP ALARM. SPILLER EN ALARM OG KAN VISE R?DT OVERLAY."
                 },
                 "gas": {
                     "title": "GASS",

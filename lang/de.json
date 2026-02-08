@@ -89,7 +89,7 @@
                 },
                 "cerberus": {
                     "title": "CERBERUS-PROTOKOLL",
-                    "desc": "CERBERUS: SELBSTZERSTÖRUNGSPROTOKOLL MIT COUNTDOWN."
+                    "desc": "CERBERUS: GM-GENEHMIGUNG ERFORDERLICH. SPIELER MUSS BEST?TIGEN/ABBRECHEN VOR DEM COUNTDOWN."
                 },
                 "doors": {
                     "title": "TÜRENSTEUERUNG",
@@ -97,11 +97,11 @@
                 },
                 "lights": {
                     "title": "LICHTSTEUERUNG",
-                    "desc": "SHUTDOWN LIGHTS, RESTORE LIGHTS. LICHT AUSSCHALTEN UND WIEDERHERSTELLEN."
+                    "desc": "SHUTDOWN LIGHTS, DIM LIGHTS, RESTORE LIGHTS. LICHT AUS, DIMMEN UND WIEDERHERSTELLEN."
                 },
                 "alarm": {
                     "title": "ALARM",
-                    "desc": "ACTIVATE ALARM. SPIELT EINEN ALARM UND KANN EIN ROTES OVERLAY ANZEIGEN."
+                    "desc": "ACTIVATE ALARM, STOP ALARM. SPIELT EINEN ALARM UND KANN EIN ROTES OVERLAY ANZEIGEN."
                 },
                 "gas": {
                     "title": "GAS",

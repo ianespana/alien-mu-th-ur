@@ -37,7 +37,7 @@ const getStringArray = (value: unknown): string[] =>
     Array.isArray(value) ? value.filter((item): item is string => typeof item === 'string') : [];
 
 const savedLightStates: Record<string, AmbientLightDocument['_source']> = {};
-let currentAlarmSrc: string | null = null;
+let currentAlarmSound: foundry.audio.Sound | null = null;
 
 export function getSortedDoorDocuments() {
     const scene: Scene | undefined = game.scenes?.active;
@@ -173,8 +173,9 @@ export function triggerAlarm(withOverlay: boolean = true): void {
     try {
         const soundPath = getGame().settings.get(MODULE_ID, 'alarmSoundPath');
         if (!soundPath) return;
-        currentAlarmSrc = soundPath;
-        void playAlarmSound(0.8);
+        void playAlarmSound(0.8).then((sound) => {
+            if (sound) currentAlarmSound = sound;
+        });
     } catch (error) {
         console.error('MUTHUR Actions | Error playing alarm:', error);
     }
@@ -183,13 +184,10 @@ export function triggerAlarm(withOverlay: boolean = true): void {
 export function stopAlarm(): void {
     const overlay = document.getElementById('muthur-alarm-overlay');
     if (overlay) overlay.remove();
-    if (currentAlarmSrc) {
-        const audio = getGame().audio as { stop?: (src: string) => void };
-        if (typeof audio.stop === 'function') {
-            audio.stop(currentAlarmSrc);
-        }
+    if (currentAlarmSound) {
+        void currentAlarmSound.stop();
+        currentAlarmSound = null;
     }
-    currentAlarmSrc = null;
 }
 
 export function performZoneScan(zoneLabel: string): string {

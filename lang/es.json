@@ -93,7 +93,7 @@
                 },
                 "cerberus": {
                     "title": "PROTOCOL CERBERUS",
-                    "desc": "CERBERUS: PROTOCOLO DE AUTODESTRUCCIÓN CON CUENTA ATRÁS."
+                    "desc": "CERBERUS: REQUIERE APROBACI?N DEL GM. EL JUGADOR DEBE CONFIRMAR/CANCELAR ANTES DE LA CUENTA ATR?S."
                 },
                 "doors": {
                     "title": "CONTROL DE PUERTAS",
@@ -101,11 +101,11 @@
                 },
                 "lights": {
                     "title": "CONTROL DE LUCES",
-                    "desc": "SHUTDOWN LIGHTS, RESTORE LIGHTS. APAGAR Y RESTAURAR ILUMINACIÓN."
+                    "desc": "SHUTDOWN LIGHTS, DIM LIGHTS, RESTORE LIGHTS. APAGA, ATEN?A Y RESTAURA LAS LUCES."
                 },
                 "alarm": {
                     "title": "ALARMA",
-                    "desc": "ACTIVATE ALARM. REPRODUCE ALARMA Y PUEDE APLICAR OVERLAY ROJO."
+                    "desc": "ACTIVATE ALARM, STOP ALARM. REPRODUCE UNA ALARMA Y PUEDE MOSTRAR UN OVERLAY ROJO."
                 },
                 "gas": {
                     "title": "GAS",

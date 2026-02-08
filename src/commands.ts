@@ -183,6 +183,24 @@ async function handleActionCommand(action: string, target: string, chatLog: HTML
         return;
     }
 
+    if (action === 'CRYO_RELEASE') {
+        getGame().socket?.emit('module.alien-mu-th-ur', {
+            type: 'cryoReleaseRequest',
+            fromId: getGame().user?.id,
+            fromName: getGame().user?.name,
+        });
+        if (!getGame().user?.isGM) {
+            await syncMessageToSpectators(
+                chatLog,
+                getGame().i18n?.localize('MUTHUR.waitingForMother') || 'WAITING FOR MOTHER',
+                '',
+                '#00ff00',
+                'reply',
+            );
+        }
+        return;
+    }
+
     // Logic for sending to GM for approval or executing directly if GM
     if (getGame().user?.isGM) {
         await executeAction(action, target, chatLog);
