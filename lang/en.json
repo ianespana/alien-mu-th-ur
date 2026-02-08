@@ -313,7 +313,9 @@
         },
         "helpHeader": "AVAILABLE COMMANDS:",
         "helpFooter": "AWAITING COMMAND...",
-        "messageHint": "TYPE ANY TEXT TO SEND TO MUTHUR. FOR COMMANDS, TYPE /HELP."
+        "messageHint": "TYPE ANY TEXT TO SEND TO MUTHUR. FOR COMMANDS, TYPE /HELP.",
+        "close": "CLOSE",
+        "spectatorJoined": "A new spectator has joined the session"
     },
     "MOTHER": {
         "HackSuccess": "HACK SUCCESSFUL - ACCESS GRANTED",
@@ -410,7 +412,8 @@
                 "goodbye": "GOOD LUCK",
                 "StopCerberus": "Stop Cerberus",
                 "completed": "SELF-DESTRUCT SEQUENCE COMPLETED."
-            }
+            },
+            "Unknown": "SPECIAL ORDER NOT RECOGNIZED."
         }
     }
 }

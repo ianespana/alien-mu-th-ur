@@ -246,6 +246,10 @@
             "hackDecisionByGM": {
                 "name": "SL godkender hacking",
                 "hint": "Kr?ver SL-godkendelse af HACK-fors?g i stedet for tilf?ldig succes"
+            },
+            "alarmSoundPath": {
+                "name": "MUTHUR ? ALARMLYD",
+                "hint": "V?lg alarmlyden der afspilles ved aktivering."
             }
         },
         "motherName": "MOR",
@@ -313,7 +317,9 @@
         },
         "helpHeader": "AVAILABLE COMMANDS:",
         "helpFooter": "AWAITING COMMAND...",
-        "messageHint": "SKRIV FRI TEKST FOR AT SENDE TIL MUTHUR. FOR KOMMANDOER, SKRIV /HELP."
+        "messageHint": "SKRIV FRI TEKST FOR AT SENDE TIL MUTHUR. FOR KOMMANDOER, SKRIV /HELP.",
+        "close": "LUK",
+        "spectatorJoined": "En ny tilskuer er tilsluttet sessionen"
     },
     "MOTHER": {
         "HackSuccess": "HACK LYKKEDES - ADGANG BEVILGET",
@@ -410,7 +416,8 @@
                 "goodbye": "HELD OG LYKKE",
                 "StopCerberus": "Stop Cerberus",
                 "completed": "SELVDDESTRUKTION SEKVENS AFSLUTTET."
-            }
+            },
+            "Unknown": "S?RLIG ORDRE IKKE GENKENDT."
         }
     }
 }

@@ -246,6 +246,10 @@
             "hackDecisionByGM": {
                 "name": "SL keurt hacken goed",
                 "hint": "Vereist SL-goedkeuring voor HACK-pogingen in plaats van willekeurig succes"
+            },
+            "alarmSoundPath": {
+                "name": "MUTHUR ? ALARMGELUID",
+                "hint": "Selecteer het alarmsignaal dat bij activatie wordt afgespeeld."
             }
         },
         "motherName": "MOEDER",
@@ -313,7 +317,9 @@
         },
         "helpHeader": "AVAILABLE COMMANDS:",
         "helpFooter": "AWAITING COMMAND...",
-        "messageHint": "TYPE VRIJE TEKST OM NAAR MUTHUR TE STUREN. VOOR COMMANDO'S, TYP /HELP."
+        "messageHint": "TYPE VRIJE TEKST OM NAAR MUTHUR TE STUREN. VOOR COMMANDO'S, TYP /HELP.",
+        "close": "SLUITEN",
+        "spectatorJoined": "Een nieuwe toeschouwer is toegetreden tot de sessie"
     },
     "MOTHER": {
         "HackSuccess": "HACK SUCCESVOL - TOEGANG VERLEEND",
@@ -410,7 +416,8 @@
                 "goodbye": "SUCCES",
                 "StopCerberus": "Stop Cerberus",
                 "completed": "ZELFVERNIETIGINGSSEQUENTIE VOLTOOID."
-            }
+            },
+            "Unknown": "SPECIALE OPDRACHT NIET HERKEND."
         }
     }
 }

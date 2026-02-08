@@ -242,6 +242,10 @@
             "hackDecisionByGM": {
                 "name": "SL genehmigt Hacking",
                 "hint": "Erfordert SL-Genehmigung f?r HACK-Versuche statt zuf?lligem Erfolg"
+            },
+            "alarmSoundPath": {
+                "name": "MUTHUR ? ALARMTON",
+                "hint": "W?hlen Sie den Alarmton, der bei Aktivierung abgespielt wird."
             }
         },
         "motherName": "MUTTER",
@@ -309,7 +313,9 @@
         },
         "helpHeader": "AVAILABLE COMMANDS:",
         "helpFooter": "AWAITING COMMAND...",
-        "messageHint": "FREIEN TEXT AN MUTHUR SENDEN. F?R BEFEHLE, /HELP EINGEBEN."
+        "messageHint": "FREIEN TEXT AN MUTHUR SENDEN. F?R BEFEHLE, /HELP EINGEBEN.",
+        "close": "SCHLIESSEN",
+        "spectatorJoined": "Ein neuer Zuschauer ist der Sitzung beigetreten"
     },
     "MOTHER": {
         "HackSuccess": "HACK ERFOLGREICH - ZUGRIFF GEWÄHRT",
@@ -406,7 +412,8 @@
                 "goodbye": "VIEL GLÜCK",
                 "StopCerberus": "Cerberus Stoppen",
                 "completed": "SELBSTZERST?RUNGSEQUENZ ABGESCHLOSSEN."
-            }
+            },
+            "Unknown": "SPEZIALAUFTRAG NICHT ERKANNT."
         }
     }
 }

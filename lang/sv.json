@@ -246,6 +246,10 @@
             "hackDecisionByGM": {
                 "name": "SL godk?nner hackning",
                 "hint": "Kr?ver SL-godk?nnande f?r HACK-f?rs?k ist?llet f?r slumpm?ssig framg?ng"
+            },
+            "alarmSoundPath": {
+                "name": "MUTHUR ? ALARMLJUD",
+                "hint": "V?lj larmljudet som spelas upp vid aktivering."
             }
         },
         "motherName": "MODER",
@@ -313,7 +317,9 @@
         },
         "helpHeader": "AVAILABLE COMMANDS:",
         "helpFooter": "AWAITING COMMAND...",
-        "messageHint": "SKRIV FRI TEXT F?R ATT SKICKA TILL MUTHUR. F?R KOMMANDON, SKRIV /HELP."
+        "messageHint": "SKRIV FRI TEXT F?R ATT SKICKA TILL MUTHUR. F?R KOMMANDON, SKRIV /HELP.",
+        "close": "ST?NG",
+        "spectatorJoined": "En ny ?sk?dare har anslutit till sessionen"
     },
     "MOTHER": {
         "HackSuccess": "HACK LYCKADES - ÅTKOMST BEVILJAD",
@@ -410,7 +416,8 @@
                 "goodbye": "LYCKA TILL",
                 "StopCerberus": "Stoppa Cerberus",
                 "completed": "SJ?LVDESTRUKTIONSSEKVENS SLUTF?RD."
-            }
+            },
+            "Unknown": "SPECIALORDER K?NNS INTE IGEN."
         }
     }
 }

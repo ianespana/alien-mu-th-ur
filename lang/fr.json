@@ -313,7 +313,9 @@
         },
         "helpHeader": "AVAILABLE COMMANDS:",
         "helpFooter": "AWAITING COMMAND...",
-        "messageHint": "SAISISSEZ UN TEXTE ? ENVOYER ? MUTHUR. POUR LES COMMANDES, TAPEZ /HELP."
+        "messageHint": "SAISISSEZ UN TEXTE ? ENVOYER ? MUTHUR. POUR LES COMMANDES, TAPEZ /HELP.",
+        "close": "FERMER",
+        "spectatorJoined": "Un nouveau spectateur a rejoint la session"
     },
     "MOTHER": {
         "HackSuccess": "HACK RÉUSSI - ACCÈS ACCORDÉ",
@@ -410,7 +412,8 @@
                 "goodbye": "BONNE CHANCE",
                 "StopCerberus": "Arrêter Cerberus",
                 "completed": "S?QUENCE D'AUTODESTRUCTION TERMIN?E."
-            }
+            },
+            "Unknown": "ORDRE SP?CIAL NON RECONNU."
         }
     }
 }

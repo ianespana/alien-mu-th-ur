@@ -246,6 +246,10 @@
             "hackDecisionByGM": {
                 "name": "GM approva l'hacking",
                 "hint": "Richiede l'approvazione del GM per i tentativi di HACK invece del successo casuale"
+            },
+            "alarmSoundPath": {
+                "name": "MUTHUR ? SUONO ALLARME",
+                "hint": "Seleziona il suono d'allarme riprodotto all'attivazione."
             }
         },
         "motherName": "MADRE",
@@ -313,7 +317,9 @@
         },
         "helpHeader": "AVAILABLE COMMANDS:",
         "helpFooter": "AWAITING COMMAND...",
-        "messageHint": "SCRIVI QUALSIASI TESTO PER INVIARE A MUTHUR. PER I COMANDI, DIGITA /HELP."
+        "messageHint": "SCRIVI QUALSIASI TESTO PER INVIARE A MUTHUR. PER I COMANDI, DIGITA /HELP.",
+        "close": "CHIUDI",
+        "spectatorJoined": "Un nuovo spettatore si ? unito alla sessione"
     },
     "MOTHER": {
         "HackSuccess": "HACK RIUSCITO - ACCESSO CONCESSO",
@@ -410,7 +416,8 @@
                 "goodbye": "BUONA FORTUNA",
                 "StopCerberus": "Fermare Cerberus",
                 "completed": "SEQUENZA DI AUTODISTRUZIONE COMPLETATA."
-            }
+            },
+            "Unknown": "ORDINE SPECIALE NON RICONOSCIUTO."
         }
     }
 }
