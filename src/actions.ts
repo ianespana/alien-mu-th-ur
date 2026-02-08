@@ -8,7 +8,7 @@ type StatusEffectLike = { id?: string; label?: string; name?: string; icon?: str
 type PlaceableLike = {
     document?: {
         name?: string;
-        texture?: { src?: string; width?: number; height?: number };
+        texture?: { src?: unknown; width?: number; height?: number };
         x?: number;
         y?: number;
         width?: number;
@@ -23,7 +23,8 @@ type PlaceableLike = {
     actor?: { type?: string };
 };
 type TargetRect = { x: number; y: number; w: number; h: number };
-type TokenLike = PlaceableLike & {
+export type TokenLike = PlaceableLike & {
+    id?: string;
     document?: PlaceableLike['document'] & {
         setFlag?: (scope: string, key: string, value: unknown) => Promise<unknown> | void;
         unsetFlag?: (scope: string, key: string) => Promise<unknown> | void;
@@ -103,8 +104,9 @@ export function applyLightsAction(action: 'SHUTDOWN' | 'DIM' | 'RESTORE'): strin
             return getGame().i18n?.localize('MUTHUR.lightsShutdown') || 'Lights shutdown complete.';
         case 'DIM':
             lights.forEach((light) => {
-                const savedBright = savedLightStates[light.id || 'unknown'].config.bright;
-                const savedDim = savedLightStates[light.id || 'unknown']?.config.bright;
+                const savedLight = savedLightStates[light.id || 'unknown'];
+                const savedBright = savedLight?.config?.bright ?? 0;
+                const savedDim = savedLight?.config?.bright ?? 0;
                 void light.update({
                     hidden: false,
                     config: {
@@ -198,7 +200,8 @@ export function performZoneScan(zoneLabel: string): string {
     const targets: TargetRect[] = [];
     const upper = (zoneLabel || '').toUpperCase();
     for (const t of tiles) {
-        const label = (t.document?.name || t.document?.texture?.src || '').toUpperCase();
+        const rawLabel = t.document?.name ?? t.document?.texture?.src;
+        const label = (typeof rawLabel === 'string' ? rawLabel : '').toUpperCase();
         if (label.startsWith('ALIEN') && (upper === '' || label.includes(upper))) {
             const x = t.document?.x ?? t.x ?? t.center?.x ?? 0;
             const y = t.document?.y ?? t.y ?? t.center?.y ?? 0;
@@ -208,7 +211,8 @@ export function performZoneScan(zoneLabel: string): string {
         }
     }
     for (const r of regions) {
-        const label = (r.document?.name || '').toUpperCase();
+        const regionName = r.document?.name;
+        const label = (typeof regionName === 'string' ? regionName : '').toUpperCase();
         if (label.startsWith('ALIEN') && (upper === '' || label.includes(upper))) {
             const x = r.document?.x ?? r.x ?? r.center?.x ?? 0;
             const y = r.document?.y ?? r.y ?? r.center?.y ?? 0;

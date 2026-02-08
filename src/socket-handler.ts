@@ -1,4 +1,4 @@
-import { releaseCryoForTokens, stopAlarm, triggerAlarm } from './actions.js';
+import { releaseCryoForTokens, stopAlarm, triggerAlarm, type TokenLike } from './actions.js';
 import { getGame, MODULE_ID } from './constants.js';
 import { clearHackingElements, createHackingWindows } from './hacking.js';
 import {
@@ -283,7 +283,7 @@ export function handleSocketMessage(raw: unknown): void {
     } else if (type === 'cryoReleaseRequest' && isGM) {
         const requesterId = getString(raw.fromId);
         const requesterName = getString(raw.fromName) || 'PLAYER';
-        const tokens = Array.from(canvas?.tokens?.placeables ?? []);
+        const tokens = Array.from(canvas?.tokens?.placeables ?? []) as TokenLike[];
 
         const dialog = document.createElement('div');
         dialog.style.cssText =
