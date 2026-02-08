@@ -35,6 +35,7 @@ export class MuthurAdminSettingsApp extends foundry.appv1.api.FormApplication {
         const game = getGame();
         return {
             allowHack: game.settings.get(MODULE_ID, 'allowHack'),
+            hackDecisionByGM: game.settings.get(MODULE_ID, 'hackDecisionByGM'),
             allowDragGM: game.settings.get(MODULE_ID, 'allowDragGM'),
             allowDragPlayers: game.settings.get(MODULE_ID, 'allowDragPlayers'),
             allowCaptainSpecialOrders: game.settings.get(MODULE_ID, 'allowCaptainSpecialOrders'),
@@ -64,6 +65,7 @@ export class MuthurAdminSettingsApp extends foundry.appv1.api.FormApplication {
         const bool = (k: string) => Boolean(formData[k]);
 
         await game.settings.set(MODULE_ID, 'allowHack', bool('allowHack'));
+        await game.settings.set(MODULE_ID, 'hackDecisionByGM', bool('hackDecisionByGM'));
         await game.settings.set(MODULE_ID, 'allowDragGM', bool('allowDragGM'));
         await game.settings.set(MODULE_ID, 'allowDragPlayers', bool('allowDragPlayers'));
         await game.settings.set(MODULE_ID, 'allowCaptainSpecialOrders', bool('allowCaptainSpecialOrders'));

@@ -62,6 +62,7 @@ declare global {
 
         // World (GM controls)
         'alien-mu-th-ur.allowHack': boolean;
+        'alien-mu-th-ur.hackDecisionByGM': boolean;
         'alien-mu-th-ur.allowDragGM': boolean;
         'alien-mu-th-ur.allowDragPlayers': boolean;
 

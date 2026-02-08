@@ -242,6 +242,10 @@
             "soundVolume": {
                 "name": "MUTHUR-volym",
                 "hint": "Justerar MUTHUR-volymen (0 = tyst, 1 = max)"
+            },
+            "hackDecisionByGM": {
+                "name": "SL godk?nner hackning",
+                "hint": "Kr?ver SL-godk?nnande f?r HACK-f?rs?k ist?llet f?r slumpm?ssig framg?ng"
             }
         },
         "motherName": "MODER",

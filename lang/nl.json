@@ -242,6 +242,10 @@
             "soundVolume": {
                 "name": "MUTHUR-volume",
                 "hint": "Past het MUTHUR-volume aan (0 = stil, 1 = maximum)"
+            },
+            "hackDecisionByGM": {
+                "name": "SL keurt hacken goed",
+                "hint": "Vereist SL-goedkeuring voor HACK-pogingen in plaats van willekeurig succes"
             }
         },
         "motherName": "MOEDER",

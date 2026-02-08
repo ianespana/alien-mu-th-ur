@@ -153,6 +153,17 @@ export function registerSettings(): void {
         default: true,
     });
 
+    getGame().settings.register(MODULE_ID, 'hackDecisionByGM', {
+        name: getGame().i18n?.localize('MUTHUR.SETTINGS.hackDecisionByGM.name') || 'GM approves hacking',
+        hint:
+            getGame().i18n?.localize('MUTHUR.SETTINGS.hackDecisionByGM.hint') ||
+            'Requires GM approval for HACK attempts instead of random success',
+        scope: 'world',
+        config: false,
+        type: Boolean,
+        default: true,
+    });
+
     // Allow moving terminals on the scene
     getGame().settings.register(MODULE_ID, 'allowDragGM', {
         name: getGame().i18n?.localize('MUTHUR.SETTINGS.allowDragGM.name') || 'Move terminal (GM)',

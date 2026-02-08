@@ -110,14 +110,20 @@ export async function simulateHackingAttempt(chatLog: HTMLElement): Promise<bool
             });
     }
 
-    let isSuccess: boolean; // 70% success rate
-    if (!getGame().user?.isGM) {
+    const requireGMDecision = getGame().settings.get('alien-mu-th-ur', 'hackDecisionByGM') as boolean;
+    let isSuccess: boolean;
+
+    if (getGame().user?.isGM) {
+        isSuccess = true;
+    } else if (requireGMDecision) {
         isSuccess = await requestHackDecision();
     } else {
         const roll = new Roll('1d6');
         await roll.evaluate();
-        isSuccess = (roll.total ?? 0) % 2 === 0;
+        await roll.toMessage();
+        isSuccess = (roll.total ?? 0) === 6;
     }
+
     const resultSequences = isSuccess ? getSuccessSequences() : getFailureSequences();
 
     for (const step of resultSequences) {

@@ -242,6 +242,10 @@
             "soundVolume": {
                 "name": "MUTHUR Volume",
                 "hint": "Adjusts MUTHUR sound volume (0 = mute, 1 = maximum)"
+            },
+            "hackDecisionByGM": {
+                "name": "GM approves hacking",
+                "hint": "Requires GM approval for HACK attempts instead of random success"
             }
         },
         "motherName": "MOTHER",

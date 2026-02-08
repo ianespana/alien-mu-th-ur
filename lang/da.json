@@ -242,6 +242,10 @@
             "soundVolume": {
                 "name": "MUTHUR-lydstyrke",
                 "hint": "Justerer MUTHUR-lydstyrken (0 = lydl?s, 1 = maksimum)"
+            },
+            "hackDecisionByGM": {
+                "name": "SL godkender hacking",
+                "hint": "Kr?ver SL-godkendelse af HACK-fors?g i stedet for tilf?ldig succes"
             }
         },
         "motherName": "MOR",

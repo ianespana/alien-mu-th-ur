@@ -238,6 +238,10 @@
             "soundVolume": {
                 "name": "MUTHUR-Lautst?rke",
                 "hint": "Passt die MUTHUR-Lautst?rke an (0 = stumm, 1 = maximal)"
+            },
+            "hackDecisionByGM": {
+                "name": "SL genehmigt Hacking",
+                "hint": "Erfordert SL-Genehmigung f?r HACK-Versuche statt zuf?lligem Erfolg"
             }
         },
         "motherName": "MUTTER",

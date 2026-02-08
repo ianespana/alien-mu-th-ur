@@ -190,6 +190,10 @@
             "soundVolume": {
                 "name": "Volume de MUTHUR",
                 "hint": "Ajuste le volume de MUTHUR (0 = muet, 1 = maximum)"
+            },
+            "hackDecisionByGM": {
+                "name": "MJ approuve le piratage",
+                "hint": "N?cessite l'approbation du MJ pour les tentatives de HACK au lieu d'un succ?s al?atoire"
             }
         },
         "motherName": "MAMAN",

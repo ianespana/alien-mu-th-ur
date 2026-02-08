@@ -242,6 +242,10 @@
             "soundVolume": {
                 "name": "MUTHUR-volum",
                 "hint": "Justerer MUTHUR-volumet (0 = lydl?s, 1 = maks)"
+            },
+            "hackDecisionByGM": {
+                "name": "SL godkjenner hacking",
+                "hint": "Krever SL-godkjenning for HACK-fors?k i stedet for tilfeldig suksess"
             }
         },
         "motherName": "MOR",
