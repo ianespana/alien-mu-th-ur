@@ -77,7 +77,7 @@
                 "intro": "LISTE UND BESCHREIBUNG VERFÜGBARER POST-HACK-BEFEHLE (MIT MJ-GENEHMIGUNG).",
                 "basic": {
                     "title": "GRUNDBEFEHLE",
-                    "desc": "HELP: HILFE ANZEIGEN\nSTATUS: SYSTEMSTATUS\nCLEAR: BILDSCHIRM LÖSCHEN\nEXIT: TERMINAL SCHLIESSEN\nNACHRICHT: MIT MUTHUR KOMMUNIZIEREN"
+                    "desc": "HELP: HILFE ANZEIGEN\nSTATUS: SYSTEMSTATUS\nCLEAR: BILDSCHIRM LÖSCHEN\nEXIT: TERMINAL SCHLIESSEN"
                 },
                 "hack": {
                     "title": "HACK",
@@ -242,6 +242,10 @@
             "hackDecisionByGM": {
                 "name": "SL genehmigt Hacking",
                 "hint": "Erfordert SL-Genehmigung f?r HACK-Versuche statt zuf?lligem Erfolg"
+            },
+            "alarmSoundPath": {
+                "name": "MUTHUR ? ALARMTON",
+                "hint": "W?hlen Sie den Alarmton, der bei Aktivierung abgespielt wird."
             }
         },
         "motherName": "MUTTER",
@@ -298,7 +302,6 @@
             "status": "STATUS: SYSTEMSTATUS",
             "clear": "CLEAR: BILDSCHIRM LÖSCHEN",
             "exit": "EXIT: TERMINAL SCHLIESSEN",
-            "message": "NACHRICHT: MIT MUTHUR KOMMUNIZIEREN",
             "hack": "HACK: VERSUCH, ADMINRECHTE ZU ERHALTEN (VOM MJ KONTROLLIERT)",
             "cerberus": "CERBERUS: GM-GENEHMIGUNG ERFORDERLICH. SPIELER MUSS BEST?TIGEN/ABBRECHEN VOR DEM COUNTDOWN.",
             "doors": "DOORS, LOCK DOOR X, UNLOCK DOOR X. ZIELT AUF TÜREN MIT NAMEN 'AD*'.",
@@ -309,7 +312,10 @@
             "cryoRelease": "CRYO RELEASE. LISTET CHARAKTERE IN STASE ZUR MEHRFACH-FREIGABE."
         },
         "helpHeader": "AVAILABLE COMMANDS:",
-        "helpFooter": "AWAITING COMMAND..."
+        "helpFooter": "AWAITING COMMAND...",
+        "messageHint": "FREIEN TEXT AN MUTHUR SENDEN. F?R BEFEHLE, /HELP EINGEBEN.",
+        "close": "SCHLIESSEN",
+        "spectatorJoined": "Ein neuer Zuschauer ist der Sitzung beigetreten"
     },
     "MOTHER": {
         "HackSuccess": "HACK ERFOLGREICH - ZUGRIFF GEWÄHRT",
@@ -406,7 +412,8 @@
                 "goodbye": "VIEL GLÜCK",
                 "StopCerberus": "Cerberus Stoppen",
                 "completed": "SELBSTZERST?RUNGSEQUENZ ABGESCHLOSSEN."
-            }
+            },
+            "Unknown": "SPEZIALAUFTRAG NICHT ERKANNT."
         }
     }
 }

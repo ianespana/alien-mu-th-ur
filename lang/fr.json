@@ -209,7 +209,7 @@
                 "intro": "LISTE ET DESCRIPTION DES COMMANDES DISPONIBLES APRÈS HACK (AVEC APPROBATION MJ).",
                 "basic": {
                     "title": "COMMANDES DE BASE",
-                    "desc": "HELP : AFFICHE L'AIDE\nSTATUS : ÉTAT DU SYSTÈME\nCLEAR : EFFACE L'ÉCRAN\nEXIT : FERME LE TERMINAL\nMESSAGE : COMMUNIQUER AVEC MUTHUR"
+                    "desc": "HELP : AFFICHE L'AIDE\nSTATUS : ÉTAT DU SYSTÈME\nCLEAR : EFFACE L'ÉCRAN\nEXIT : FERME LE TERMINAL"
                 },
                 "hack": {
                     "title": "HACK",
@@ -302,7 +302,6 @@
             "status": "STATUS : ÉTAT DU SYSTÈME",
             "clear": "CLEAR : EFFACE L'ÉCRAN",
             "exit": "EXIT : FERME LE TERMINAL",
-            "message": "MESSAGE : COMMUNIQUER AVEC MUTHUR",
             "hack": "HACK : TENTE D'OBTENIR DES DROITS ADMINISTRATEURS (SOUS CONTRÔLE DU MJ)",
             "cerberus": "CERBERUS: APPROBATION MJ REQUISE. LE JOUEUR DOIT CONFIRMER/ANNULER AVANT LE COMPTE ? REBOURS.",
             "doors": "DOORS, LOCK DOOR X, UNLOCK DOOR X. CIBLE LES PORTES NOMMÉES 'AD*'.",
@@ -313,7 +312,10 @@
             "cryoRelease": "CRYO RELEASE. LISTE LES PERSONNAGES EN STASE POUR LIBÉRATION MULTI-SÉLECTION."
         },
         "helpHeader": "AVAILABLE COMMANDS:",
-        "helpFooter": "AWAITING COMMAND..."
+        "helpFooter": "AWAITING COMMAND...",
+        "messageHint": "SAISISSEZ UN TEXTE ? ENVOYER ? MUTHUR. POUR LES COMMANDES, TAPEZ /HELP.",
+        "close": "FERMER",
+        "spectatorJoined": "Un nouveau spectateur a rejoint la session"
     },
     "MOTHER": {
         "HackSuccess": "HACK RÉUSSI - ACCÈS ACCORDÉ",
@@ -410,7 +412,8 @@
                 "goodbye": "BONNE CHANCE",
                 "StopCerberus": "Arrêter Cerberus",
                 "completed": "S?QUENCE D'AUTODESTRUCTION TERMIN?E."
-            }
+            },
+            "Unknown": "ORDRE SP?CIAL NON RECONNU."
         }
     }
 }

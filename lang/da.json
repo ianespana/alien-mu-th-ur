@@ -81,7 +81,7 @@
                 "intro": "LISTE OG BESKRIVELSE AF TILGÆNGELIGE POST-HACK-KOMMANDOER (MED MJ-GODKENDELSE).",
                 "basic": {
                     "title": "BASISKOMMANDOER",
-                    "desc": "HELP: VIS DENNE HJÆLP\nSTATUS: SYSTEMSTATUS\nCLEAR: RYD SKÆRM\nEXIT: LUK TERMINAL\nBESKED: KOMMUNIKER MED MOR"
+                    "desc": "HELP: VIS DENNE HJÆLP\nSTATUS: SYSTEMSTATUS\nCLEAR: RYD SKÆRM\nEXIT: LUK TERMINAL"
                 },
                 "hack": {
                     "title": "HACK",
@@ -246,6 +246,10 @@
             "hackDecisionByGM": {
                 "name": "SL godkender hacking",
                 "hint": "Kr?ver SL-godkendelse af HACK-fors?g i stedet for tilf?ldig succes"
+            },
+            "alarmSoundPath": {
+                "name": "MUTHUR ? ALARMLYD",
+                "hint": "V?lg alarmlyden der afspilles ved aktivering."
             }
         },
         "motherName": "MOR",
@@ -302,7 +306,6 @@
             "status": "STATUS: SYSTEMSTATUS",
             "clear": "CLEAR: RYD SKÆRM",
             "exit": "EXIT: LUK TERMINAL",
-            "message": "BESKED: KOMMUNIKER MED MOR",
             "hack": "HACK: FORSØG AT FÅ ADMIN-RETTIGHEDER (GM-STYRET)",
             "cerberus": "CERBERUS: KR?VER GM-GODKENDELSE. SPILLER SKAL BEKR?FTE/ANNULLERE F?R NEDT?LLING.",
             "doors": "DOORS, LOCK DOOR X, UNLOCK DOOR X. MÅLRETTER DØRE 'AD*'.",
@@ -313,7 +316,10 @@
             "cryoRelease": "CRYO RELEASE. LISTE OVER PERSONER I STASE TIL FLERVALGS FRIGIVELSE."
         },
         "helpHeader": "AVAILABLE COMMANDS:",
-        "helpFooter": "AWAITING COMMAND..."
+        "helpFooter": "AWAITING COMMAND...",
+        "messageHint": "SKRIV FRI TEKST FOR AT SENDE TIL MUTHUR. FOR KOMMANDOER, SKRIV /HELP.",
+        "close": "LUK",
+        "spectatorJoined": "En ny tilskuer er tilsluttet sessionen"
     },
     "MOTHER": {
         "HackSuccess": "HACK LYKKEDES - ADGANG BEVILGET",
@@ -410,7 +416,8 @@
                 "goodbye": "HELD OG LYKKE",
                 "StopCerberus": "Stop Cerberus",
                 "completed": "SELVDDESTRUKTION SEKVENS AFSLUTTET."
-            }
+            },
+            "Unknown": "S?RLIG ORDRE IKKE GENKENDT."
         }
     }
 }

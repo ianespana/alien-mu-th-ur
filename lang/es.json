@@ -81,7 +81,7 @@
                 "intro": "LISTA Y DESCRIPCIÓN DE LOS COMANDOS DISPONIBLES TRAS HACK (CON APROBACIÓN DEL MJ).",
                 "basic": {
                     "title": "COMANDOS BÁSICOS",
-                    "desc": "HELP: MUESTRA ESTA AYUDA\nSTATUS: ESTADO DEL SISTEMA\nCLEAR: LIMPIAR PANTALLA\nEXIT: CERRAR TERMINAL\nMENSAJE: COMUNICAR CON MUTHUR"
+                    "desc": "HELP: MUESTRA ESTA AYUDA\nSTATUS: ESTADO DEL SISTEMA\nCLEAR: LIMPIAR PANTALLA\nEXIT: CERRAR TERMINAL"
                 },
                 "hack": {
                     "title": "HACK",
@@ -246,6 +246,10 @@
             "hackDecisionByGM": {
                 "name": "El DJ aprueba el hackeo",
                 "hint": "Requiere aprobaci?n del DJ para intentos de HACK en lugar de ?xito aleatorio"
+            },
+            "alarmSoundPath": {
+                "name": "MUTHUR ? SONIDO DE ALARMA",
+                "hint": "Selecciona el sonido de alarma que se reproduce al activarse."
             }
         },
         "motherName": "MADRE",
@@ -302,7 +306,6 @@
             "status": "STATUS: ESTADO DEL SISTEMA",
             "clear": "CLEAR: LIMPIAR PANTALLA",
             "exit": "EXIT: CERRAR TERMINAL",
-            "message": "MENSAJE: COMUNICAR CON MUTHUR",
             "hack": "HACK: INTENTO DE OBTENER DERECHOS DE ADMIN (CONTROLADO POR MJ)",
             "cerberus": "CERBERUS: REQUIERE APROBACI?N DEL GM. EL JUGADOR DEBE CONFIRMAR/CANCELAR ANTES DE LA CUENTA ATR?S.",
             "doors": "DOORS, LOCK DOOR X, UNLOCK DOOR X. OBJETIVO: PUERTAS 'AD*'.",
@@ -313,7 +316,10 @@
             "cryoRelease": "CRYO RELEASE. LISTA PERSONAJES EN ESTASIS PARA LIBERACIÓN MÚLTIPLE."
         },
         "helpHeader": "AVAILABLE COMMANDS:",
-        "helpFooter": "AWAITING COMMAND..."
+        "helpFooter": "AWAITING COMMAND...",
+        "messageHint": "ESCRIBE CUALQUIER TEXTO PARA ENVIAR A MUTHUR. PARA COMANDOS, ESCRIBE /HELP.",
+        "close": "CERRAR",
+        "spectatorJoined": "Un nuevo espectador se ha unido a la sesi?n"
     },
     "MOTHER": {
         "HackSuccess": "HACK EXITOSO - ACCESO CONCEDIDO",
@@ -410,7 +416,8 @@
                 "goodbye": "BUENA SUERTE",
                 "StopCerberus": "Detener Cerberus",
                 "completed": "SECUENCIA DE AUTODESTRUCCI?N COMPLETADA."
-            }
+            },
+            "Unknown": "ORDEN ESPECIAL NO RECONOCIDA."
         }
     }
 }
