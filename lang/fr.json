@@ -293,12 +293,12 @@
             "allowCaptainOrdersHint": "Permet aux Capitaines d'accéder aux Ordres Spéciaux sans réussir HACK"
         },
         "alarmStopped": "ALARME ARR?T?E.",
-        "permissions": "Permissions",
-        "permissionsTitle": "Permissions",
-        "permissionsSpecialOrders": "Special Orders",
-        "permissionsPostHack": "Post-Hack Commands",
-        "cerberusDeathScreenEnabled": "CERBERUS DEATH SCREEN ENABLED.",
-        "cerberusDeathScreenDisabled": "CERBERUS DEATH SCREEN DISABLED.",
+        "permissions": "Autorisations",
+        "permissionsTitle": "Autorisations",
+        "permissionsSpecialOrders": "Ordres speciaux",
+        "permissionsPostHack": "Commandes post-hack",
+        "cerberusDeathScreenEnabled": "ECRAN DE MORT CERBERUS ACTIVE.",
+        "cerberusDeathScreenDisabled": "ECRAN DE MORT CERBERUS DESACTIVE.",
         "helpCommands": {
             "help": "HELP : AFFICHE L'AIDE",
             "status": "STATUS : ÉTAT DU SYSTÈME",
@@ -306,8 +306,8 @@
             "exit": "EXIT : FERME LE TERMINAL",
             "hack": "HACK : TENTE D'OBTENIR DES DROITS ADMINISTRATEURS (SOUS CONTRÔLE DU MJ)",
             "cerberus": "CERBERUS: APPROBATION MJ REQUISE. LE JOUEUR DOIT CONFIRMER/ANNULER AVANT LE COMPTE ? REBOURS.",
-            "selfDestruct": "SELF DESTRUCT: GM APPROVAL REQUIRED. PLAYER MUST CONFIRM/CANCEL BEFORE COUNTDOWN.",
-            "cerberusDeathScreen": "CERBERUS DEATHSCREEN: TOGGLE FINAL DEATH SCREEN (GM ONLY).",
+            "selfDestruct": "SELF-DESTRUCT: APPROBATION DU MJ REQUISE. LE JOUEUR DOIT CONFIRMER/ANNULER AVANT LE COMPTE A REBOURS.",
+            "cerberusDeathScreen": "CERBERUS DEATHSCREEN: ACTIVER/DESACTIVER L'ECRAN FINAL DE MORT (MJ UNIQUEMENT).",
             "doors": "DOORS, LOCK DOOR X, UNLOCK DOOR X. CIBLE LES PORTES NOMMÉES 'AD*'.",
             "lights": "SHUTDOWN LIGHTS, DIM LIGHTS, RESTORE LIGHTS. ?TEINT, ATT?NUE ET RESTAURE L'?CLAIRAGE.",
             "alarm": "ACTIVATE ALARM, STOP ALARM. JOUE UNE ALARME ET PEUT AFFICHER UN OVERLAY ROUGE.",
@@ -333,8 +333,8 @@
         "CerberusHackAlert": "!!! ALERTE PRIORITAIRE !!! - {userName} A INITIÉ LE PROTOCOLE CERBERUS",
         "CerberusConfirmed": "PROTOCOLE CERBERUS CONFIRMÉ - AUTODESTRUCTION EN COURS",
         "CerberusCancelled": "PROTOCOLE CERBERUS ANNULÉ",
-        "SelfDestructConfirmed": "SELF-DESTRUCT CONFIRMED - COUNTDOWN IN PROGRESS",
-        "SelfDestructCancelled": "SELF-DESTRUCT CANCELLED",
+        "SelfDestructConfirmed": "AUTO-DESTRUCTION CONFIRMEE - COMPTE A REBOURS EN COURS",
+        "SelfDestructCancelled": "AUTO-DESTRUCTION ANNULEE",
         "CommandNotFound": "COMMANDE NON RECONNUE. TAPEZ 'HELP' POUR LA LISTE DES COMMANDES.",
         "IntrusionDetected": "!!! INTRUSION DÉTECTÉE !!!",
         "HackDisabledInfo": "La commande HACK est actuellement désactivée dans les paramètres du système\nSouhaitez-vous l'activer ?",
@@ -419,14 +419,17 @@
                 "StopCerberus": "Arrêter Cerberus",
                 "completed": "S?QUENCE D'AUTODESTRUCTION TERMIN?E."
             },
-            "SelfDestruct": {
-                "name": "SELF-DESTRUCT",
-                "confirmation": "!!! WARNING !!!\\n\\nYOU ARE ABOUT TO ACTIVATE SELF-DESTRUCT\\nTHIS ACTION WILL TRIGGER DESTRUCTION\\nNO RETURN WILL BE POSSIBLE\\n\\nCONFIRM ACTIVATION?",
-                "confirm": "CONFIRM",
-                "cancel": "CANCEL",
-                "completed": "SELF-DESTRUCT SEQUENCE COMPLETED."
+                        "SelfDestruct": {
+                "name": "AUTO-DESTRUCTION",
+                "confirmation": "!!! AVERTISSEMENT !!!\n\nVOUS ALLEZ ACTIVER L'AUTO-DESTRUCTION\nCETTE ACTION DECLENCHERA LA DESTRUCTION\nAUCUN RETOUR POSSIBLE\n\nCONFIRMER L'ACTIVATION ?",
+                "confirm": "CONFIRMER",
+                "cancel": "ANNULER",
+                "completed": "SEQUENCE D'AUTO-DESTRUCTION TERMINEE."
             },
             "Unknown": "ORDRE SP?CIAL NON RECONNU."
         }
     }
 }
+
+
+

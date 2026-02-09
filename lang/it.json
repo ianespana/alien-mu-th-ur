@@ -297,10 +297,12 @@
             "allowCaptainOrdersHint": "Consenti ai Capitani l'accesso agli Ordini Speciali senza HACK"
         },
         "alarmStopped": "ALLARME ARRESTATO.",
-        "permissions": "Permissions",
-        "permissionsTitle": "Permissions",
-        "permissionsSpecialOrders": "Special Orders",
-        "permissionsPostHack": "Post-Hack Commands",
+        "permissions": "Permessi",
+        "permissionsTitle": "Permessi",
+        "permissionsSpecialOrders": "Ordini speciali",
+        "permissionsPostHack": "Comandi post-hack",
+        "cerberusDeathScreenEnabled": "SCHERMATA MORTE CERBERUS ATTIVATA.",
+        "cerberusDeathScreenDisabled": "SCHERMATA MORTE CERBERUS DISATTIVATA.",
         "helpCommands": {
             "help": "HELP: MOSTRA QUESTO AIUTO",
             "status": "STATUS: STATO DEL SISTEMA",
@@ -308,8 +310,8 @@
             "exit": "EXIT: CHIUDI TERMINALE",
             "hack": "HACK: TENTA DI OTTENERE DIRITTI ADMIN (CONTROLLATO DAL MJ)",
             "cerberus": "CERBERUS: RICHIEDE APPROVAZIONE DEL GM. IL GIOCATORE DEVE CONFERMARE/ANNULLARE PRIMA DEL CONTO ALLA ROVESCIA.",
-            "cerberusDeathScreen": "CERBERUS DEATHSCREEN: TOGGLE FINAL DEATH SCREEN (GM ONLY).",
-            "selfDestruct": "SELF DESTRUCT: GM APPROVAL REQUIRED. PLAYER MUST CONFIRM/CANCEL BEFORE COUNTDOWN.",
+            "cerberusDeathScreen": "CERBERUS DEATHSCREEN: ATTIVA/DISATTIVA LA SCHERMATA FINALE DI MORTE (SOLO GM).",
+            "selfDestruct": "SELF-DESTRUCT: APPROVAZIONE DEL GM RICHIESTA. IL GIOCATORE DEVE CONFERMARE/ANNULLARE PRIMA DEL COUNTDOWN.",
             "doors": "DOORS, LOCK DOOR X, UNLOCK DOOR X. PRENDE DI MIRA PORTE 'AD*'.",
             "lights": "SHUTDOWN LIGHTS, DIM LIGHTS, RESTORE LIGHTS. SPEGNE, ATTENUA E RIPRISTINA LE LUCI.",
             "alarm": "ACTIVATE ALARM, STOP ALARM. RIPRODUCE UN ALLARME E PU? MOSTRARE UN OVERLAY ROSSO.",
@@ -335,8 +337,8 @@
         "CerberusHackAlert": "!!! ALLERTA PRIORITARIA !!! - {userName} HA AVVIATO IL PROTOCOLLO CERBERUS",
         "CerberusConfirmed": "PROTOCOLLO CERBERUS CONFERMATO - AUTODISTRUZIONE IN CORSO",
         "CerberusCancelled": "PROTOCOLLO CERBERUS ANNULLATO",
-        "SelfDestructConfirmed": "SELF-DESTRUCT CONFIRMED - COUNTDOWN IN PROGRESS",
-        "SelfDestructCancelled": "SELF-DESTRUCT CANCELLED",
+        "SelfDestructConfirmed": "AUTODISTRUZIONE CONFERMATA - COUNTDOWN IN CORSO",
+        "SelfDestructCancelled": "AUTODISTRUZIONE ANNULLATA",
         "CommandNotFound": "COMANDO NON RICONOSCIUTO. DIGITA 'HELP' PER LA LISTA DEI COMANDI.",
         "IntrusionDetected": "!!! INTRUSIONE RILEVATA !!!",
         "HackDisabledInfo": "Il comando HACK è attualmente disattivato nelle impostazioni di sistema\nVuoi attivarlo?",
@@ -421,14 +423,18 @@
                 "StopCerberus": "Fermare Cerberus",
                 "completed": "SEQUENZA DI AUTODISTRUZIONE COMPLETATA."
             },
-            "SelfDestruct": {
-                "name": "SELF-DESTRUCT",
-                "confirmation": "!!! WARNING !!!\\n\\nYOU ARE ABOUT TO ACTIVATE SELF-DESTRUCT\\nTHIS ACTION WILL TRIGGER DESTRUCTION\\nNO RETURN WILL BE POSSIBLE\\n\\nCONFIRM ACTIVATION?",
-                "confirm": "CONFIRM",
-                "cancel": "CANCEL",
-                "completed": "SELF-DESTRUCT SEQUENCE COMPLETED."
+                        "SelfDestruct": {
+                "name": "AUTODISTRUZIONE",
+                "confirmation": "!!! AVVISO !!!\n\nSTAI PER ATTIVARE L'AUTODISTRUZIONE\nQUESTA AZIONE INNESCHERA LA DISTRUZIONE\nNON SARA POSSIBILE TORNARE INDIETRO\n\nCONFERMARE L'ATTIVAZIONE?",
+                "confirm": "CONFERMA",
+                "cancel": "ANNULLA",
+                "completed": "SEQUENZA DI AUTODISTRUZIONE COMPLETATA."
             },
             "Unknown": "ORDINE SPECIALE NON RICONOSCIUTO."
         }
     }
 }
+
+
+
+
