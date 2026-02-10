@@ -297,10 +297,12 @@
             "allowCaptainOrdersHint": "Tillåt Kaptener att komma åt Specialorder utan HACK"
         },
         "alarmStopped": "LARM STOPPAT.",
-        "permissions": "Permissions",
-        "permissionsTitle": "Permissions",
-        "permissionsSpecialOrders": "Special Orders",
-        "permissionsPostHack": "Post-Hack Commands",
+        "permissions": "Behorigheter",
+        "permissionsTitle": "Behorigheter",
+        "permissionsSpecialOrders": "Specialorder",
+        "permissionsPostHack": "Post-hack-kommandon",
+        "cerberusDeathScreenEnabled": "CERBERUS DODSSKARM AKTIVERAD.",
+        "cerberusDeathScreenDisabled": "CERBERUS DODSSKARM INAKTIVERAD.",
         "helpCommands": {
             "help": "HELP: VISA DENNA HJÄLP",
             "status": "STATUS: SYSTEMSTATUS",
@@ -308,8 +310,8 @@
             "exit": "EXIT: STÄNG TERMINAL",
             "hack": "HACK: FÖRSÖK ATT FÅ ADMINRÄTTIGHETER (GM-STYRT)",
             "cerberus": "CERBERUS: KR?VER GM-GODK?NNANDE. SPELAREN M?STE BEKR?FTA/AVBRYTA INNAN NEDR?KNING.",
-            "cerberusDeathScreen": "CERBERUS DEATHSCREEN: TOGGLE FINAL DEATH SCREEN (GM ONLY).",
-            "selfDestruct": "SELF DESTRUCT: GM APPROVAL REQUIRED. PLAYER MUST CONFIRM/CANCEL BEFORE COUNTDOWN.",
+            "cerberusDeathScreen": "CERBERUS DEATHSCREEN: SLAA PAA/AV SLUTLIG DOEDSSKAERM (ENDAST GM).",
+            "selfDestruct": "SELF-DESTRUCT: GM-GODKAENNANDE KRAEVS. SPELAREN MASTE BEKRAFTA/AVBRYTA FOERE NEDRAEKNING.",
             "doors": "DOORS, LOCK DOOR X, UNLOCK DOOR X. MÅLRiktar DÖRRAR 'AD*'.",
             "lights": "SHUTDOWN LIGHTS, DIM LIGHTS, RESTORE LIGHTS. SL?CKER, DIMMAR OCH ?TERST?LLER LJUS.",
             "alarm": "ACTIVATE ALARM, STOP ALARM. SPELAR ETT LARM OCH KAN VISA EN R?D OVERLAY.",
@@ -335,8 +337,8 @@
         "CerberusHackAlert": "!!! PRIORITETSALARM !!! - {userName} HAR INITIERAT CERBERUS PROTOKOLLET",
         "CerberusConfirmed": "CERBERUS PROTOKOLL BEKRÄFTAT - SJÄLVFÖRSTÖRELSE PÅGÅR",
         "CerberusCancelled": "CERBERUS PROTOKOLL AVBRUTET",
-        "SelfDestructConfirmed": "SELF-DESTRUCT CONFIRMED - COUNTDOWN IN PROGRESS",
-        "SelfDestructCancelled": "SELF-DESTRUCT CANCELLED",
+        "SelfDestructConfirmed": "SJAELVFOERSTOERELSE BEKRAEFTAD - NEDRAEKNING PAAGAAR",
+        "SelfDestructCancelled": "SJAELVFOERSTOERELSE AVBRUTEN",
         "CommandNotFound": "KOMMANDO EJ IGENKÄNT. SKRIV 'HELP' FÖR KOMMANDOLISTA.",
         "IntrusionDetected": "!!! INTRÅNG UPPTÄCKT !!!",
         "HackDisabledInfo": "HACK-kommandot är för närvarande inaktiverat i systeminställningarna\nVill du aktivera det?",
@@ -421,14 +423,18 @@
                 "StopCerberus": "Stoppa Cerberus",
                 "completed": "SJ?LVDESTRUKTIONSSEKVENS SLUTF?RD."
             },
-            "SelfDestruct": {
-                "name": "SELF-DESTRUCT",
-                "confirmation": "!!! WARNING !!!\\n\\nYOU ARE ABOUT TO ACTIVATE SELF-DESTRUCT\\nTHIS ACTION WILL TRIGGER DESTRUCTION\\nNO RETURN WILL BE POSSIBLE\\n\\nCONFIRM ACTIVATION?",
-                "confirm": "CONFIRM",
-                "cancel": "CANCEL",
-                "completed": "SELF-DESTRUCT SEQUENCE COMPLETED."
+                        "SelfDestruct": {
+                "name": "SJAELVFOERSTOERELSE",
+                "confirmation": "!!! VARNING !!!\n\nDU AER PAA VAEG ATT AKTIVERA SJAELVFOERSTOERELSE\nDENNA ATGAERD STARTAR FOERSTOERELSE\nINGEN ATERVAENDNING AER MOJLIG\n\nBEKRAEFTA AKTIVERING?",
+                "confirm": "BEKRAEFTA",
+                "cancel": "AVBRYT",
+                "completed": "SJAELVFOERSTOERELSESEKVENS SLUTFOERD."
             },
             "Unknown": "SPECIALORDER K?NNS INTE IGEN."
         }
     }
 }
+
+
+
+

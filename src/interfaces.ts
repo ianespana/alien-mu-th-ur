@@ -696,6 +696,10 @@ export function showGMSpectatorSelectionDialog(activeUserId: string, activeUserN
 
     cancelButton.onclick = () => {
         dialog.remove();
+        getGame().socket?.emit('module.alien-mu-th-ur', {
+            type: 'startRequestDenied',
+            targetUserId: activeUserId,
+        });
     };
 }
 

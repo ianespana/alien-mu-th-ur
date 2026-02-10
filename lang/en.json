@@ -421,7 +421,7 @@
             },
             "SelfDestruct": {
                 "name": "SELF-DESTRUCT",
-                "confirmation": "!!! WARNING !!!\\n\\nYOU ARE ABOUT TO ACTIVATE SELF-DESTRUCT\\nTHIS ACTION WILL TRIGGER DESTRUCTION\\nNO RETURN WILL BE POSSIBLE\\n\\nCONFIRM ACTIVATION?",
+                "confirmation": "!!! WARNING !!!\n\nYOU ARE ABOUT TO ACTIVATE SELF-DESTRUCT\nTHIS ACTION WILL TRIGGER DESTRUCTION\nNO RETURN WILL BE POSSIBLE\n\nCONFIRM ACTIVATION?",
                 "confirm": "CONFIRM",
                 "cancel": "CANCEL",
                 "completed": "SELF-DESTRUCT SEQUENCE COMPLETED."
@@ -430,6 +430,7 @@
         }
     }
 }
+
 
 
 

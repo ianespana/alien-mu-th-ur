@@ -293,10 +293,12 @@
             "allowCaptainOrdersHint": "Erlaubt Kapitänen den Zugriff auf Spezialbefehle ohne HACK"
         },
         "alarmStopped": "ALARM GESTOPPT.",
-        "permissions": "Permissions",
-        "permissionsTitle": "Permissions",
-        "permissionsSpecialOrders": "Special Orders",
-        "permissionsPostHack": "Post-Hack Commands",
+        "permissions": "Berechtigungen",
+        "permissionsTitle": "Berechtigungen",
+        "permissionsSpecialOrders": "Spezialbefehle",
+        "permissionsPostHack": "Post-Hack-Befehle",
+        "cerberusDeathScreenEnabled": "CERBERUS-TODESBILDSCHIRM AKTIVIERT.",
+        "cerberusDeathScreenDisabled": "CERBERUS-TODESBILDSCHIRM DEAKTIVIERT.",
         "helpCommands": {
             "help": "HELP: HILFE ANZEIGEN",
             "status": "STATUS: SYSTEMSTATUS",
@@ -304,8 +306,8 @@
             "exit": "EXIT: TERMINAL SCHLIESSEN",
             "hack": "HACK: VERSUCH, ADMINRECHTE ZU ERHALTEN (VOM MJ KONTROLLIERT)",
             "cerberus": "CERBERUS: GM-GENEHMIGUNG ERFORDERLICH. SPIELER MUSS BEST?TIGEN/ABBRECHEN VOR DEM COUNTDOWN.",
-            "cerberusDeathScreen": "CERBERUS DEATHSCREEN: TOGGLE FINAL DEATH SCREEN (GM ONLY).",
-            "selfDestruct": "SELF DESTRUCT: GM APPROVAL REQUIRED. PLAYER MUST CONFIRM/CANCEL BEFORE COUNTDOWN.",
+            "cerberusDeathScreen": "CERBERUS DEATHSCREEN: FINALES TODESBILD EIN/AUS (NUR GM).",
+            "selfDestruct": "SELF-DESTRUCT: GM-GENEHMIGUNG ERFORDERLICH. SPIELER MUSS VOR DEM COUNTDOWN BESTAETIGEN/ABBRECHEN.",
             "doors": "DOORS, LOCK DOOR X, UNLOCK DOOR X. ZIELT AUF TÜREN MIT NAMEN 'AD*'.",
             "lights": "SHUTDOWN LIGHTS, DIM LIGHTS, RESTORE LIGHTS. LICHT AUS, DIMMEN UND WIEDERHERSTELLEN.",
             "alarm": "ACTIVATE ALARM, STOP ALARM. SPIELT EINEN ALARM UND KANN EIN ROTES OVERLAY ANZEIGEN.",
@@ -331,8 +333,8 @@
         "CerberusHackAlert": "!!! PRIORITÄTSALARM !!! - {userName} HAT DAS CERBERUS-PROTOKOLL EINGELEITET",
         "CerberusConfirmed": "CERBERUS-PROTOKOLL BESTÄTIGT - SELBSTZERSTÖRUNG LÄUFT",
         "CerberusCancelled": "CERBERUS-PROTOKOLL ABGEBROCHEN",
-        "SelfDestructConfirmed": "SELF-DESTRUCT CONFIRMED - COUNTDOWN IN PROGRESS",
-        "SelfDestructCancelled": "SELF-DESTRUCT CANCELLED",
+        "SelfDestructConfirmed": "SELBSTZERSTOERUNG BESTAETIGT - COUNTDOWN LAEUFT",
+        "SelfDestructCancelled": "SELBSTZERSTOERUNG ABGEBROCHEN",
         "CommandNotFound": "BEFEHL NICHT ERKANNT. GEBEN SIE 'HELP' FÜR DIE BEFEHLSLISTE EIN.",
         "IntrusionDetected": "!!! EINDRINGEN ERKANNT !!!",
         "HackDisabledInfo": "Der HACK-Befehl ist derzeit in den Systemeinstellungen deaktiviert\nMöchten Sie ihn aktivieren?",
@@ -417,14 +419,18 @@
                 "StopCerberus": "Cerberus Stoppen",
                 "completed": "SELBSTZERST?RUNGSEQUENZ ABGESCHLOSSEN."
             },
-            "SelfDestruct": {
-                "name": "SELF-DESTRUCT",
-                "confirmation": "!!! WARNING !!!\\n\\nYOU ARE ABOUT TO ACTIVATE SELF-DESTRUCT\\nTHIS ACTION WILL TRIGGER DESTRUCTION\\nNO RETURN WILL BE POSSIBLE\\n\\nCONFIRM ACTIVATION?",
-                "confirm": "CONFIRM",
-                "cancel": "CANCEL",
-                "completed": "SELF-DESTRUCT SEQUENCE COMPLETED."
+                        "SelfDestruct": {
+                "name": "SELBSTZERSTOERUNG",
+                "confirmation": "!!! WARNUNG !!!\n\nSIE SIND DABEI, DIE SELBSTZERSTOERUNG ZU AKTIVIEREN\nDIESE AKTION LOEST ZERSTOERUNG AUS\nEINE RUECKKEHR IST NICHT MOEGLICH\n\nAKTIVIERUNG BESTAETIGEN?",
+                "confirm": "BESTAETIGEN",
+                "cancel": "ABBRECHEN",
+                "completed": "SELBSTZERSTOERUNGSSEQUENZ ABGESCHLOSSEN."
             },
             "Unknown": "SPEZIALAUFTRAG NICHT ERKANNT."
         }
     }
 }
+
+
+
+

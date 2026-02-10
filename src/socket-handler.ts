@@ -31,12 +31,33 @@ import {
 
 type SocketPayload = Record<string, unknown> & { type: string };
 type MessageSnapshot = { text: string; color?: string; messageType?: string };
+type ProtocolKey = 'CERBERUS' | 'SELF_DESTRUCT';
 
 const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === 'object' && value !== null;
 const getString = (value: unknown): string | undefined => (typeof value === 'string' ? value : undefined);
 const getStringArray = (value: unknown): string[] =>
     Array.isArray(value) ? value.filter((item): item is string => typeof item === 'string') : [];
 const getBoolean = (value: unknown): boolean | undefined => (typeof value === 'boolean' ? value : undefined);
+const getProtocolKey = (value: unknown): ProtocolKey => (value === 'SELF_DESTRUCT' ? 'SELF_DESTRUCT' : 'CERBERUS');
+const getProtocolInfo = (protocol: ProtocolKey) => {
+    const baseKey = protocol === 'CERBERUS' ? 'Cerberus' : 'SelfDestruct';
+    const name =
+        getGame().i18n?.localize(`MOTHER.SpecialOrders.${baseKey}.name`) ||
+        (protocol === 'CERBERUS' ? 'CERBERUS PROTOCOL' : 'SELF-DESTRUCT');
+    const confirmation =
+        getGame().i18n?.localize(`MOTHER.SpecialOrders.${baseKey}.confirmation`) || `${name} CONFIRMATION REQUIRED.`;
+    const confirmLabel = getGame().i18n?.localize(`MOTHER.SpecialOrders.${baseKey}.confirm`) || 'CONFIRM';
+    const cancelLabel = getGame().i18n?.localize(`MOTHER.SpecialOrders.${baseKey}.cancel`) || 'CANCEL';
+    const confirmed =
+        getGame().i18n?.localize(
+            protocol === 'CERBERUS' ? 'MOTHER.CerberusConfirmed' : 'MOTHER.SelfDestructConfirmed',
+        ) || `${name} CONFIRMED.`;
+    const cancelled =
+        getGame().i18n?.localize(
+            protocol === 'CERBERUS' ? 'MOTHER.CerberusCancelled' : 'MOTHER.SelfDestructCancelled',
+        ) || `${name} CANCELLED.`;
+    return { name, confirmation, confirmLabel, cancelLabel, confirmed, cancelled };
+};
 
 export function handleSocketMessage(raw: unknown): void {
     if (!isRecord(raw)) return;
@@ -169,13 +190,15 @@ export function handleSocketMessage(raw: unknown): void {
     } else if (type === 'cerberusApprovalRequest' && isGM) {
         const requesterId = getString(raw.fromId);
         const requesterName = getString(raw.fromName) || 'PLAYER';
+        const protocol = getProtocolKey(raw.protocol);
+        const protocolInfo = getProtocolInfo(protocol);
         if (!requesterId) return;
 
         const wrap = document.createElement('div');
         wrap.style.cssText =
             'background:black; border:2px solid #ff9900; color:#ff9900; padding:10px; z-index:100005; font-family:monospace;';
         const title = document.createElement('div');
-        title.textContent = `${requesterName} → CERBERUS ?`;
+        title.textContent = `${requesterName} → ${protocolInfo.name} ?`;
         title.style.cssText = 'margin-bottom:6px; font-weight:bold;';
         const input = document.createElement('input');
         input.type = 'number';
@@ -184,11 +207,11 @@ export function handleSocketMessage(raw: unknown): void {
         input.value = '10';
         input.style.cssText = 'width: 60px; margin-right: 8px; background:black; color:#ff9900;';
         const ok = document.createElement('button');
-        ok.textContent = 'CONFIRM';
+        ok.textContent = protocolInfo.confirmLabel;
         ok.style.cssText =
             'background:black; color:#00ff00; border:1px solid #00ff00; padding:4px 10px; margin-right:6px;';
         const ko = document.createElement('button');
-        ko.textContent = 'CANCEL';
+        ko.textContent = protocolInfo.cancelLabel;
         ko.style.cssText = 'background:black; color:#ff0000; border:1px solid #ff0000; padding:4px 10px;';
         wrap.appendChild(title);
         wrap.appendChild(input);
@@ -202,6 +225,7 @@ export function handleSocketMessage(raw: unknown): void {
                 targetUserId: requesterId,
                 approved: true,
                 minutes,
+                protocol,
             });
             wrap.remove();
         };
@@ -210,6 +234,7 @@ export function handleSocketMessage(raw: unknown): void {
                 type: 'cerberusApproval',
                 targetUserId: requesterId,
                 approved: false,
+                protocol,
             });
             wrap.remove();
         };
@@ -364,6 +389,8 @@ export function handleSocketMessage(raw: unknown): void {
     } else if (type === 'cerberusApproval' && getString(raw.targetUserId) === userId) {
         const approved = getBoolean(raw.approved) ?? false;
         const minutes = Math.max(1, Math.min(60, Number(raw.minutes) || 10));
+        const protocol = getProtocolKey(raw.protocol);
+        const protocolInfo = getProtocolInfo(protocol);
         const chatLog = document.querySelector('.muthur-chat-log');
         if (chatLog) {
             stopReplyWait(chatLog as HTMLElement);
@@ -382,9 +409,7 @@ export function handleSocketMessage(raw: unknown): void {
             return;
         }
         if (!chatLog) return;
-        const warningText =
-            getGame().i18n?.localize('MOTHER.SpecialOrders.Cerberus.confirmation') ||
-            'CERBERUS PROTOCOL CONFIRMATION REQUIRED.';
+        const warningText = protocolInfo.confirmation;
         void displayMuthurMessage(chatLog as HTMLElement, warningText, '', '#ff0000', 'error');
         updateSpectatorsWithMessage(
             warningText,
@@ -396,10 +421,10 @@ export function handleSocketMessage(raw: unknown): void {
         const controls = document.createElement('div');
         controls.style.cssText = 'display:flex; gap:8px; justify-content:center; margin:10px 0;';
         const yesBtn = document.createElement('button');
-        yesBtn.textContent = getGame().i18n?.localize('MOTHER.SpecialOrders.Cerberus.confirm') || 'CONFIRM';
+        yesBtn.textContent = protocolInfo.confirmLabel;
         yesBtn.style.cssText = 'background:black; color:#ff3333; border:1px solid #ff3333; padding:4px 10px;';
         const noBtn = document.createElement('button');
-        noBtn.textContent = getGame().i18n?.localize('MOTHER.SpecialOrders.Cerberus.cancel') || 'CANCEL';
+        noBtn.textContent = protocolInfo.cancelLabel;
         noBtn.style.cssText = 'background:black; color:#33ff33; border:1px solid #33ff33; padding:4px 10px;';
         controls.appendChild(yesBtn);
         controls.appendChild(noBtn);
@@ -407,41 +432,32 @@ export function handleSocketMessage(raw: unknown): void {
 
         yesBtn.onclick = () => {
             controls.remove();
-            void displayMuthurMessage(
-                chatLog as HTMLElement,
-                getGame().i18n?.localize('MOTHER.CerberusConfirmed') || 'CERBERUS CONFIRMED.',
-                '',
-                '#ff0000',
-                'error',
-            );
-            createCerberusWindow();
-            startCerberusCountdown(minutes, chatLog as HTMLElement);
-            startCerberusCountdownGlobal(minutes);
+            void displayMuthurMessage(chatLog as HTMLElement, protocolInfo.confirmed, '', '#ff0000', 'error');
+            createCerberusWindow(protocolInfo.name);
+            startCerberusCountdown(minutes, chatLog as HTMLElement, protocol);
+            startCerberusCountdownGlobal(minutes, Date.now(), protocol);
             getGame().socket?.emit('module.alien-mu-th-ur', {
                 type: 'showCerberusGlobal',
                 fromId: userId,
                 fromName: user?.name,
                 minutes,
                 startTime: Date.now(),
+                protocol,
             });
         };
         noBtn.onclick = () => {
             controls.remove();
-            void displayMuthurMessage(
-                chatLog as HTMLElement,
-                getGame().i18n?.localize('MOTHER.CerberusCancelled') || 'CERBERUS CANCELLED.',
-                '',
-                '#00ff00',
-                'reply',
-            );
+            void displayMuthurMessage(chatLog as HTMLElement, protocolInfo.cancelled, '', '#00ff00', 'reply');
         };
     } else if (type === 'showCerberusGlobal') {
         const fromId = getString(raw.fromId);
         const minutes = Math.max(1, Math.min(60, Number(raw.minutes) || 10));
         const startTime = Number(raw.startTime) || Date.now();
+        const protocol = getProtocolKey(raw.protocol);
+        const protocolInfo = getProtocolInfo(protocol);
         if (fromId !== userId) {
-            createCerberusWindow();
-            startCerberusCountdownGlobal(minutes, startTime);
+            createCerberusWindow(protocolInfo.name);
+            startCerberusCountdownGlobal(minutes, startTime, protocol);
         }
     } else if (type === 'stopCerberus') {
         stopCerberusCountdown();
@@ -467,6 +483,12 @@ export function handleSocketMessage(raw: unknown): void {
                 void showBootSequence(true);
                 showSpectatorInterface(activeUserId, activeUserName);
             }
+        }
+    } else if (type === 'startRequestDenied' && !isGM) {
+        if (getString(raw.targetUserId) === userId) {
+            removeWaitingMessage();
+            updateSession({ active: false, userId: null, userName: null });
+            ui.notifications?.error(getGame().i18n?.localize('MUTHUR.requestDenied') || 'Request denied.');
         }
     } else if (type === 'sessionStatus') {
         const active = getBoolean(raw.active) ?? false;
